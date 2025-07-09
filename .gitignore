@@ -1,0 +1,13 @@
+node_modules/
+.env
+.DS_Store
+reports/
+test-results/
+screenshots/
+build/
+dist/
+*.log
+.vscode/
+.idea/
+apps/android/*.apk
+apps/ios/*.app
