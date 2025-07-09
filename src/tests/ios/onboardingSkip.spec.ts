@@ -36,6 +36,7 @@ describe("Onboarding Flow", () => {
     it('Should display and interact with sixth onboarding screen', async () => {
       expect(await onboardingSkipPage.isSixthScreenDisplayed()).toBe(true);
       await onboardingSkipPage.tapAcceptButton();
+      console.log('paso la prueba')
     });
 
     it('Should display and interact with seventh onboarding screen', async () => {
@@ -48,10 +49,7 @@ describe("Onboarding Flow", () => {
       await onboardingSkipPage.tapSkipSetupButton();
     });
     it('Should display moodmeter title after skipping', async () => {
-      if(await onboardingSkipPage.isMoodMeterTitleDisplayed()){
         expect(await onboardingSkipPage.isMoodMeterTitleDisplayed()).toBe(true);
-        await onboardingSkipPage.tapSkipSetupButton();
-      }
     })
   });
 });

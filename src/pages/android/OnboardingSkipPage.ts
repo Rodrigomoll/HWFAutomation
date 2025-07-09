@@ -1,6 +1,6 @@
 import { BasePage } from "../base/BasePage";
 
-export class OnboardingPage extends BasePage {
+export class OnboardingSkipPage extends BasePage {
     
     private firstScreenOnboarding = {
         title: 'new UiSelector().text("How We Feel-\nA Journal for\nYour Wellbeing")',

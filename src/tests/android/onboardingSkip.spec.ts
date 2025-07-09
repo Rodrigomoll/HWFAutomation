@@ -1,57 +1,57 @@
-import { OnboardingPage } from "../../pages/android/OnboardingSkipPage";
+import { OnboardingSkipPage } from "../../pages/android/OnboardingSkipPage";
 
 describe("Onboarding Tests", () => {
-  let onboardingPage: OnboardingPage;
+  let onboardingSkipPage: OnboardingSkipPage;
 
   beforeAll(async () => {
-    onboardingPage = new OnboardingPage();
+    onboardingSkipPage = new OnboardingSkipPage();
   });
 
   describe("First Screen interaction", () => {
     it("Should display and interact with first onboarding screen", async () => {
-      expect(await onboardingPage.isFirstScreenDisplayed()).toBe(true);
-      await onboardingPage.tapGetStarted();
+      expect(await onboardingSkipPage.isFirstScreenDisplayed()).toBe(true);
+      await onboardingSkipPage.tapGetStarted();
     });
 
     it("Should display and interact with second onboarding screen", async () => {
-      expect(await onboardingPage.isSecondScreenDisplayed()).toBe(true);
-      await onboardingPage.tapContinueSecondScreen();
+      expect(await onboardingSkipPage.isSecondScreenDisplayed()).toBe(true);
+      await onboardingSkipPage.tapContinueSecondScreen();
     });
 
     it("Should display and interact with third onboarding screen", async () => {
-      expect(await onboardingPage.isThirdScreenDisplayed()).toBe(true);
-      await onboardingPage.tapContinueThirdScreen();
+      expect(await onboardingSkipPage.isThirdScreenDisplayed()).toBe(true);
+      await onboardingSkipPage.tapContinueThirdScreen();
     });
 
     it("Should display and interact with fourth onboarding screen", async () => {
-      expect(await onboardingPage.isFourthScreenDisplayed());
-      await onboardingPage.tapContinueFourthScreen();
+      expect(await onboardingSkipPage.isFourthScreenDisplayed());
+      await onboardingSkipPage.tapContinueFourthScreen();
     });
 
     it("Should display and interact with fifth onboarding screen", async () => {
-      expect(await onboardingPage.isFifthScreenDisplayed()).toBe(true);
-      await onboardingPage.tapContinueFifthScreen();
+      expect(await onboardingSkipPage.isFifthScreenDisplayed()).toBe(true);
+      await onboardingSkipPage.tapContinueFifthScreen();
     });
 
     it("Should display and interact with sixth onboarding screen", async () => {
-      expect(await onboardingPage.isSixthScreenDisplayed()).toBe(true);
-      await onboardingPage.tapIAccept();
+      expect(await onboardingSkipPage.isSixthScreenDisplayed()).toBe(true);
+      await onboardingSkipPage.tapIAccept();
     });
 
     it("Should display and interact with seventh onboarding screen", async () => {
-      expect(await onboardingPage.isSeventhScreenDisplayed()).toBe(true);
-      await onboardingPage.tapSkipSetup();
+      expect(await onboardingSkipPage.isSeventhScreenDisplayed()).toBe(true);
+      await onboardingSkipPage.tapSkipSetup();
     });
 
     it("Should display modal title after skipping onboarding", async () => {
-      expect(await onboardingPage.isSeventhScreenModalDisplayed()).toBe(true);
-      await onboardingPage.tapSkipSetupModal();
+      expect(await onboardingSkipPage.isSeventhScreenModalDisplayed()).toBe(true);
+      await onboardingSkipPage.tapSkipSetupModal();
     });
 
     it("Should display privacy modal after skipping", async () => {
-      if (await onboardingPage.isPrivacyModalDisplayed()) {
-          expect(await onboardingPage.isPrivacyModalDisplayed()).toBe(true);
-          await onboardingPage.tapAcceptPrivacyModal();
+      if (await onboardingSkipPage.isPrivacyModalDisplayed()) {
+          expect(await onboardingSkipPage.isPrivacyModalDisplayed()).toBe(true);
+          await onboardingSkipPage.tapAcceptPrivacyModal();
       }
     });
   });
