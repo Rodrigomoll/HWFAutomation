@@ -36,7 +36,6 @@ describe("Onboarding Flow", () => {
     it('Should display and interact with sixth onboarding screen', async () => {
       expect(await onboardingSkipPage.isSixthScreenDisplayed()).toBe(true);
       await onboardingSkipPage.tapAcceptButton();
-      console.log('paso la prueba')
     });
 
     it('Should display and interact with seventh onboarding screen', async () => {
