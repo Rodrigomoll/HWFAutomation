@@ -34,7 +34,8 @@ export class OnboardingSkipPage extends BasePage {
 
     private seventhScreenOnboarding = {
         title: 'new UiSelector().text("Hi and welcome\nto HWF!")',
-        skipSetUp: 'new UiSelector().text("Skip setup")'
+        skipSetUp: 'new UiSelector().text("Skip setup")',
+        continueTap: 'new UiSelector().text("Continue")'
     }
 
     private seventhScreenonboardingModal = {
@@ -101,6 +102,10 @@ export class OnboardingSkipPage extends BasePage {
 
     async tapSkipSetup(): Promise<void> {
         await this.tapElement(`android=${this.seventhScreenOnboarding.skipSetUp}`);
+    }
+
+    async tapContinueSeventhScreen(): Promise<void> {
+        await this.tapElement(`android=${this.seventhScreenOnboarding.continueTap}`);
     }
 
     async isSeventhScreenModalDisplayed(): Promise<boolean> {

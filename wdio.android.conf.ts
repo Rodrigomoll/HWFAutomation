@@ -13,11 +13,13 @@ export const config: WebdriverIO.Config = {
         'appium:platformVersion': process.env.ANDROID_PLATFORM_VERSION || '14.0',
         'appium:app': process.env.ANDROID_APP_PATH || './apps/android/howwefeel.apk',
         'appium:appPackage': process.env.ANDROID_PACKAGE_NAME || 'org.howwefeel.moodmeter.dev',
-        'appium:appActivity': process.env.ANDROID_ACTIVITY || 'org.howwefeel.moodmeter.screens.main.MainActivity'
+        'appium:appActivity': process.env.ANDROID_ACTIVITY || 'org.howwefeel.moodmeter.screens.main.MainActivity',
+        'appium:autoAcceptAlerts': true, 
+        'appium:autoGrantPermissions': true
     }],
 
     hostname: 'localhost',
-    port:  parseInt(process.env.APPIUM_PORT_IOS || '4723'),
+    port:  parseInt(process.env.APPIUM_PORT_ANDROID || '4723'),
     
     logLevel: 'info',
     framework: 'jasmine',  

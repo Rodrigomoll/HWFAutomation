@@ -1,6 +1,6 @@
 import { BasePage } from "../base/BasePage";
 
-export class OnboardingSetupPage extends BasePage{
+export class OnboardingCompletePage extends BasePage{
     private firstSetupScreen = {
         title: "~Before jumping in,\nlet's explore why you're here.",
         firstOption: '~I want to feel more positive around others',

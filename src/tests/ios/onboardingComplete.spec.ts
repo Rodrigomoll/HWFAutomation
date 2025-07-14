@@ -1,13 +1,13 @@
+import { OnboardingCompletePage } from "../../pages/ios/OnboardingCompletePage";
 import { OnboardingSkipPage } from "../../pages/ios/OnboardingSkipPage";
-import { OnboardingSetupPage } from "../../pages/ios/OnboardingSetupPage";
 
 describe("Onboarding Complete Flow", () => {
   let onboardingSkipPage: OnboardingSkipPage;
-  let setupPage: OnboardingSetupPage;
+  let onboardingCompletePage: OnboardingCompletePage;
 
   beforeAll(async () => {
     onboardingSkipPage = new OnboardingSkipPage();
-    setupPage = new OnboardingSetupPage();
+    onboardingCompletePage = new OnboardingCompletePage();
   });
 
   describe("Complete onboarding flow", () => {
@@ -39,7 +39,6 @@ describe("Onboarding Complete Flow", () => {
     it("Should display and interact with sixth onboarding screen", async () => {
       expect(await onboardingSkipPage.isSixthScreenDisplayed()).toBe(true);
       await onboardingSkipPage.tapAcceptButton();
-      console.log("paso la prueba");
     });
 
     it("Should display and interact with seventh onboarding screen", async () => {
@@ -48,72 +47,72 @@ describe("Onboarding Complete Flow", () => {
     });
 
     it("Should display and interact with first setup screen", async () => {
-      expect(await setupPage.isFirstSetupScreenDisplayed()).toBe(true);
-      await setupPage.tapOnFirstOption();
-      await setupPage.tapContinueFirstScreen();
+      expect(await onboardingCompletePage.isFirstSetupScreenDisplayed()).toBe(true);
+      await onboardingCompletePage.tapOnFirstOption();
+      await onboardingCompletePage.tapContinueFirstScreen();
     });
     it("Should display and interact with second setup screen", async () => {
-      expect(await setupPage.isSecondSetupScreenDisplayed()).toBe(true);
-      await setupPage.tapContinueSecondScreen();
+      expect(await onboardingCompletePage.isSecondSetupScreenDisplayed()).toBe(true);
+      await onboardingCompletePage.tapContinueSecondScreen();
     });
 
     it("Should display and interact with third setup screen", async () => {
-      expect(await setupPage.isThirdSetupScreenDisplayed()).toBe(true);
-      await setupPage.tapHighEnergyPleasantButton();
+      expect(await onboardingCompletePage.isThirdSetupScreenDisplayed()).toBe(true);
+      await onboardingCompletePage.tapHighEnergyPleasantButton();
     });
 
     it("Should display and interact with fourth setup screen", async () => {
-      expect(await setupPage.isFourthSetupScreenDisplayed()).toBe(true);
-      await setupPage.tapOnPleasedEmotion();
-      await setupPage.tapOnArrowRight();
+      expect(await onboardingCompletePage.isFourthSetupScreenDisplayed()).toBe(true);
+      await onboardingCompletePage.tapOnPleasedEmotion();
+      await onboardingCompletePage.tapOnArrowRight();
     });
 
     it("Should display and interact with fifth setup screen", async () => {
-      expect(await setupPage.isFifthSetupScreenDisplayed()).toBe(true);
-      await setupPage.tapOnJournalEntry();
+      expect(await onboardingCompletePage.isFifthSetupScreenDisplayed()).toBe(true);
+      await onboardingCompletePage.tapOnJournalEntry();
     });
 
     it("Should display and interact with journal entry screen", async () => {
-      expect(await setupPage.journalEntryScreenDisplayed()).toBe(true);
-      await setupPage.enterTextJournal(
+      expect(await onboardingCompletePage.journalEntryScreenDisplayed()).toBe(true);
+      await onboardingCompletePage.enterTextJournal(
         "Exploring my pleased emotion with a test"
       );
-      await setupPage.tapFinishButton();
+      await onboardingCompletePage.tapFinishButton();
     });
 
     it("Should display and interact with tags screen", async () => {
-      expect(await setupPage.isFifthSetupScreenDisplayed()).toBe(true);
-      await setupPage.tapOnTagsScreen();
-      await setupPage.tapOnCompleteCheckin();
+      expect(await onboardingCompletePage.isFifthSetupScreenDisplayed()).toBe(true);
+      await onboardingCompletePage.tapOnTagsScreen();
+      await onboardingCompletePage.tapOnCompleteCheckin();
     });
 
     it("Should complete the onboarding setup", async () => {
-      expect(await setupPage.isSixthSetupScreenDisplayed()).toBe(true);
-      await setupPage.tapContinueSixthScreen();
+      expect(await onboardingCompletePage.isSixthSetupScreenDisplayed()).toBe(true);
+      await onboardingCompletePage.tapContinueSixthScreen();
     });
 
     it("Should display with seventh screen setup screen", async () => {
-      expect(await setupPage.isSeventhSetupScreenDisplayed()).toBe(true);
-      await setupPage.tapOnTwicePerDay();
+      expect(await onboardingCompletePage.isSeventhSetupScreenDisplayed()).toBe(true);
+      await onboardingCompletePage.tapOnTwicePerDay();
     });
 
     it("Should complete with eighth setup screen", async () => {
-      expect(await setupPage.isEighthSetupScreenDisplayed()).toBe(true);
-      await setupPage.tapContinueEighthScreen();
+      expect(await onboardingCompletePage.isEighthSetupScreenDisplayed()).toBe(true);
+      await onboardingCompletePage.tapContinueEighthScreen();
     });
 
     it("Should display with ninth setup screen", async () => {
-      expect(await setupPage.isNinthSetupScreenDisplayed()).toBe(true);
-      await setupPage.tapAddWidgetButton();
+      expect(await onboardingCompletePage.isNinthSetupScreenDisplayed()).toBe(true);
+      await onboardingCompletePage.tapAddWidgetButton();
     });
 
     it("Should display with tenth setup screen", async () => {
-      await setupPage.tapCloseButton();
+      await onboardingCompletePage.tapCloseButton();
     });
 
-    it("Should display mood meter title after completing setup", async () => {
-      expect(await setupPage.isMessageDisplayed()).toBe(true);
-      await setupPage.tapScreenCheckin();
+    it("Should display moodmeter title after completing setup", async () => {
+      expect(await onboardingCompletePage.isMessageDisplayed()).toBe(true);
+      await onboardingCompletePage.tapScreenCheckin();
     });
   });
 });

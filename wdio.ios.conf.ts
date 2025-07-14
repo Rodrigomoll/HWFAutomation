@@ -12,7 +12,9 @@ export const config: WebdriverIO.Config = {
         'appium:deviceName': process.env.IOS_DEVICE_NAME || 'iPhone 15',
         'appium:platformVersion': process.env.IOS_PLATFORM_VERSION || '18.3',
         'appium:app': process.env.IOS_APP_PATH || './apps/ios/HowWeFeel.app',
-        'appium:bundleId': process.env.IOS_BUNDLE_ID || 'org.howwefeel.HowWeFeel-Moodmeter'
+        'appium:bundleId': process.env.IOS_BUNDLE_ID || 'org.howwefeel.HowWeFeel-Moodmeter',
+        'appium:autoAcceptAlerts': true, 
+        'appium:autoDismissAlerts': false
     }],
 
     hostname: 'localhost',
@@ -20,7 +22,14 @@ export const config: WebdriverIO.Config = {
     
     logLevel: 'info',
     framework: 'jasmine',
-    services: [],
+    services: [
+        ['appium', {
+            args: {
+                port: 4724, 
+                basePath: '/'
+            }
+        }]
+    ],
     reporters: ['spec'],
     
     jasmineOpts: {
