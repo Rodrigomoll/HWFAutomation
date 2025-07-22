@@ -1,4 +1,7 @@
+import { Capabilities } from '@wdio/types';
 import * as dotenv from 'dotenv';
+import { registerCheckinCommands } from './src/commands/android/checkinCommands';
+
 dotenv.config();
 
 export const config: WebdriverIO.Config = {
@@ -14,7 +17,7 @@ export const config: WebdriverIO.Config = {
         'appium:app': process.env.ANDROID_APP_PATH || './apps/android/howwefeel.apk',
         'appium:appPackage': process.env.ANDROID_PACKAGE_NAME || 'org.howwefeel.moodmeter.dev',
         'appium:appActivity': process.env.ANDROID_ACTIVITY || 'org.howwefeel.moodmeter.screens.main.MainActivity',
-        'appium:autoAcceptAlerts': true, 
+        'appium:autoAcceptAlerts': true,
         'appium:autoGrantPermissions': true
     }],
 
@@ -28,5 +31,9 @@ export const config: WebdriverIO.Config = {
     
     jasmineOpts: {
         defaultTimeoutInterval: parseInt(process.env.COMMAND_TIMEOUT || '60000')
+    },
+
+    before: async (capabilities, specs) => {
+        registerCheckinCommands();
     }
 };

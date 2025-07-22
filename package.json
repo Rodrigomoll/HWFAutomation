@@ -11,6 +11,8 @@
     "ios:complete": "wdio run wdio.ios.conf.ts --spec ./src/tests/ios/onboardingComplete.spec.ts",
     "android:skip": "wdio run wdio.android.conf.ts --spec ./src/tests/android/onboardingSkip.spec.ts",
     "android:complete": "wdio run wdio.android.conf.ts --spec ./src/tests/android/onboardingComplete.spec.ts",
+    "android:create": "wdio run wdio.android.conf.ts --spec ./src/tests/android/createCheckin.spec.ts",
+    "test:emotions": "npx wdio run wdio.android.conf.ts --spec './src/tests/android/createCheckinQuadrants.spec.ts'",
     "test:ios": "wdio run wdio.ios.conf.ts",
     "test:ios:spec": "wdio run wdio.ios.conf.ts --spec",
     "test:android": "wdio run wdio.android.conf.ts",

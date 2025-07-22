@@ -48,6 +48,14 @@ export class OnboardingCompletePage extends BasePage{
         continueButton: 'new UiSelector().text("Continue")'
     }
 
+    private alarmAndRemindersDialogScreen = {
+        title: 'new UiSelector().text("Special App Access required")',
+        description: 'new UiSelector().text("Alarms & Reminders access is required in order to set an exact reminder time, otherwise an approximate reminder time will be used.")',
+        settingsButton: 'new UiSelector().text("Settings")',
+        howWeFeelButton: 'new UiSelector().text("How We Feel")',
+        allowSettingsButton: 'new UiSelector().text("Allow setting alarms and reminders")',
+        navigateBackButton: '~Navigate up',
+    }
     private eighthSetupScreen = {
         eighthProgressBar: 'new UiSelector().text("8/10")',
         title: 'new UiSelector().text("Check in anytime with the How We Feel widget")',
@@ -157,6 +165,23 @@ export class OnboardingCompletePage extends BasePage{
         return await this.isElementDisplayed(`android=${this.seventhSetupScreen.title}`);
     }
 
+    async isAlarmAndRemindersDialogScreenDisplayed(): Promise<boolean>{
+        return await this.isElementDisplayed(`android=${this.alarmAndRemindersDialogScreen.title}`);
+    }
+
+    async isDialogDescriptionDisplayed(): Promise<boolean> {
+        return await this.isElementDisplayed(`android=${this.alarmAndRemindersDialogScreen.description}`);
+    }
+
+    async tapSettingsButton(): Promise<void> {
+        await this.tapElement(`android=${this.alarmAndRemindersDialogScreen.settingsButton}`);
+        await this.tapElement(`android=${this.alarmAndRemindersDialogScreen.howWeFeelButton}`);
+        await this.tapElement(`android=${this.alarmAndRemindersDialogScreen.allowSettingsButton}`);
+    }
+    async tapNavigateBackButton(): Promise<void> {
+        await this.tapElement(this.alarmAndRemindersDialogScreen.navigateBackButton);
+    }
+    
     async tapContinueSeventhScreen(): Promise<void> {
         await this.tapElement(`android=${this.seventhSetupScreen.continueButton}`);
     }
