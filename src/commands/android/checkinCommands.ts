@@ -13,19 +13,23 @@ export function registerCheckinCommands(){
 
         switch(emotion) {
             case 'pleased':
-                await createCheckinPage.tapYellowQuadrant(); // High Energy + Pleasant
+                // High Energy + Pleasant
+                await createCheckinPage.tapYellowQuadrant();
                 await createCheckinPage.tapPleasedEmotion();
                 break;
             case 'uneasy':
-                await createCheckinPage.tapRedQuadrant(); // High Energy + Pleasant
+                // High Energy + Pleasant
+                await createCheckinPage.tapRedQuadrant(); 
                 await createCheckinPage.tapUneasyEmotion(); 
                 break;
             case 'calm':
-                await createCheckinPage.tapGreenQuadrant(); // Low Energy + Pleasant
+                // Low Energy + Pleasant
+                await createCheckinPage.tapGreenQuadrant(); 
                 await createCheckinPage.tapCalmEmotion(); 
                 break;
             case 'bored':
-                await createCheckinPage.tapBlueQuadrant(); // Low Energy + Unpleasant
+                // Low Energy + Unpleasant
+                await createCheckinPage.tapBlueQuadrant(); 
                 await createCheckinPage.tapBoredEmotion(); 
                 break;
         }

@@ -6,7 +6,8 @@ describe("Delete Checkin Page", () => {
     let checkinListPage: CheckinListPage;
     beforeAll(async () => {
         checkinListPage = new CheckinListPage();
-        await doOnboardingSetup(); // Setup to skip all onboarding flow and start creating our check-ins
+        // Setup to skip all onboarding flow and start creating our check-ins
+        await doOnboardingSetup();
     })
 
     it("Should create a check-in (green)", async () => {

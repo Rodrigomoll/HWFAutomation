@@ -7,7 +7,8 @@ describe("Edit Checkin Page", () => {
     let checkinListPage : CheckinListPage;
     beforeAll(async () => {
         checkinListPage = new CheckinListPage();
-        await doOnboardingSetup();//setup to skip all onboarding flow and start creating our check-ins
+        //setup to skip all onboarding flow and start creating our check-ins
+        await doOnboardingSetup();
     })
 
     it("Should create uneasy check-in (red)", async () => {

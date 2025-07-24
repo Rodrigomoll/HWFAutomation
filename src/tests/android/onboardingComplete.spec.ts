@@ -7,8 +7,8 @@ describe("Onboarding Complete Flow", () => {
 
   beforeAll(async () => {
     onboardingCompletePage = new OnboardingCompletePage();
-
-    await doOnboardingCompleteFlow(); // Setup for first steps of onboarding and continue with the onboarding flow
+     // Setup for first steps of onboarding and continue with the onboarding flow
+    await doOnboardingCompleteFlow();
   });
 
   describe("Complete onboarding flow", () => {

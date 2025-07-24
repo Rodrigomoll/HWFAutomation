@@ -16,10 +16,14 @@ export class CreateCheckinPage extends BasePage {
     };
 
     private moodmeterScreen = {
-        pleasedEmotion: 'new UiSelector().text("Pleased")',//yellow quadrant
-        uneasyEmotion: 'new UiSelector().text("Uneasy")',//red quadrant
-        calmEmotion: 'new UiSelector().text("Calm")',//green quadrant
-        boredEmotion: 'new UiSelector().text("Bored")',//blue quadrant
+        //yellow quadrant
+        pleasedEmotion: 'new UiSelector().text("Pleased")',
+        //red quadrant
+        uneasyEmotion: 'new UiSelector().text("Uneasy")',
+        //green quadrant
+        calmEmotion: 'new UiSelector().text("Calm")',
+        //blue quadrant
+        boredEmotion: 'new UiSelector().text("Bored")',
         emotionDescription: 'new UiSelector().text("feeling content and happy about a particular situation or person")',
     };
 

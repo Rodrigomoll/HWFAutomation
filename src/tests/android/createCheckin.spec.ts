@@ -7,8 +7,9 @@ describe("Create Checkin Page", () => {
 
     beforeAll(async () => {
         createCheckinPage = new CreateCheckinPage();
-
-        await doOnboardingSetup();//setup to skip all onboarding flow and start creating our check-ins
+        
+        //setup to skip all onboarding flow and start creating our check-ins
+        await doOnboardingSetup();
     });
 
     it("Should display the Create Checkin page", async () => {
