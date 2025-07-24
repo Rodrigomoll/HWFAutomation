@@ -16,10 +16,14 @@ export class CreateCheckinPage extends BasePage {
     };
 
     private moodmeterScreen = {
-        pleasedEmotion: 'new UiSelector().text("Pleased")',//yellow quadrant
-        uneasyEmotion: 'new UiSelector().text("Uneasy")',//red quadrant
-        calmEmotion: 'new UiSelector().text("Calm")',//green quadrant
-        boredEmotion: 'new UiSelector().text("Bored")',//blue quadrant
+        //yellow quadrant
+        pleasedEmotion: 'new UiSelector().text("Pleased")',
+        //red quadrant
+        uneasyEmotion: 'new UiSelector().text("Uneasy")',
+        //green quadrant
+        calmEmotion: 'new UiSelector().text("Calm")',
+        //blue quadrant
+        boredEmotion: 'new UiSelector().text("Bored")',
         emotionDescription: 'new UiSelector().text("feeling content and happy about a particular situation or person")',
     };
 
@@ -48,6 +52,17 @@ export class CreateCheckinPage extends BasePage {
     private dataEntriesScreen = {
         title: 'new UiSelector().text("Time, weather, \nsleep & exercise")',
         saveButton: 'new UiSelector().text("Save")'
+    }
+
+    private checkinCompletedScreen = {
+        feelingTitle: 'new UiSelector().textContains("How are you feeling this")',
+        reflectButton: 'new UiSelector().text("Reflect")',
+        toolsButton: 'new UiSelector().text("Tools").instance(0)',
+        firstTimeToolTip: 'new UiSelector().textContains("Want to change how you feel")'
+    }
+
+    private reflectModal = {
+        notNowButton: 'new UiSelector().text("Not now")'
     }
 
     async isTitleDisplayed(): Promise<boolean> {
@@ -126,7 +141,7 @@ export class CreateCheckinPage extends BasePage {
     async tapBoredEmotion(): Promise<void> {
         await this.tapElement(`android=${this.moodmeterScreen.boredEmotion}`);
     }
-    
+
     async tagScreenDisplayed(): Promise<boolean> {
         return await this.isElementDisplayed(`android=${this.tagsScreen.title}`);
     }
@@ -165,5 +180,38 @@ export class CreateCheckinPage extends BasePage {
 
     async tapSaveButton(): Promise<void> {
         await this.tapElement(`android=${this.dataEntriesScreen.saveButton}`)
+    }
+
+    async handleFirstTimeTooltip(): Promise<boolean> {
+            const tooltipPresent = await this.isElementDisplayed(`android=${this.checkinCompletedScreen.firstTimeToolTip}`);
+            
+            if (tooltipPresent) {
+                await this.tapScreenCenter();
+                return true;
+            }
+            return false;
+    }   
+
+    async isCheckinCompleted(): Promise<boolean> {
+        try{
+            const titleDisplayed = await this.isElementDisplayed(`android=${this.checkinCompletedScreen.feelingTitle}`);
+            const reflectButtonDisplayed = await this.isElementDisplayed(`android=${this.checkinCompletedScreen.reflectButton}`);
+            const toolsButtonDisplated = await this.isElementDisplayed(`android=${this.checkinCompletedScreen.toolsButton}`);
+            return titleDisplayed && reflectButtonDisplayed && toolsButtonDisplated;
+        }
+        catch(error){
+            return false;
+        }
+    }
+
+    async dismissReflectModalIfPresent(): Promise<boolean> {
+        const modalPresent = await this.isElementDisplayed(`android=${this.reflectModal.notNowButton}`);
+        if (modalPresent) {
+            await this.tapElement(`android=${this.reflectModal.notNowButton}`);
+            return true
+        }
+        else{
+            return false
+        }
     }
 }

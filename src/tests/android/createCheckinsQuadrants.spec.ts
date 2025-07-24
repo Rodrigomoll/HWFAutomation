@@ -7,18 +7,18 @@ describe('Test emotions commands', () => {
     });
 
     it("Should create pleased check-in (yellow)", async () => {
-        await browser.createCheckinWithEmotion('pleased', "Feeling great today! 😊");
+        await browser.createCheckinWithEmotions('pleased', "Feeling great today! 😊");
     });
 
     it("Should create uneasy check-in (red)", async () => {
-        await browser.createCheckinWithEmotion('uneasy', "Feeling stressed about work 😰");
+        await browser.createCheckinWithEmotions('uneasy', "Feeling stressed about work 😰");
     });
 
     it("Should create calm check-in (green)", async () => {
-        await browser.createCheckinWithEmotion('calm', "Peaceful morning meditation 😌");
+        await browser.createCheckinWithEmotions('calm', "Peaceful morning meditation 😌");
     });
 
     it("Should create bored check-in (blue)", async () => {
-        await browser.createCheckinWithEmotion('bored', "Nothing interesting happening 😴");
+        await browser.createCheckinWithEmotions('bored', "Nothing interesting happening 😴");
     });
 })

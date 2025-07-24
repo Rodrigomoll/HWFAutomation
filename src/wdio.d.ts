@@ -3,9 +3,8 @@
 declare global {
     namespace WebdriverIO {
         interface Browser {
-            createCheckinWithEmotion(emotion: 'pleased' | 'uneasy' | 'calm' | 'bored', journalText: string): Promise<void>;
+            createCheckinWithEmotions(emotion: 'pleased' | 'uneasy' | 'calm' | 'bored', journalText: string): Promise<void>;
         }
     }
 }
-
 export {};
