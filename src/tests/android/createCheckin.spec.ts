@@ -25,13 +25,16 @@ describe("Create Checkin Page", () => {
         await createCheckinPage.selectTags();
         await createCheckinPage.tapNextButton();
 
-        await verify(createCheckinPage.isJournalScreenDisplayed())
+        await verify(createCheckinPage.isJournalScreenDisplayed());
         await createCheckinPage.enterTextJournal("This is a test journal entry.");
         await createCheckinPage.tapNextButton();
 
-        await verify(createCheckinPage.dataEntriesScreenDisplayed())
+        await verify(createCheckinPage.dataEntriesScreenDisplayed());
         await createCheckinPage.tapSaveButton();
-
-        it
+        
+        if (await createCheckinPage.handleFirstTimeTooltip()) {
+            await verify(createCheckinPage.isCheckinCompleted());
+        }
+        await verify(createCheckinPage.isCheckinCompleted());
     });
-})
+});

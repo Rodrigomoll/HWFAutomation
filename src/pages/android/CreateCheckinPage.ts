@@ -50,6 +50,17 @@ export class CreateCheckinPage extends BasePage {
         saveButton: 'new UiSelector().text("Save")'
     }
 
+    private checkinCompletedScreen = {
+        feelingTitle: 'new UiSelector().textContains("How are you feeling this")',
+        reflectButton: 'new UiSelector().text("Reflect")',
+        toolsButton: 'new UiSelector().text("Tools").instance(0)',
+        firstTimeToolTip: 'new UiSelector().textContains("Want to change how you feel")'
+    }
+
+    private reflectModal = {
+        notNowButton: 'new UiSelector().text("Not now")'
+    }
+
     async isTitleDisplayed(): Promise<boolean> {
         return await this.isElementDisplayed(`android=${this.checkinScreen.title}`);
     }
@@ -126,7 +137,7 @@ export class CreateCheckinPage extends BasePage {
     async tapBoredEmotion(): Promise<void> {
         await this.tapElement(`android=${this.moodmeterScreen.boredEmotion}`);
     }
-    
+
     async tagScreenDisplayed(): Promise<boolean> {
         return await this.isElementDisplayed(`android=${this.tagsScreen.title}`);
     }
@@ -165,5 +176,38 @@ export class CreateCheckinPage extends BasePage {
 
     async tapSaveButton(): Promise<void> {
         await this.tapElement(`android=${this.dataEntriesScreen.saveButton}`)
+    }
+
+    async handleFirstTimeTooltip(): Promise<boolean> {
+            const tooltipPresent = await this.isElementDisplayed(`android=${this.checkinCompletedScreen.firstTimeToolTip}`);
+            
+            if (tooltipPresent) {
+                await this.tapScreenCenter();
+                return true;
+            }
+            return false;
+    }   
+
+    async isCheckinCompleted(): Promise<boolean> {
+        try{
+            const titleDisplayed = await this.isElementDisplayed(`android=${this.checkinCompletedScreen.feelingTitle}`);
+            const reflectButtonDisplayed = await this.isElementDisplayed(`android=${this.checkinCompletedScreen.reflectButton}`);
+            const toolsButtonDisplated = await this.isElementDisplayed(`android=${this.checkinCompletedScreen.toolsButton}`);
+            return titleDisplayed && reflectButtonDisplayed && toolsButtonDisplated;
+        }
+        catch(error){
+            return false;
+        }
+    }
+
+    async dismissReflectModalIfPresent(): Promise<boolean> {
+        const modalPresent = await this.isElementDisplayed(`android=${this.reflectModal.notNowButton}`);
+        if (modalPresent) {
+            await this.tapElement(`android=${this.reflectModal.notNowButton}`);
+            return true
+        }
+        else{
+            return false
+        }
     }
 }

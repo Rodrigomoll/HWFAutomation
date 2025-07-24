@@ -6,7 +6,14 @@ dotenv.config();
 
 export const config: WebdriverIO.Config = {
     runner: 'local',
-    specs: ['./src/tests/android/**/*.spec.ts'],
+    specs: [
+        './src/tests/android/onboardingSkip.spec.ts',
+        './src/tests/android/onboardingComplete.spec.ts',
+        './src/tests/android/createCheckin.spec.ts',
+        './src/tests/android/createCheckinsQuadrants.spec.ts',
+        './src/tests/android/editCheckin.spec.ts',
+        './src/tests/android/deleteCheckin.spec.ts'
+    ],
     maxInstances: 1,
     
     capabilities: [{
