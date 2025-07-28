@@ -13,7 +13,7 @@ describe("Create Checkin Page", () => {
     });
 
     it("Should display the Create Checkin page", async () => {
-        await verify (createCheckinPage.isTitleDisplayed(), createCheckinPage.isCheckinTextDisplayed(), createCheckinPage.isCheckinButtonDisplayed());
+        await verify(createCheckinPage.isTitleDisplayed(), createCheckinPage.isCheckinTextDisplayed(), createCheckinPage.isCheckinButtonDisplayed());
         await createCheckinPage.tapNewCheckinButton();
 
         await verify(createCheckinPage.isQuadrantScreenDisplayed(), createCheckinPage.allQuadrantsDisplayed());
