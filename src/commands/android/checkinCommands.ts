@@ -1,6 +1,5 @@
 import { CreateCheckinPage } from "../../pages/android/CreateCheckinPage";
 
-
 let isFirstTooltipHandled = false;
 
 export function registerCheckinCommands(){

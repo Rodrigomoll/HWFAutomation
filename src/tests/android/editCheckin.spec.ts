@@ -9,7 +9,7 @@ describe("Edit Checkin Page", () => {
         checkinListPage = new CheckinListPage();
         //setup to skip all onboarding flow and start creating our check-ins
         await doOnboardingSetup();
-    })
+    });
 
     it("Should create uneasy check-in (red)", async () => {
         await browser.createCheckinWithEmotions('uneasy', "Feeling stressed about work");
