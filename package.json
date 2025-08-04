@@ -16,6 +16,8 @@
     "android:edit" : "npx wdio run wdio.android.conf.ts --spec './src/tests/android/editCheckin.spec.ts'",
     "android:delete" : "npx wdio run wdio.android.conf.ts --spec './src/tests/android/deleteCheckin.spec.ts'",
     "android:pastDate" : "npx wdio run wdio.android.conf.ts --spec './src/tests/android/createCheckinPastdate.spec.ts'",
+    "android:healthData" : "npx wdio run wdio.android.conf.ts --spec './src/tests/android/createCheckinHealthData.spec.ts'",
+    "android:share" : "npx wdio run wdio.android.conf.ts --spec './src/tests/android/shareCheckin.spec.ts'",
     "test:ios": "wdio run wdio.ios.conf.ts",
     "test:ios:spec": "wdio run wdio.ios.conf.ts --spec",
     "test:android": "wdio run wdio.android.conf.ts",
