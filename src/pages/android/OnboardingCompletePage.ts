@@ -166,7 +166,7 @@ export class OnboardingCompletePage extends BasePage{
     }
 
     async isAlarmAndRemindersDialogScreenDisplayed(): Promise<boolean>{
-        return await this.isElementDisplayed(`android=${this.alarmAndRemindersDialogScreen.title}`);
+        return await this.isElementDisplayed(`android=${this.alarmAndRemindersDialogScreen.title}`,3000);
     }
 
     async isDialogDescriptionDisplayed(): Promise<boolean> {

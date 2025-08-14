@@ -1,0 +1,12 @@
+.........Console Logs.........
+
+[COMMAND] creating checkin with journal text: Peaceful morning meditation 😌
+Checking if element is displayed: android=new UiSelector().text("Not now") (timeout: 2000ms)
+✅ Element found and displayed: android=new UiSelector().text("Not now")
+Checking if element is displayed: android=new UiSelector().textContains("How are you feeling this") (timeout: 10000ms)
+✅ Element found and displayed: android=new UiSelector().textContains("How are you feeling this")
+Checking if element is displayed: android=new UiSelector().text("Reflect") (timeout: 10000ms)
+✅ Element found and displayed: android=new UiSelector().text("Reflect")
+Checking if element is displayed: android=new UiSelector().text("Tools").instance(0) (timeout: 10000ms)
+✅ Element found and displayed: android=new UiSelector().text("Tools").instance(0)
+[COMMAND] checkin created with journal text

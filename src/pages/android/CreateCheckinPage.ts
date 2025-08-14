@@ -24,8 +24,7 @@ export class CreateCheckinPage extends BasePage {
         calmEmotion: 'new UiSelector().text("Calm")',
         //blue quadrant
         boredEmotion: 'new UiSelector().text("Bored")',
-        emotionDescription:
-            'new UiSelector().text("feeling content and happy about a particular situation or person")',
+        emotionDescription: 'new UiSelector().text("feeling content and happy about a particular situation or person")',
     };
 
     private tagsScreen = {
@@ -47,7 +46,31 @@ export class CreateCheckinPage extends BasePage {
         textInput: 'new UiSelector().className("android.widget.ScrollView")',
         microphoneButton: "~Open microphone",
         cameraButton: "~Open camera",
+        reflectButton: '~Reflect',
+        addFeelingButton: 'new UiSelector().className("android.view.View").instance(4)',
         nextButton: 'new UiSelector().description("Next")',
+    };
+
+    private reflectScreen = {
+        title: 'new UiSelector().text("Reflect")',
+        textField: 'new UiSelector().text("Write")',
+        textInput: 'new UiSelector().className("android.widget.EditText")',
+        goDeeperButton: 'new UiSelector().text("Go Deeper")',
+        finishButton: 'new UiSelector().text("Finish")',
+        doneButton: 'new UiSelector().text("Done")',
+        limitReachTitle: 'new UiSelector().text("Usage limit reached. Please try again tomorrow.")'    
+    }
+
+    private searchFeelingScreen = {
+        textSearchInput: 'new UiSelector().text("Search feelings to add")',
+        yellowEmotions: 'new UiSelector().text("Yellow")',
+        absorbedEmotion: 'new UiSelector().text("Absorbed")',
+        greenEmotions: 'new UiSelector().text("Green")',
+        acceptedEmotion: 'new UiSelector().text("Accepted")',
+        blueEmotions: 'new UiSelector().text("Blue")',
+        abandonedEmotion: 'new UiSelector().text("Abandoned")',
+        redEmotions: 'new UiSelector().text("Red")',
+        afraidEmotion: 'new UiSelector().text("Afraid")'
     };
 
     private dataEntriesScreen = {
@@ -74,15 +97,7 @@ export class CreateCheckinPage extends BasePage {
         const monthName = now.toLocaleString("default", { month: "long" });
         const day = now.getDate();
 
-        let hours = now.getHours();
-        const minutes = now.getMinutes().toString().padStart(2, "0");
-        const ampm = hours >= 12 ? "PM" : "AM";
-
-        hours = hours % 12;
-        hours = hours ? hours : 12;
-
-        const timeString = `${hours}:${minutes} ${ampm}`;
-        const formatDate = `${dayName} ${monthName} ${day}\n${timeString}`;
+        const formatDate = `${dayName} ${monthName} ${day}`;
         return `new UiSelector().textContains("${formatDate}")`;
     }
 
@@ -114,9 +129,7 @@ export class CreateCheckinPage extends BasePage {
         return await this.isElementDisplayed(`android=${this.checkinScreen.title}`);
     }
     async isCheckinTextDisplayed(): Promise<boolean> {
-        return await this.isElementDisplayed(
-            `android=${this.checkinScreen.checkinText}`
-        );
+        return await this.isElementDisplayed(`android=${this.checkinScreen.checkinText}`);
     }
     async isCheckinButtonDisplayed(): Promise<boolean> {
         return await this.isElementDisplayed(this.checkinScreen.newCheckinButton);
@@ -126,23 +139,13 @@ export class CreateCheckinPage extends BasePage {
     }
 
     async isQuadrantScreenDisplayed(): Promise<boolean> {
-        return await this.isElementDisplayed(
-            `android=${this.quadrantScreen.title}`
-        );
+        return await this.isElementDisplayed(`android=${this.quadrantScreen.title}`);
     }
     async allQuadrantsDisplayed(): Promise<boolean> {
-        const redDisplayed = await this.isElementDisplayed(
-            `android=${this.quadrantScreen.quadrantRed}`
-        );
-        const yellowDisplayed = await this.isElementDisplayed(
-            `android=${this.quadrantScreen.quadrantYellow}`
-        );
-        const blueDisplayed = await this.isElementDisplayed(
-            `android=${this.quadrantScreen.quadrantBlue}`
-        );
-        const greenDisplayed = await this.isElementDisplayed(
-            `android=${this.quadrantScreen.quadrantGreen}`
-        );
+        const redDisplayed = await this.isElementDisplayed(`android=${this.quadrantScreen.quadrantRed}`);
+        const yellowDisplayed = await this.isElementDisplayed(`android=${this.quadrantScreen.quadrantYellow}`);
+        const blueDisplayed = await this.isElementDisplayed(`android=${this.quadrantScreen.quadrantBlue}`);
+        const greenDisplayed = await this.isElementDisplayed(`android=${this.quadrantScreen.quadrantGreen}`);
         return redDisplayed && yellowDisplayed && blueDisplayed && greenDisplayed;
     }
 
@@ -177,9 +180,7 @@ export class CreateCheckinPage extends BasePage {
     }
 
     async isUneasyEmotionDisplayed(): Promise<boolean> {
-        const emotionDisplayed = await this.isElementDisplayed(
-            `android=${this.moodmeterScreen.uneasyEmotion}`
-        );
+        const emotionDisplayed = await this.isElementDisplayed(`android=${this.moodmeterScreen.uneasyEmotion}`);
         return emotionDisplayed;
     }
 
@@ -188,9 +189,7 @@ export class CreateCheckinPage extends BasePage {
     }
 
     async isCalmEmotionDisplayed(): Promise<boolean> {
-        const emotionDisplayed = await this.isElementDisplayed(
-            `android=${this.moodmeterScreen.calmEmotion}`
-        );
+        const emotionDisplayed = await this.isElementDisplayed(`android=${this.moodmeterScreen.calmEmotion}`);
         return emotionDisplayed;
     }
 
@@ -199,9 +198,7 @@ export class CreateCheckinPage extends BasePage {
     }
 
     async isBoredEmotionDisplayed(): Promise<boolean> {
-        const emotionDisplayed = await this.isElementDisplayed(
-            `android=${this.moodmeterScreen.boredEmotion}`
-        );
+        const emotionDisplayed = await this.isElementDisplayed(`android=${this.moodmeterScreen.boredEmotion}`);
         return emotionDisplayed;
     }
 
@@ -213,7 +210,7 @@ export class CreateCheckinPage extends BasePage {
         return await this.isElementDisplayed(`android=${this.tagsScreen.title}`);
     }
 
-    async isThemesTextDisplayed(): Promise<boolean> {
+    async areThemesTextDisplayed(): Promise<boolean> {
         const themesTextDisplayed = await this.isElementDisplayed(
             `android=${this.tagsScreen.tagsTheme}`
         );
@@ -230,6 +227,89 @@ export class CreateCheckinPage extends BasePage {
         await this.tapElement(`android=${this.tagsOptions.themeDriving}`);
         await this.tapElement(`android=${this.tagsOptions.themePeople}`);
         await this.tapElement(`android=${this.tagsOptions.themePlaces}`);
+    }
+
+    async tapAddFeelingButton(): Promise<void> {
+        await this.tapElement(`android=${this.journalEntryScreen.addFeelingButton}`);
+    }
+
+    async isSearchFeelingScreenDisplayed(): Promise<void> {
+        await this.waitForElement(`android=${this.searchFeelingScreen.textSearchInput}`);
+    }
+    
+    async displayColorsCategory(): Promise<boolean> {
+        const yellowCategoryDisplayed = await this.isElementDisplayed(`android=${this.searchFeelingScreen.yellowEmotions}`);
+        const greenCategoryDisplayed = await this.isElementDisplayed(`android=${this.searchFeelingScreen.greenEmotions}`);
+        const blueCategoryDisplayed = await this.isElementDisplayed(`android=${this.searchFeelingScreen.blueEmotions}`);
+        const redCategoryDisplayed = await this.isElementDisplayed(`android=${this.searchFeelingScreen.redEmotions}`);
+        return yellowCategoryDisplayed && greenCategoryDisplayed && blueCategoryDisplayed && redCategoryDisplayed;
+    }
+
+    async tapYellowCategory(): Promise<void> {
+        await this.tapElement(`android=${this.searchFeelingScreen.yellowEmotions}`);
+    }
+
+    async tapAbsorbedEmotion(): Promise<void> {
+        await this.tapElement(`android=${this.searchFeelingScreen.absorbedEmotion}`);
+    }
+
+    async tapGreenCategory(): Promise<void> {
+        await this.tapElement(`android=${this.searchFeelingScreen.greenEmotions}`);
+    }
+
+    async tapAcceptedEmotion(): Promise<void> {
+        await this.tapElement(`android=${this.searchFeelingScreen.acceptedEmotion}`);
+    }
+
+    async tapBlueCategory(): Promise<void> {
+        await this.tapElement(`android=${this.searchFeelingScreen.blueEmotions}`);
+    }
+
+    async tapAbandonedEmotion(): Promise<void> {
+        await this.tapElement(`android=${this.searchFeelingScreen.abandonedEmotion}`);
+    }
+
+    async tapRedCategory(): Promise<void> {
+        await this.tapElement(`android=${this.searchFeelingScreen.redEmotions}`);
+    }
+
+    async tapAfraidEmotion(): Promise<void> {
+        await this.tapElement(`android=${this.searchFeelingScreen.afraidEmotion}`);
+    }
+
+    async tapReflectButton(): Promise<void> {
+        await this.tapElement(this.journalEntryScreen.reflectButton);
+    }
+
+    async displayWriteReflectInput(): Promise<boolean> {
+        return await this.isElementDisplayed(`android=${this.reflectScreen.textField}`);
+    }
+
+    async isUsageLimitReached(): Promise<boolean> {
+        try{
+            const usageLimitSelector = `new UiSelector().text("Usage limit reached. Please try again tomorrow.")`;
+            const element = await $(`android=${usageLimitSelector}`);
+
+            return await element.isDisplayed();
+        }catch(error){
+            return false;
+        }
+    }
+
+    async enterReflectText(text: string): Promise<void> {
+        await this.enterText(`android=${this.reflectScreen.textInput}`, text, true);
+    }
+
+    async tapGoDeeperButton(): Promise<void> {
+        await this.tapElement(`android=${this.reflectScreen.goDeeperButton}`);
+    }
+
+    async tapFinishButton(): Promise<void> {
+        await this.tapElement(`android=${this.reflectScreen.finishButton}`);
+    }
+
+    async tapDoneButton(): Promise<void> {
+        await this.tapElement(`android=${this.reflectScreen.doneButton}`);
     }
 
     async tapNextButton(): Promise<void> {
@@ -250,17 +330,11 @@ export class CreateCheckinPage extends BasePage {
     }
 
     async enterTextJournal(text: string): Promise<void> {
-        await this.enterText(
-            `android=${this.journalEntryScreen.textInput}`,
-            text,
-            true
-        );
+        await this.enterText(`android=${this.journalEntryScreen.textInput}`,text,true);
     }
 
     async dataEntriesScreenDisplayed(): Promise<boolean> {
-        return await this.isElementDisplayed(
-            `android=${this.dataEntriesScreen.title}`
-        );
+        return await this.isElementDisplayed(`android=${this.dataEntriesScreen.title}`);
     }
 
     async tapPaperClipIcon(): Promise<void> {
@@ -272,9 +346,7 @@ export class CreateCheckinPage extends BasePage {
     }
 
     async handleFirstTimeTooltip(): Promise<boolean> {
-        const tooltipPresent = await this.isElementDisplayed(
-            `android=${this.checkinCompletedScreen.firstTimeToolTip}`
-        );
+        const tooltipPresent = await this.isElementDisplayed(`android=${this.checkinCompletedScreen.firstTimeToolTip}`);
 
         if (tooltipPresent) {
             await this.tapScreenCenter();
@@ -301,9 +373,7 @@ export class CreateCheckinPage extends BasePage {
     }
 
     async dismissReflectModalIfPresent(): Promise<boolean> {
-        const modalPresent = await this.isElementDisplayed(
-            `android=${this.reflectModal.notNowButton}`
-        );
+        const modalPresent = await this.isElementDisplayed(`android=${this.reflectModal.notNowButton}`, 2000);
         if (modalPresent) {
             await this.tapElement(`android=${this.reflectModal.notNowButton}`);
             return true;
@@ -311,6 +381,7 @@ export class CreateCheckinPage extends BasePage {
             return false;
         }
     }
+
     async tapDateTimeDisplay(date?: Date): Promise<void> {
         const dateTimeSelector = await this.generateCurrentDateTimeSelector();
         await this.tapElement(`android=${dateTimeSelector}`);
@@ -329,9 +400,9 @@ export class CreateCheckinPage extends BasePage {
         const elementSize = await dateElement.getSize();
 
         // SWIPE DOWN to select previous date in date carousel
-        const centerX = elementLocation.x + elementSize.width / 2;
+        const centerX = elementLocation.x + elementSize.width / 2
         const startY = elementLocation.y + elementSize.height * 0.1;
-        const endY = elementLocation.y + elementSize.height * 0.9;
+        const endY = elementLocation.y + elementSize.height * 2;
 
         await driver.performActions([
             {

@@ -1,11 +1,11 @@
-import { CheckinListPage } from "../../pages/android/CheckinListPage";
+import { CheckinCardPage } from "../../pages/android/CheckinCardPage";
 import { doOnboardingSetup } from "../helpers/android/onboardingSkipSetup";
 import { verify } from "../helpers/android/test-verification";
 
 describe("Delete Checkin Page", () => {
-    let checkinListPage: CheckinListPage;
+    let checkinCardPage: CheckinCardPage;
     beforeAll(async () => {
-        checkinListPage = new CheckinListPage();
+        checkinCardPage = new CheckinCardPage();
         // Setup to skip all onboarding flow and start creating our check-ins
         await doOnboardingSetup();
     })
@@ -15,14 +15,13 @@ describe("Delete Checkin Page", () => {
     });
 
     it("Should display the Checkin and delete the check-in", async () => {
-        await verify(checkinListPage.isCheckinCalmDisplayed());
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        await checkinListPage.tapCalmCheckin();
-        await verify(checkinListPage.isCalmCheckinCardDisplayed());
-        await checkinListPage.tapThreeButton();
-        await verify(checkinListPage.displayDeleteButton());
-        await checkinListPage.tapDeleteButton();
-        await checkinListPage.confirmDelete();
-        await verify(checkinListPage.isBackToMainScreen());
+        await verify(checkinCardPage.isCheckinCalmDisplayed());
+        await checkinCardPage.tapCalmCheckin();
+        await verify(checkinCardPage.isCalmCheckinCardDisplayed());
+        await checkinCardPage.tapThreeButton();
+        await verify(checkinCardPage.displayDeleteButton());
+        await checkinCardPage.tapDeleteButton();
+        await checkinCardPage.confirmDelete();
+        await verify(checkinCardPage.isBackToMainScreen());
     });
 })

@@ -22,7 +22,7 @@ describe("Create Checkin Page", () => {
         await verify(createCheckinPage.isPleasedEmotionDisplayed());
         await createCheckinPage.tapPleasedEmotion();
 
-        await verify(createCheckinPage.tagScreenDisplayed(), createCheckinPage.isThemesTextDisplayed())
+        await verify(createCheckinPage.tagScreenDisplayed(), createCheckinPage.areThemesTextDisplayed())
         await createCheckinPage.selectTags();
         await createCheckinPage.tapNextButton();
 

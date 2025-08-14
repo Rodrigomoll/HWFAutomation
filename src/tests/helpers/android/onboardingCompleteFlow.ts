@@ -1,4 +1,5 @@
 import { OnboardingSkipPage } from "../../../pages/android/OnboardingSkipPage";
+import { verify } from "./test-verification";
 
 // This function completes the onboarding flow by interacting with first steps of the onboarding screens
 // the methods comes from OnboardingSkipPage class then proceeds to the next steps
@@ -7,26 +8,26 @@ export async function doOnboardingCompleteFlow() {
     const onboardingSkipPage = new OnboardingSkipPage();
 
     try{
+        await verify(onboardingSkipPage.isFirstScreenDisplayed())
         await onboardingSkipPage.tapGetStarted();
-        await new Promise(resolve => setTimeout(resolve, 800));
-        
-        await onboardingSkipPage.tapContinueSecondScreen();
-        await new Promise(resolve => setTimeout(resolve, 800));
-        
-        await onboardingSkipPage.tapContinueThirdScreen();
-        await new Promise(resolve => setTimeout(resolve, 800));
-        
-        await onboardingSkipPage.tapContinueFourthScreen();
-        await new Promise(resolve => setTimeout(resolve, 800));
-        
-        await onboardingSkipPage.tapContinueFifthScreen();
-        await new Promise(resolve => setTimeout(resolve, 800));
-        
-        await onboardingSkipPage.tapIAccept();
-        await new Promise(resolve => setTimeout(resolve, 800));
 
+        await verify(onboardingSkipPage.isSecondScreenDisplayed());
+        await onboardingSkipPage.tapContinueSecondScreen();
+
+        await verify(onboardingSkipPage.isThirdScreenDisplayed());
+        await onboardingSkipPage.tapContinueThirdScreen();
+        
+        await verify(onboardingSkipPage.isFourthScreenDisplayed());
+        await onboardingSkipPage.tapContinueFourthScreen();
+
+        await verify(onboardingSkipPage.isFifthScreenDisplayed());
+        await onboardingSkipPage.tapContinueFifthScreen();
+
+        await verify(onboardingSkipPage.isSixthScreenDisplayed());
+        await onboardingSkipPage.tapIAccept();
+
+        await verify(onboardingSkipPage.isSeventhScreenDisplayed());
         await onboardingSkipPage.tapContinueSeventhScreen();
-        await new Promise(resolve => setTimeout(resolve, 800));
     }
     catch (error) {
         console.error("Error during onboarding setup:", error);
