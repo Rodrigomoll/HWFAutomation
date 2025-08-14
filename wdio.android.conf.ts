@@ -4,6 +4,10 @@ import { registerCheckinCommands } from './src/commands/android/checkinCommands'
 
 dotenv.config();
 
+console.log("=== WDIO CONFIG DEBUG ===");
+console.log("COMMAND_TIMEOUT:", process.env.COMMAND_TIMEOUT);
+console.log("Calculated timeout:", parseInt(process.env.COMMAND_TIMEOUT || '60000'));
+
 export const config: WebdriverIO.Config = {
     runner: 'local',
     specs: [
@@ -12,7 +16,12 @@ export const config: WebdriverIO.Config = {
         './src/tests/android/createCheckin.spec.ts',
         './src/tests/android/createCheckinsQuadrants.spec.ts',
         './src/tests/android/editCheckin.spec.ts',
-        './src/tests/android/deleteCheckin.spec.ts'
+        './src/tests/android/deleteCheckin.spec.ts',
+        './src/tests/android/createCheckinPastdate.spec.ts',
+        './src/tests/android/createCheckinHealthData.spec.ts',
+        './src/tests/android/shareCheckin.spec.ts',
+        './src/tests/android/createCheckinMultipleFeelings.spec.ts',
+        './src/tests/android/createCheckinReflect.spec.ts'
     ],
     maxInstances: 1,
     
@@ -34,7 +43,15 @@ export const config: WebdriverIO.Config = {
     logLevel: 'info',
     framework: 'jasmine',  
     services: ['appium'],
-    reporters: ['spec'],
+    reporters: [
+        'spec',
+        ['allure', {
+            outputDir: 'allure-results',
+            disableWebdriverStepsReporting: true,
+            disableWebdriverScreenshotsReporting: false,
+            addConsoleLogs: true
+        }]
+    ],
     
     jasmineOpts: {
         defaultTimeoutInterval: parseInt(process.env.COMMAND_TIMEOUT || '60000')
@@ -42,5 +59,11 @@ export const config: WebdriverIO.Config = {
 
     before: async (capabilities, specs) => {
         registerCheckinCommands();
+    },
+
+    afterTest: async function(test, context, { error, result, duration, passed, retries }) {
+        if (error) {
+            await browser.takeScreenshot();
+        }
     }
 };

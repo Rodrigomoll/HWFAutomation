@@ -21,7 +21,7 @@ describe("Create Checkin Past Date Page", () => {
         await verify(checkinPastDate.isBoredEmotionDisplayed());
         await checkinPastDate.tapBoredEmotion();
 
-        await verify(checkinPastDate.tagScreenDisplayed(), checkinPastDate.isThemesTextDisplayed())
+        await verify(checkinPastDate.tagScreenDisplayed(), checkinPastDate.areThemesTextDisplayed())
         await checkinPastDate.selectTags();
         await checkinPastDate.tapNextButton();
 

@@ -5,6 +5,11 @@ import { doOnboardingSetup } from "../helpers/android/onboardingSkipSetup";
 import { verify } from "../helpers/android/test-verification";
 
 
+console.log("🔍 DEBUG - Environment variables:");
+console.log("   COMMAND_TIMEOUT:", process.env.COMMAND_TIMEOUT);
+console.log("   NODE_ENV:", process.env.NODE_ENV);
+console.log("   Parsed timeout:", parseInt(process.env.COMMAND_TIMEOUT || '60000'));
+
 describe("Create check-in then share checkin", () => {
     let createCheckinPage : CreateCheckinPage;
     let friendsPage : FriendsPage;
@@ -12,9 +17,10 @@ describe("Create check-in then share checkin", () => {
     beforeAll(async () => {
         createCheckinPage = new CreateCheckinPage();
         friendsPage = new FriendsPage();
+        
         await doOnboardingSetup();
         await doLoginFlow();
-    });
+    },90000);
 
     it("Should complete the check-in and share", async () => {
         await verify(createCheckinPage.isTitleDisplayed(), createCheckinPage.isCheckinTextDisplayed(), createCheckinPage.isCheckinButtonDisplayed());
@@ -26,7 +32,7 @@ describe("Create check-in then share checkin", () => {
         await verify(createCheckinPage.isBoredEmotionDisplayed());
         await createCheckinPage.tapBoredEmotion();
 
-        await verify(createCheckinPage.tagScreenDisplayed(), createCheckinPage.isThemesTextDisplayed())
+        await verify(createCheckinPage.tagScreenDisplayed(), createCheckinPage.areThemesTextDisplayed());
         await createCheckinPage.selectTags();
         await createCheckinPage.tapNextButton();
 
@@ -42,14 +48,7 @@ describe("Create check-in then share checkin", () => {
         }
         await verify(createCheckinPage.isCheckinCompleted());
 
-        await friendsPage.tapFriendsTab();
-        await verify(friendsPage.isTitleCheckinCardDisplayed());
-        await friendsPage.tapCheckinCard();
-
-        await verify(friendsPage.isShareTitleModalDisplayed());
-
-        await friendsPage.tapSelectAllButton();
-        await friendsPage.tapShareButton();
+        await friendsPage.completeShareFlow();
         await verify(friendsPage.isTitleCheckinCardDisplayed());
     })
 })

@@ -23,7 +23,7 @@ describe("Create Checkin Health Data Page", () => {
         await verify(createCheckinPage.isUneasyEmotionDisplayed());
         await createCheckinPage.tapUneasyEmotion();
 
-        await verify(createCheckinPage.tagScreenDisplayed(), createCheckinPage.isThemesTextDisplayed());
+        await verify(createCheckinPage.tagScreenDisplayed(), createCheckinPage.areThemesTextDisplayed());
         await createCheckinPage.selectTags();
         await createCheckinPage.tapNextButton();
 
@@ -34,11 +34,9 @@ describe("Create Checkin Health Data Page", () => {
         await verify(createCheckinPage.dataEntriesScreenDisplayed());
         await createCheckinPage.tapPaperClipIcon();
 
-        await verify(healthDataPage.areHealthDataEntriesScreen())
-        await healthDataPage.enableHealthDataEntries();
-        await healthDataPage.tapCloseButton();
-
-        await verify(healthDataPage.isHealthDataScreenDisplayed())
+        await verify(healthDataPage.areHealthDataEntriesScreen());
+        await healthDataPage.configureHealthDataEntries();
+        await verify(healthDataPage.isHealthDataEntriesEnabled());
         await createCheckinPage.tapSaveButton();
 
         if (await createCheckinPage.handleFirstTimeTooltip()) {

@@ -1,10 +1,12 @@
 import { CreateCheckinPage } from "../../pages/android/CreateCheckinPage";
 
 let isFirstTooltipHandled = false;
+let checkinCount = 0;
 
 export function registerCheckinCommands(){
     browser.addCommand("createCheckinWithEmotions", async (emotion: 'pleased' | 'uneasy' | 'calm' | 'bored', journalText: string) => {
         const createCheckinPage = new CreateCheckinPage();
+        checkinCount++;
 
         console.log(`[COMMAND] creating checkin with journal text: ${journalText}`);
 
@@ -44,7 +46,10 @@ export function registerCheckinCommands(){
                 isFirstTooltipHandled = true;
             } 
         }
-        await createCheckinPage.dismissReflectModalIfPresent();
+
+        if(checkinCount >= 3){
+            await createCheckinPage.dismissReflectModalIfPresent();
+        }
         await createCheckinPage.isCheckinCompleted();
 
         console.log(`[COMMAND] checkin created with journal text`)

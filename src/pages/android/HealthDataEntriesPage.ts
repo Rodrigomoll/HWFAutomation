@@ -1,115 +1,166 @@
 import { BasePage } from "../base/BasePage";
 
 export class HealthDataEntriesPages extends BasePage {
-    private healthDataEntriesScreen = {
-        title: 'new UiSelector().text("About Health & \nLocation Data")',
-        weatherTitle: 'new UiSelector().text("Weather Tracking")',
-        sleepTitle: 'new UiSelector().text("Sleep Tracking")',
-        stepsTitle: 'new UiSelector().text("Steps Tracking")',
-        exerciseTitle: 'new UiSelector().text("Exercise Tracking")',
-        meditationTitle: 'new UiSelector().text("Meditation Tracking")',
-        waterTitle: 'new UiSelector().text("Water Tracking")',
-        caffeineTitle: 'new UiSelector().text("Caffeine Tracking")',
-        alcoholTitle: 'new UiSelector().text("Alcohol Tracking")'
-    }
 
-    private trackingToggles = {
-        weatherToggle : 'new UiSelector().className("android.view.View").instance(6)',
-        sleepToggle : 'new UiSelector().className("android.view.View").instance(8)',
-        stepsToggle : 'new UiSelector().className("android.view.View").instance(10)',
-        exerciseToggle : 'new UiSelector().className("android.view.View").instance(12)',
-        meditationToggle : 'new UiSelector().className("android.view.View").instance(14)',
-        waterToggle : 'new UiSelector().className("android.view.View").instance(16)',
-        caffeineToggle : 'new UiSelector().className("android.view.View").instance(18)',
-        alcoholToggle : 'new UiSelector().className("android.view.View").instance(20)',
-        closeButton: '~Close'
-    }
+    private readonly elements = {
+        screen : {
+            title: 'new UiSelector().text("About Health & \nLocation Data")',
+        },
+        trackingTitles: {
+            weather: 'new UiSelector().text("Weather Tracking")',
+            sleep: 'new UiSelector().text("Sleep Tracking")',
+            steps: 'new UiSelector().text("Steps Tracking")',
+            exercise: 'new UiSelector().text("Exercise Tracking")',
+            meditation: 'new UiSelector().text("Meditation Tracking")',
+            water: 'new UiSelector().text("Water Tracking")',
+            caffeine: 'new UiSelector().text("Caffeine Tracking")',
+            alcohol: 'new UiSelector().text("Alcohol Tracking")'
+        },
+        toggles: {
+            weather: 'new UiSelector().className("android.view.View").instance(6)',
+            sleep: 'new UiSelector().className("android.view.View").instance(8)',
+            steps: 'new UiSelector().className("android.view.View").instance(10)',
+            exercise: 'new UiSelector().className("android.view.View").instance(12)',
+            meditation: 'new UiSelector().className("android.view.View").instance(14)',
+            water: 'new UiSelector().className("android.view.View").instance(16)',
+            caffeine: 'new UiSelector().className("android.view.View").instance(18)',
+            alcohol: 'new UiSelector().className("android.view.View").instance(20)',
+        },
+        enabledEntries: {
+            weather: 'new UiSelector().text("Weather")',
+            sleep: 'new UiSelector().text("Sleep")',
+            steps: 'new UiSelector().text("Steps")',
+            exercise: 'new UiSelector().text("Exercise")',
+            meditation: 'new UiSelector().text("Meditation")',
+            water: 'new UiSelector().text("Water")',
+            caffeine: 'new UiSelector().text("Caffeine")',
+            alcohol: 'new UiSelector().text("Alcohol")'
+        },
+        buttons: {
+            close: '~Close'
+        }
+    };
 
-    private healthDataEntriesEnabled = {
-        weatherEntry : 'new UiSelector().text("Weather")',
-        sleepEntry : 'new UiSelector().text("Sleep")',
-        stepsEntry : 'new UiSelector().text("Steps")',
-        exerciseEntry : 'new UiSelector().text("Exercise")',
-        meditationEntry : 'new UiSelector().text("Meditation")',
-        waterEntry : 'new UiSelector().text("Water")',
-        caffeineEntry : 'new UiSelector().text("Caffeine")',
-        alcoholEntry : 'new UiSelector().text("Alcohol")'
-    }
+    private readonly trackingTitleOrder = [
+        'weather', 'sleep', 'steps', 'exercise', 'meditation', 'water', 'caffeine', 'alcohol'
+    ]as const;
 
-    async areHealthDataEntriesScreen(): Promise<boolean>{
-        const titleDisplayed = await this.isElementDisplayed(`android=${this.healthDataEntriesScreen.title}`);
+    private readonly toggleOrder = [
+        'alcohol', 'caffeine', 'water', 'meditation', 'exercise', 'steps', 'sleep', 'weather'
+    ]as const; 
+
+    private readonly enabledEntriesFirstGroup = [
+        'weather', 'sleep', 'steps', 'exercise', 'meditation', 'water'
+    ] as const;
+
+    private readonly enabledEntriesSecondGroup = [
+        'caffeine', 'alcohol'
+    ] as const;
+
+    async areHealthDataEntriesScreen(): Promise<boolean> {
+        const titleDisplayed = await this.isElementDisplayed(`android=${this.elements.screen.title}`);
         await this.swipeUp(0.5);
-        const weatherTitleDisplayed = await this.isElementDisplayed(`android=${this.healthDataEntriesScreen.weatherTitle}`);
-        const sleepTitleDisplayed = await this.isElementDisplayed(`android=${this.healthDataEntriesScreen.sleepTitle}`);
-        const stepsTitleDisplayed = await this.isElementDisplayed(`android=${this.healthDataEntriesScreen.stepsTitle}`);
-        const exerciseTitleDisplayed = await this.isElementDisplayed(`android=${this.healthDataEntriesScreen.exerciseTitle}`);
-        const meditationTitleDisplayed = await this.isElementDisplayed(`android=${this.healthDataEntriesScreen.meditationTitle}`);
-        const waterTitleDisplayed = await this.isElementDisplayed(`android=${this.healthDataEntriesScreen.waterTitle}`);
-        const caffeineTitleDisplayed = await this.isElementDisplayed(`android=${this.healthDataEntriesScreen.caffeineTitle}`);
-        const alcoholTitleDisplayed = await this.isElementDisplayed(`android=${this.healthDataEntriesScreen.alcoholTitle}`);
-        return titleDisplayed && weatherTitleDisplayed && sleepTitleDisplayed && stepsTitleDisplayed &&
-            exerciseTitleDisplayed && meditationTitleDisplayed && waterTitleDisplayed &&
-            caffeineTitleDisplayed && alcoholTitleDisplayed;
+        await driver.pause(500);
+
+        const trackingResults = await Promise.all(
+            this.trackingTitleOrder.map(type => 
+                this.isElementDisplayed(`android=${this.elements.trackingTitles[type]}`)
+            )
+        );
+
+        return titleDisplayed && trackingResults.every(result => result);
     }
 
-    async isHealthDataScreenDisplayed(): Promise<boolean>{
-        const weatherEntryDisplayed = await this.isElementDisplayed(`android=${this.healthDataEntriesEnabled.weatherEntry}`);
-        const sleepEntryDisplayed = await this.isElementDisplayed(`android=${this.healthDataEntriesEnabled.sleepEntry}`);
-        const stepsEntryDisplayed = await this.isElementDisplayed(`android=${this.healthDataEntriesEnabled.stepsEntry}`);
-        const exerciseEntryDisplayed = await this.isElementDisplayed(`android=${this.healthDataEntriesEnabled.exerciseEntry}`);
-        const meditationEntryDisplayed = await this.isElementDisplayed(`android=${this.healthDataEntriesEnabled.meditationEntry}`);
-        const waterEntryDisplayed = await this.isElementDisplayed(`android=${this.healthDataEntriesEnabled.waterEntry}`);
+    async isHealthDataEntriesEnabled(): Promise<boolean> {
+        const firstGroupResults = await Promise.all(
+            this.enabledEntriesFirstGroup.map(type =>
+                this.isElementDisplayed(`android=${this.elements.enabledEntries[type]}`)
+            )
+        );
         await this.swipeUp(0.2);
-        const caffeineEntryDisplayed = await this.isElementDisplayed(`android=${this.healthDataEntriesEnabled.caffeineEntry}`);
-        const alcoholEntryDisplayed = await this.isElementDisplayed(`android=${this.healthDataEntriesEnabled.alcoholEntry}`);
-        return weatherEntryDisplayed && sleepEntryDisplayed && stepsEntryDisplayed && exerciseEntryDisplayed &&
-            meditationEntryDisplayed && waterEntryDisplayed && caffeineEntryDisplayed && alcoholEntryDisplayed;
+
+        const secondGroupResults = await Promise.all(
+            this.enabledEntriesSecondGroup.map(type => 
+                this.isElementDisplayed(`android=${this.elements.enabledEntries[type]}`)
+            )
+        );
+        await driver.pause(1000);
+
+        return [...firstGroupResults, ...secondGroupResults].every(result => result);
     }
 
     async tapWeatherToggle(): Promise<void>{
-        await this.tapElement(`android=${this.trackingToggles.weatherToggle}`);
+        await this.tapElement(`android=${this.elements.toggles.weather}`);
     }
 
     async tapSleepToggle(): Promise<void>{
-        await this.tapElement(`android=${this.trackingToggles.sleepToggle}`);
+        await this.tapElement(`android=${this.elements.toggles.sleep}`);
     }
 
     async tapStepsToggle(): Promise<void>{
-        await this.tapElement(`android=${this.trackingToggles.stepsToggle}`);
+        await this.tapElement(`android=${this.elements.toggles.steps}`);
     }
 
     async tapExerciseToggle(): Promise<void>{
-        await this.tapElement(`android=${this.trackingToggles.exerciseToggle}`);
+        await this.tapElement(`android=${this.elements.toggles.exercise}`);
     }
 
     async tapMeditationToggle(): Promise<void>{
-        await this.tapElement(`android=${this.trackingToggles.meditationToggle}`);
+        await this.tapElement(`android=${this.elements.toggles.meditation}`);
     }
 
     async tapWaterToggle(): Promise<void>{
-        await this.tapElement(`android=${this.trackingToggles.waterToggle}`);
+        await this.tapElement(`android=${this.elements.toggles.water}`);
     }
 
     async tapCaffeineToggle(): Promise<void>{
-        await this.tapElement(`android=${this.trackingToggles.caffeineToggle}`);
+        await this.tapElement(`android=${this.elements.toggles.caffeine}`);
     }
 
     async tapAlcoholToggle(): Promise<void>{
-        await this.tapElement(`android=${this.trackingToggles.alcoholToggle}`);
+        await this.tapElement(`android=${this.elements.toggles.alcohol}`);
     }
 
     async enableHealthDataEntries(): Promise<void> {
-        await this.tapAlcoholToggle();
-        await this.tapCaffeineToggle();
-        await this.tapWaterToggle();
-        await this.tapMeditationToggle();
-        await this.tapExerciseToggle();
-        await this.tapStepsToggle();
-        await this.tapSleepToggle();
-        await this.tapWeatherToggle();
+        console.log("Enabling Health Data Entries...");
+        for(const toggleType of this.toggleOrder){
+            console.log(`Toggling ${toggleType}...`);
+
+            switch(toggleType){
+                case 'alcohol':
+                    await this.tapAlcoholToggle();
+                    break;
+                case 'caffeine':
+                    await this.tapCaffeineToggle();
+                    break;
+                case 'water':
+                    await this.tapWaterToggle();
+                    break;
+                case 'meditation':
+                    await this.tapMeditationToggle();
+                    break;
+                case 'exercise':
+                    await this.tapExerciseToggle();
+                    break;
+                case 'steps':
+                    await this.tapStepsToggle();
+                    break;
+                case 'sleep':
+                    await this.tapSleepToggle();
+                    break;
+                case 'weather':
+                    await this.tapWeatherToggle();
+                    break;
+                }
+            }
+        console.log("Health Data Entries toggled successfully.");
     }
     
     async tapCloseButton(): Promise<void>{
-        await this.tapElement(this.trackingToggles.closeButton);
+        await this.tapElement(this.elements.buttons.close);
+    }
+    async configureHealthDataEntries(): Promise<void> {
+        await this.enableHealthDataEntries();
+        await this.tapCloseButton();
     }
 }

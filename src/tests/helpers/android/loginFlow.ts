@@ -16,19 +16,13 @@ export async function doLoginFlow():Promise<void> {
         await verify(friendsPage.isSigninModalDisplayed());
 
         await friendsPage.tapEmailAccount();
-        // try {
-        //     const isModalNotifDisplayed = await friendsPage.isModalNotifDisplayed();
-        //     if( isModalNotifDisplayed) {
-        //         await friendsPage.tapAllowButton();
-        //     }
-        // }
-        // catch (error){
-        //     console.error("Modal not displaying:", error);       
-        // }
+        await friendsPage.waitForModalAddFriend();
+
         await friendsPage.tapDoneButton();
         await friendsPage.tapCheckinTab();
     }
     catch (error) {
         console.error("Error during login flow:", error);
+        throw error;
     }
 }
