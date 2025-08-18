@@ -58,7 +58,11 @@ export class CreateCheckinPage extends BasePage {
         goDeeperButton: 'new UiSelector().text("Go Deeper")',
         finishButton: 'new UiSelector().text("Finish")',
         doneButton: 'new UiSelector().text("Done")',
-        limitReachTitle: 'new UiSelector().text("Usage limit reached. Please try again tomorrow.")'    
+        limitReachTitle: 'new UiSelector().text("Usage limit reached. Please try again tomorrow.")',
+        suggestedActions: 'new UiSelector().text("[icon] Suggested actions")',
+        affirmations: 'new UiSelector().text("[icon] Affirmations")',
+        insights: 'new UiSelector().text("[icon] Insight")',
+        bookmarkIcon: 'new UiSelector().className("android.widget.Button").instance(0)'
     }
 
     private searchFeelingScreen = {
@@ -306,6 +310,32 @@ export class CreateCheckinPage extends BasePage {
 
     async tapFinishButton(): Promise<void> {
         await this.tapElement(`android=${this.reflectScreen.finishButton}`);
+    }
+
+    async areTakeawaysDisplayed(): Promise<boolean> {
+        
+        try {
+            const timeout = 10000;
+            await this.waitForElement(`android=${this.reflectScreen.suggestedActions}`, timeout);
+            await this.swipeUp(0.5);
+            await this.waitForElement(`android=${this.reflectScreen.affirmations}`, timeout);
+            await this.waitForElement(`android=${this.reflectScreen.insights}`, timeout);
+            await browser.pause(1000);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async tapButtonByInstance(instance: number): Promise<void> {
+        await this.tapElement(`android=new UiSelector().className("android.widget.Button").instance(${instance})`);
+    }
+
+    // Tapping the buttons with instances 0, 1, and 2
+    async tapAllButtons(): Promise<void> {
+        await this.tapButtonByInstance(0);
+        await this.tapButtonByInstance(1);
+        await this.tapButtonByInstance(2);
     }
 
     async tapDoneButton(): Promise<void> {

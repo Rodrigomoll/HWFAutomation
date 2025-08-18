@@ -1,19 +1,19 @@
-import { CreateCheckinPage } from "../../pages/android/CreateCheckinPage";
+import { CreateCheckinPage } from "../../pages/android/CreateCheckinPage"
 import { enableAISettings } from "../helpers/android/enableAISettings";
-import { doLoginFlow } from "../helpers/android/loginFlow"
+import { doLoginFlow } from "../helpers/android/loginFlow";
 import { doOnboardingSetup } from "../helpers/android/onboardingSkipSetup";
 import { verify } from "../helpers/android/test-verification";
 
-describe("Create check-in with reflection feature", () => {
+describe("Create check-in with reflection and takeaways feature", () => {
     let createCheckin : CreateCheckinPage;
     beforeAll(async () => {
         createCheckin = new CreateCheckinPage();
-        // Setup to skip all onboarding flow and start creating our check-ins
+
         await doOnboardingSetup();
         await doLoginFlow();
         await enableAISettings();
     });
-    it("Should create a check-in with reflection feature", async() => {
+    it("Should create a check-in with reflection and takeaways feature", async () => {
         await verify(createCheckin.isTitleDisplayed(), createCheckin.isCheckinTextDisplayed(), createCheckin.isCheckinButtonDisplayed());
         await createCheckin.tapNewCheckinButton();
 
@@ -49,10 +49,9 @@ describe("Create check-in with reflection feature", () => {
                 await verify(createCheckin.isCheckinCompleted());
             }
             await verify(createCheckin.isCheckinCompleted());
-            console.log(" Check-in completed without reflection due to usage limit");
+            console.log("Check-in completed without reflection due to usage limit");
         }
         else{
-
             const reflectionText = [
                 "This is a test 1",
                 "This is a test 2",
@@ -60,7 +59,6 @@ describe("Create check-in with reflection feature", () => {
                 "This is a test 4",
                 "This is a test 5"
             ];
-
             for(let i = 0; i < reflectionText.length; i++){
                 if(isLimitReached){
                     await createCheckin.tapFinishButton();
@@ -89,6 +87,8 @@ describe("Create check-in with reflection feature", () => {
                     }
                 }
             }
+            await verify(createCheckin.areTakeawaysDisplayed());
+            await createCheckin.tapAllButtons();
             await createCheckin.tapDoneButton();
             await createCheckin.tapNextButton();
             await verify(createCheckin.dataEntriesScreenDisplayed());
@@ -101,4 +101,5 @@ describe("Create check-in with reflection feature", () => {
             await verify(createCheckin.isCheckinCompleted());
         }
     });
+
 });
