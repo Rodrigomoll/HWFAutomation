@@ -21,7 +21,7 @@ describe("Create check-in with multiple feelings", () => {
         await verify(createCheckinPage.isUneasyEmotionDisplayed());
         await createCheckinPage.tapUneasyEmotion();
 
-        await verify(createCheckinPage.tagScreenDisplayed(), createCheckinPage.isThemesTextDisplayed());
+        await verify(createCheckinPage.tagScreenDisplayed(),createCheckinPage.areThemesTextDisplayed());
         await createCheckinPage.selectTags();
         await createCheckinPage.tapNextButton();
 

@@ -21,7 +21,8 @@ export const config: WebdriverIO.Config = {
         './src/tests/android/createCheckinHealthData.spec.ts',
         './src/tests/android/shareCheckin.spec.ts',
         './src/tests/android/createCheckinMultipleFeelings.spec.ts',
-        './src/tests/android/createCheckinReflect.spec.ts'
+        './src/tests/android/createCheckinReflect.spec.ts',
+        './src/tests/android/createCheckinWithTakeaways.spec.ts',
     ],
     maxInstances: 1,
     

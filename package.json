@@ -20,6 +20,7 @@
     "android:share": "npx wdio run wdio.android.conf.ts --spec './src/tests/android/shareCheckin.spec.ts'",
     "android:multiple": "npx wdio run wdio.android.conf.ts --spec './src/tests/android/createCheckinMultipleFeelings.spec.ts'",
     "android:reflect": "npx wdio run wdio.android.conf.ts --spec './src/tests/android/createCheckinReflect.spec.ts'",
+    "android:takeaways": "npx wdio run wdio.android.conf.ts --spec './src/tests/android/createCheckinWithTakeaways.spec.ts'",
     "test:ios": "wdio run wdio.ios.conf.ts",
     "test:ios:spec": "wdio run wdio.ios.conf.ts --spec",
     "test:android": "wdio run wdio.android.conf.ts",

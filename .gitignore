@@ -11,3 +11,6 @@ dist/
 .idea/
 apps/android/*.apk
 apps/ios/*.app
+
+allure-results/
+allure-report/

@@ -5,10 +5,10 @@ import { doOnboardingSetup } from "../helpers/android/onboardingSkipSetup";
 import { verify } from "../helpers/android/test-verification";
 
 
-console.log("🔍 DEBUG - Environment variables:");
-console.log("   COMMAND_TIMEOUT:", process.env.COMMAND_TIMEOUT);
-console.log("   NODE_ENV:", process.env.NODE_ENV);
-console.log("   Parsed timeout:", parseInt(process.env.COMMAND_TIMEOUT || '60000'));
+console.log("DEBUG - Environment variables:");
+console.log("COMMAND_TIMEOUT:", process.env.COMMAND_TIMEOUT);
+console.log("NODE_ENV:", process.env.NODE_ENV);
+console.log("Parsed timeout:", parseInt(process.env.COMMAND_TIMEOUT || '60000'));
 
 describe("Create check-in then share checkin", () => {
     let createCheckinPage : CreateCheckinPage;

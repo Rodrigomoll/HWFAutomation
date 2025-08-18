@@ -250,10 +250,10 @@ export class BasePage {
         timeoutMsg: `Element "${selector}" not displayed after ${timeout}ms`,
       });
 
-      console.log(`✅ Element found and displayed: ${selector}`);
+      console.log(`Element found and displayed: ${selector}`);
       return true;
     } catch (error) {
-      console.log(`❌ Element not displayed: ${selector} - ${error.message}`);
+      console.log(`Element not displayed: ${selector} - ${error.message}`);
       return false;
     }
   }
