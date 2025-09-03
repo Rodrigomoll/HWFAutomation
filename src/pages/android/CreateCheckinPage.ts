@@ -313,11 +313,10 @@ export class CreateCheckinPage extends BasePage {
     }
 
     async areTakeawaysDisplayed(): Promise<boolean> {
-        
         try {
             const timeout = 10000;
             await this.waitForElement(`android=${this.reflectScreen.suggestedActions}`, timeout);
-            await this.swipeUp(0.5);
+            await this.swipeVertical("up", 0.5);
             await this.waitForElement(`android=${this.reflectScreen.affirmations}`, timeout);
             await this.waitForElement(`android=${this.reflectScreen.insights}`, timeout);
             await browser.pause(1000);

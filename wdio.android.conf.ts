@@ -1,6 +1,5 @@
 import { Capabilities } from '@wdio/types';
 import * as dotenv from 'dotenv';
-import { registerCheckinCommands } from './src/commands/android/checkinCommands';
 
 dotenv.config();
 
@@ -22,7 +21,7 @@ export const config: WebdriverIO.Config = {
         './src/tests/android/shareCheckin.spec.ts',
         './src/tests/android/createCheckinMultipleFeelings.spec.ts',
         './src/tests/android/createCheckinReflect.spec.ts',
-        './src/tests/android/createCheckinWithTakeaways.spec.ts',
+        './src/tests/android/createCheckinWithTakeaways.spec.ts'
     ],
     maxInstances: 1,
     
@@ -30,7 +29,7 @@ export const config: WebdriverIO.Config = {
         platformName: 'Android',
         'appium:automationName': 'UiAutomator2',
         'appium:deviceName': process.env.ANDROID_DEVICE_NAME || 'Android Emulator',
-        'appium:platformVersion': process.env.ANDROID_PLATFORM_VERSION || '14.0',
+        'appium:platformVersion': process.env.ANDROID_PLATFORM_VERSION || '16.0',
         'appium:app': process.env.ANDROID_APP_PATH || './apps/android/howwefeel.apk',
         'appium:appPackage': process.env.ANDROID_PACKAGE_NAME || 'org.howwefeel.moodmeter.dev',
         'appium:appActivity': process.env.ANDROID_ACTIVITY || 'org.howwefeel.moodmeter.screens.main.MainActivity',
@@ -56,10 +55,6 @@ export const config: WebdriverIO.Config = {
     
     jasmineOpts: {
         defaultTimeoutInterval: parseInt(process.env.COMMAND_TIMEOUT || '60000')
-    },
-
-    before: async (capabilities, specs) => {
-        registerCheckinCommands();
     },
 
     afterTest: async function(test, context, { error, result, duration, passed, retries }) {

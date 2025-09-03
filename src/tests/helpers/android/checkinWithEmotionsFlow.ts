@@ -1,13 +1,13 @@
-import { CreateCheckinPage } from "../../pages/android/CreateCheckinPage";
+import { CreateCheckinPage } from "../../../pages/android/CreateCheckinPage";
 
 let isFirstTooltipHandled = false;
 let checkinCount = 0;
 
-export function registerCheckinCommands(){
-    browser.addCommand("createCheckinWithEmotions", async (emotion: 'pleased' | 'uneasy' | 'calm' | 'bored', journalText: string) => {
-        const createCheckinPage = new CreateCheckinPage();
-        checkinCount++;
+export async function doCheckinWithEmotionsFlow(emotion: 'pleased' | 'uneasy' | 'calm' | 'bored', journalText: string) {
+    const createCheckinPage = new CreateCheckinPage();
+    checkinCount++;
 
+    try{
         console.log(`[COMMAND] creating checkin with journal text: ${journalText}`);
 
         await createCheckinPage.tapNewCheckinButton();
@@ -53,5 +53,8 @@ export function registerCheckinCommands(){
         await createCheckinPage.isCheckinCompleted();
 
         console.log(`[COMMAND] checkin created with journal text`)
-    });
+    }
+    catch (error) {
+        console.error("Error during checkin with emotions flow:", error);
+    }
 }

@@ -29,7 +29,7 @@ export class CheckinCardPage extends BasePage{
 
     private async isCheckinDisplayed(emotionType : 'uneasy' | 'calm'): Promise<boolean> {
         const mainTitleDisplayed = await this.isElementDisplayed(`android=${this.commonElements.mainTitle}`);
-        await this.swipeUp(0.7);
+        await this.swipeVertical("up", 0.7);
         await browser.pause(1000);
         const imFeelingTextDisplayed = await this.isElementDisplayed(`android=${this.commonElements.imFeelingText}`);
         const emotionTextDisplayed = await this.isElementDisplayed(`android=${this.emotions[emotionType]}`);
