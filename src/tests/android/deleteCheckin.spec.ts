@@ -1,6 +1,7 @@
 import { CheckinCardPage } from "../../pages/android/CheckinCardPage";
 import { doOnboardingSetup } from "../helpers/android/onboardingSkipSetup";
 import { verify } from "../helpers/android/test-verification";
+import { doCheckinWithEmotionsFlow } from "../helpers/android/checkinWithEmotionsFlow";
 
 describe("Delete Checkin Page", () => {
     let checkinCardPage: CheckinCardPage;
@@ -11,7 +12,7 @@ describe("Delete Checkin Page", () => {
     })
 
     it("Should create a check-in (green)", async () => {
-        await browser.createCheckinWithEmotions('calm', "Feeling peaceful and relaxed today.");
+        await doCheckinWithEmotionsFlow('calm', "Feeling peaceful and relaxed today.");
     });
 
     it("Should display the Checkin and delete the check-in", async () => {

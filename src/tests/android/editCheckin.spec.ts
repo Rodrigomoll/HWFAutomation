@@ -1,6 +1,7 @@
 import { CheckinCardPage } from "../../pages/android/CheckinCardPage";
 import { doOnboardingSetup } from "../helpers/android/onboardingSkipSetup";
 import { verify } from "../helpers/android/test-verification";
+import { doCheckinWithEmotionsFlow } from "../helpers/android/checkinWithEmotionsFlow";
 
 
 describe("Edit Checkin Page", () => {
@@ -16,7 +17,7 @@ describe("Edit Checkin Page", () => {
     });
 
     it("Should create uneasy check-in (red)", async () => {
-        await browser.createCheckinWithEmotions('uneasy', ORIGINAL_TEXT);
+        await doCheckinWithEmotionsFlow('uneasy', ORIGINAL_TEXT);
     });
 
     it("Should display the Checkin and edit the journal entry of the check-in", async () => {

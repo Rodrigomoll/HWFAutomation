@@ -59,7 +59,7 @@ export class HealthDataEntriesPages extends BasePage {
 
     async areHealthDataEntriesScreen(): Promise<boolean> {
         const titleDisplayed = await this.isElementDisplayed(`android=${this.elements.screen.title}`);
-        await this.swipeUp(0.5);
+        await this.swipeVertical("up", 0.5);
         await driver.pause(500);
 
         const trackingResults = await Promise.all(
@@ -77,7 +77,7 @@ export class HealthDataEntriesPages extends BasePage {
                 this.isElementDisplayed(`android=${this.elements.enabledEntries[type]}`)
             )
         );
-        await this.swipeUp(0.2);
+        await this.swipeVertical("up", 0.2);
 
         const secondGroupResults = await Promise.all(
             this.enabledEntriesSecondGroup.map(type => 

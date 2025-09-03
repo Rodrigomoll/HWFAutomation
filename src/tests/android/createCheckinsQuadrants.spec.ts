@@ -1,4 +1,5 @@
 import { doOnboardingSetup } from "../helpers/android/onboardingSkipSetup";
+import { doCheckinWithEmotionsFlow } from "../helpers/android/checkinWithEmotionsFlow";
 
 describe('Test emotions commands', () => {
 
@@ -7,18 +8,18 @@ describe('Test emotions commands', () => {
     });
 
     it("Should create pleased check-in (yellow)", async () => {
-        await browser.createCheckinWithEmotions('pleased', "Feeling great today! 😊");
+        await doCheckinWithEmotionsFlow('pleased', "Feeling great today! 😊");
     });
 
     it("Should create uneasy check-in (red)", async () => {
-        await browser.createCheckinWithEmotions('uneasy', "Feeling stressed about work 😰");
+        await doCheckinWithEmotionsFlow('uneasy', "Feeling stressed about work 😰");
     });
 
     it("Should create calm check-in (green)", async () => {
-        await browser.createCheckinWithEmotions('calm', "Peaceful morning meditation 😌");
+        await doCheckinWithEmotionsFlow('calm', "Peaceful morning meditation 😌");
     });
 
     it("Should create bored check-in (blue)", async () => {
-        await browser.createCheckinWithEmotions('bored', "Nothing interesting happening 😴");
+        await doCheckinWithEmotionsFlow('bored', "Nothing interesting happening 😴");
     });
 })

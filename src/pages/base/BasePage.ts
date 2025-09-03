@@ -123,66 +123,49 @@ export class BasePage {
   // ==========================================
   // NAVIGATION - Movement methods
   // ==========================================
-
   /**
-   * Swipe up
+   * Vertical swipe (up/down)
+   * @param direction - 'up' or 'down'
    * @param distance - Swipe distance (0-1)
    */
-  async swipeUp(distance: number = 0.5): Promise<void> {
-    const { width, height } = await driver.getWindowSize();
-    const startX = width / 2;
-    const startY = height * 0.8;
-    const endY = height * (0.8 - distance);
-
-    await driver.performActions([
-      {
-        type: "pointer",
-        id: "finger",
-        parameters: { pointerType: "touch" },
-        actions: [
-          { type: "pointerMove", duration: 0, x: startX, y: startY },
-          { type: "pointerDown", button: 0 },
-          { type: "pointerMove", duration: 500, x: startX, y: endY },
-          { type: "pointerUp", button: 0 },
-        ],
-      },
-    ]);
-
-    await driver.releaseActions();
-  }
-
-  /**
-   * Swipe down
-   * @param distance - Swipe distance (0-1)
-   */
-  async swipeDown(distance: number = 0.5): Promise<void> {
+  async swipeVertical(
+    direction: "up" | "down",
+    distance: number = 0.5
+  ): Promise<void> {
     try {
-      console.log("[SWIPE] Starting swipe down...");
+      console.log(`[SWIPE] Starting swipe vertical (${direction}) ...`);
+      
+      const info = {
+        up: [0.8, -1, 500],
+        down: [0.3, 1, 800],
+      };
+      const [startRatio, multiplier, duration] = info[direction];
 
-      const windowSize = await driver.getWindowRect();
-      const centerX = windowSize.width / 2;
-      const startY = windowSize.height * 0.3; 
-      const endY = windowSize.height * (0.3 + distance);
+      const { width, height } = await driver.getWindowSize();
+      const centerX = width / 2;
+      const startY = height * startRatio;
+      const endY = height * (startRatio + (multiplier * distance));
 
       await driver.performActions([
         {
           type: "pointer",
-          id: "finger", 
+          id: "finger",
           parameters: { pointerType: "touch" },
           actions: [
             { type: "pointerMove", duration: 0, x: centerX, y: startY },
             { type: "pointerDown", button: 0 },
-            { type: "pointerMove", duration: 800, x: centerX, y: endY },
+            { type: "pointerMove", duration: duration, x: centerX, y: endY },
             { type: "pointerUp", button: 0 },
           ],
         },
       ]);
 
       await driver.releaseActions();
-      await driver.pause(2000);
-      console.log("[SWIPE] Swipe down completed");
+      if (direction === "down") await driver.pause(2000);
+
+      console.log(`[SWIPE] Swipe vertical (${direction}) completed`);
     } catch (error) {
-      console.log(`Error swiping down: ${error}`);
+      console.log(`Error swiping vertical (${direction}): ${error}`);
       throw error;
     }
   }
@@ -196,34 +179,40 @@ export class BasePage {
     direction: "left" | "right",
     distance: number = 0.5
   ): Promise<void> {
-    const { width, height } = await driver.getWindowSize();
-    const startY = height / 2;
+    try {
+      console.log(`[SWIPE] Starting swipe horizontal (${direction}) ...`);
 
-    let startX: number, endX: number;
+      const info = {
+        up: [0.8, -1],
+        down: [0.2, 1],
+      };
+      const [startRatio, multiplier] = info[direction];
 
-    if (direction === "left") {
-      startX = width * 0.8;
-      endX = width * (0.8 - distance);
-    } else {
-      startX = width * 0.2;
-      endX = width * (0.2 + distance);
+      const { width, height } = await driver.getWindowSize();
+      const startY = height / 2;
+      const startX = width * startRatio;
+      const endX = width * (startRatio + (multiplier * distance));
+
+      await driver.performActions([
+        {
+          type: "pointer",
+          id: "finger1",
+          parameters: { pointerType: "touch" },
+          actions: [
+            { type: "pointerMove", duration: 0, x: startX, y: startY },
+            { type: "pointerDown", button: 0 },
+            { type: "pointerMove", duration: 500, x: endX, y: startY },
+            { type: "pointerUp", button: 0 },
+          ],
+        },
+      ]);
+
+      await driver.releaseActions();
+      console.log(`[SWIPE] Swipe horizontal (${direction}) completed`);
+    } catch (error) {
+      console.log(`Error swiping horizontal(${direction}) : ${error}`);
+      throw error;
     }
-
-    await driver.performActions([
-      {
-        type: "pointer",
-        id: "finger1",
-        parameters: { pointerType: "touch" },
-        actions: [
-          { type: "pointerMove", duration: 0, x: startX, y: startY },
-          { type: "pointerDown", button: 0 },
-          { type: "pointerMove", duration: 500, x: endX, y: startY },
-          { type: "pointerUp", button: 0 },
-        ],
-      },
-    ]);
-
-    await driver.releaseActions();
   }
 
   // ==========================================
