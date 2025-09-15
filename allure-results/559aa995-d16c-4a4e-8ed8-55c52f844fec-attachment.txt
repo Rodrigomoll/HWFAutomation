@@ -1,0 +1,19 @@
+.........Console Logs.........
+
+[COMMAND] creating checkin with journal text: Feeling great today! 😊
+Checking if element is displayed: android=new UiSelector().text("High Energy
+Unpleasant") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("High Energy
+Unpleasant")
+Checking if element is displayed: android=new UiSelector().text("High Energy
+Pleasant") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("High Energy
+Pleasant")
+Checking if element is displayed: android=new UiSelector().text("Low Energy
+Unpleasant") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Low Energy
+Unpleasant")
+Checking if element is displayed: android=new UiSelector().text("Low Energy
+Pleasant") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Low Energy
+Pleasant")

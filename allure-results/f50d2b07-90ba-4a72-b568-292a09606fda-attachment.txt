@@ -1,0 +1,12 @@
+.........Console Logs.........
+
+[COMMAND] creating checkin with journal text: Nothing interesting happening 😴
+Checking if element is displayed: android=new UiSelector().text("High Energy
+Unpleasant") (timeout: nullms)
+Element not displayed: android=new UiSelector().text("High Energy
+Unpleasant") - Element "android=new UiSelector().text("High Energy
+Unpleasant")" not displayed after nullms
+Checking if element is displayed: android=new UiSelector().textContains("What were you doing when you felt") (timeout: nullms)
+Checking if element is displayed: android=new UiSelector().text("Themes") (timeout: nullms)
+Element not displayed: android=new UiSelector().text("Themes") - Element "android=new UiSelector().text("Themes")" not displayed after nullms
+Element not displayed: android=new UiSelector().textContains("What were you doing when you felt") - Element "android=new UiSelector().textContains("What were you doing when you felt")" not displayed after nullms

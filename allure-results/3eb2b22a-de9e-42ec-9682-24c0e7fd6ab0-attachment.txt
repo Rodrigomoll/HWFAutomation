@@ -1,0 +1,30 @@
+.........Console Logs.........
+
+Checking if element is displayed: android=new UiSelector().textContains("How are you feeling this") (timeout: nullms)
+Checking if element is displayed: android=new UiSelector().text("Check in").instance(0) (timeout: nullms)
+Checking if element is displayed: android=new UiSelector().description("New check In") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Check in").instance(0)
+Element found and displayed: android=new UiSelector().description("New check In")
+Element found and displayed: android=new UiSelector().textContains("How are you feeling this")
+Checking if element is displayed: android=new UiSelector().text("Tap the color that best describes how you feel right now") (timeout: nullms)
+Checking if element is displayed: android=new UiSelector().text("High Energy
+Unpleasant") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("High Energy
+Unpleasant")
+Checking if element is displayed: android=new UiSelector().text("High Energy
+Pleasant") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Tap the color that best describes how you feel right now")
+Element found and displayed: android=new UiSelector().text("High Energy
+Pleasant")
+Checking if element is displayed: android=new UiSelector().text("Low Energy
+Unpleasant") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Low Energy
+Unpleasant")
+Checking if element is displayed: android=new UiSelector().text("Low Energy
+Pleasant") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Low Energy
+Pleasant")
+Checking if element is displayed: android=new UiSelector().text("Pleased") (timeout: nullms)
+Checking if element is displayed: android=new UiSelector().text("feeling content and happy about a particular situation or person") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("feeling content and happy about a particular situation or person")
+Element found and displayed: android=new UiSelector().text("Pleased")

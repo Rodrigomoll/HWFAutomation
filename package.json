@@ -37,8 +37,12 @@
     "allure:generate": "allure generate allure-results --clean",
     "allure:open": "allure open allure-report",
     "allure:serve": "allure serve allure-results",
-    "test:android:report": "npm run android && npm run allure:serve",
-    "test:ios:report": "npm run ios && npm run allure:serve"
+    "test:report": "npm run allure:serve",
+
+    "allure:serve:android": "allure serve allure-results-android",
+    "allure:serve:ios": "allure serve allure-results-ios",
+    "test:android:report": "npm run android && npm run allure:serve:android",
+    "test:ios:report": "npm run ios && npm run allure:serve:ios"
   },
   "keywords": [],
   "author": "",

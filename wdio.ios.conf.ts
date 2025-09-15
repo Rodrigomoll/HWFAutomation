@@ -3,7 +3,7 @@ dotenv.config();
 
 export const config: WebdriverIO.Config = {
     runner: 'local',
-    specs: ['./src/tests/ios/**/*.spec.ts'],
+    specs: ['./src/tests/**/*.spec.ts'],
     maxInstances: 1,
     
     capabilities: [{
@@ -30,7 +30,15 @@ export const config: WebdriverIO.Config = {
             }
         }]
     ],
-    reporters: ['spec'],
+    reporters: [
+        'spec',
+        ['allure', {
+            outputDir: 'allure-results-ios',
+            disableWebdriverStepsReporting: true,
+            disableWebdriverScreenshotsReporting: false,
+            addConsoleLogs: true
+        }]
+    ],
     
     jasmineOpts: {
         defaultTimeoutInterval: parseInt(process.env.COMMAND_TIMEOUT || '60000')
