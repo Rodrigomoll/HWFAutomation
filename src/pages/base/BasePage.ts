@@ -50,9 +50,11 @@ export class BasePage {
    * Tap/click on an element
    * @param selector - Element selector
    */
-  async tapElement(selector: string): Promise<void> {
+  async tapElement(selector: string, timeout?: number): Promise<void> {
     const element = await this.waitForElement(selector);
     await element.click();
+
+    if(timeout) await this.wait(timeout);
   }
 
   /**
