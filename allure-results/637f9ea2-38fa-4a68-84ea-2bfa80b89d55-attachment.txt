@@ -1,0 +1,60 @@
+.........Console Logs.........
+
+Checking if element is displayed: android=new UiSelector().textContains("How are you feeling this") (timeout: nullms)
+Checking if element is displayed: android=new UiSelector().text("Check in").instance(0) (timeout: nullms)
+Checking if element is displayed: android=new UiSelector().description("New check In") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Check in").instance(0)
+Element found and displayed: android=new UiSelector().description("New check In")
+Element found and displayed: android=new UiSelector().textContains("How are you feeling this")
+Checking if element is displayed: android=new UiSelector().text("Tap the color that best describes how you feel right now") (timeout: nullms)
+Checking if element is displayed: android=new UiSelector().text("High Energy
+Unpleasant") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("High Energy
+Unpleasant")
+Checking if element is displayed: android=new UiSelector().text("High Energy
+Pleasant") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Tap the color that best describes how you feel right now")
+Element found and displayed: android=new UiSelector().text("High Energy
+Pleasant")
+Checking if element is displayed: android=new UiSelector().text("Low Energy
+Unpleasant") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Low Energy
+Unpleasant")
+Checking if element is displayed: android=new UiSelector().text("Low Energy
+Pleasant") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Low Energy
+Pleasant")
+Checking if element is displayed: android=new UiSelector().text("Uneasy") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Uneasy")
+Checking if element is displayed: android=new UiSelector().textContains("What were you doing when you felt") (timeout: nullms)
+Checking if element is displayed: android=new UiSelector().text("Themes") (timeout: nullms)
+Element found and displayed: android=new UiSelector().textContains("What were you doing when you felt")
+Element found and displayed: android=new UiSelector().text("Themes")
+Checking if element is displayed: android=new UiSelector().text("People") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("People")
+Checking if element is displayed: android=new UiSelector().text("Places") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Places")
+Checking if element is displayed: android=new UiSelector().textContains("Describe what might be causing you to feel") (timeout: nullms)
+Element found and displayed: android=new UiSelector().textContains("Describe what might be causing you to feel")
+Checking if element is displayed: android=new UiSelector().description("Open microphone") (timeout: nullms)
+Element found and displayed: android=new UiSelector().description("Open microphone")
+Checking if element is displayed: android=new UiSelector().description("Open camera") (timeout: nullms)
+Element found and displayed: android=new UiSelector().description("Open camera")
+Checking if element is displayed: android=new UiSelector().text("Time, weather, 
+sleep & exercise") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Time, weather, 
+sleep & exercise")
+Checking if element is displayed: android=new UiSelector().textContains("Want to change how you feel") (timeout: nullms)
+Element found and displayed: android=new UiSelector().textContains("Want to change how you feel")
+Checking if element is displayed: android=new UiSelector().textContains("How are you feeling this") (timeout: nullms)
+Element found and displayed: android=new UiSelector().textContains("How are you feeling this")
+Checking if element is displayed: android=new UiSelector().text("Reflect") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Reflect")
+Checking if element is displayed: android=new UiSelector().text("Tools").instance(0) (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Tools").instance(0)
+Checking if element is displayed: android=new UiSelector().textContains("How are you feeling this") (timeout: nullms)
+Element found and displayed: android=new UiSelector().textContains("How are you feeling this")
+Checking if element is displayed: android=new UiSelector().text("Reflect") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Reflect")
+Checking if element is displayed: android=new UiSelector().text("Tools").instance(0) (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Tools").instance(0)

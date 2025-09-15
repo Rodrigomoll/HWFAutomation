@@ -1,0 +1,8 @@
+.........Console Logs.........
+
+Checking if element is displayed: android=new UiSelector().text("Reflect") (timeout: 2000ms)
+Element found and displayed: android=new UiSelector().text("Reflect")
+Checking if element is displayed: android=new UiSelector().text("Not now") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Not now")
+Checking if element is displayed: notNowButton (timeout: 2000ms)
+Element not displayed: notNowButton - Element "notNowButton" not displayed after 2000ms

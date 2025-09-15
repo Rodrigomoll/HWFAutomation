@@ -1,0 +1,18 @@
+.........Console Logs.........
+
+Checking if element is displayed: android=new UiSelector().textContains("How are you feeling this") (timeout: nullms)
+Element found and displayed: android=new UiSelector().textContains("How are you feeling this")
+[SWIPE] Starting swipe vertical (up) ...
+[SWIPE] Swipe vertical (up) completed
+Checking if element is displayed: android=new UiSelector().text("I’m feeling") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("I’m feeling")
+Checking if element is displayed: android=new UiSelector().text("calm") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("calm")
+Checking if element is displayed: android=new UiSelector().text("calm") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("calm")
+Checking if element is displayed: android=new UiSelector().text("Driving") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Driving")
+Checking if element is displayed: android=new UiSelector().text("By Myself") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("By Myself")
+Checking if element is displayed: android=new UiSelector().text("Commuting") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Commuting")

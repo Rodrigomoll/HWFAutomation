@@ -1,0 +1,32 @@
+.........Console Logs.........
+
+Checking if element is displayed: android=new UiSelector().text("Before jumping in,
+let’s explore why you’re here.") (timeout: 10000ms)
+Element found and displayed: android=new UiSelector().text("Before jumping in,
+let’s explore why you’re here.")
+Checking if element is displayed: android=new UiSelector().text("Great! How We Feel will help you:") (timeout: 10000ms)
+Element found and displayed: android=new UiSelector().text("Great! How We Feel will help you:")
+Checking if element is displayed: android=new UiSelector().text("Let’s do your 
+first check in") (timeout: 10000ms)
+Element found and displayed: android=new UiSelector().text("Let’s do your 
+first check in")
+Checking if element is displayed: android=new UiSelector().text("Describe what might be causing you to feel
+pleased …") (timeout: 10000ms)
+Element found and displayed: android=new UiSelector().text("Describe what might be causing you to feel
+pleased …")
+Checking if element is displayed: android=new UiSelector().text("First check-in complete") (timeout: 10000ms)
+Element found and displayed: android=new UiSelector().text("First check-in complete")
+Checking if element is displayed: android=new UiSelector().text("How often do you want to check in?") (timeout: 10000ms)
+Element found and displayed: android=new UiSelector().text("How often do you want to check in?")
+Checking if element is displayed: android=new UiSelector().text("What time do you want to be reminded?") (timeout: 10000ms)
+Element found and displayed: android=new UiSelector().text("What time do you want to be reminded?")
+Checking if element is displayed: android=new UiSelector().text("Special App Access required") (timeout: 10000ms)
+Element not displayed: android=new UiSelector().text("Special App Access required") - Element "android=new UiSelector().text("Special App Access required")" not displayed after 10000ms
+Checking if element is displayed: android=new UiSelector().text("Check in anytime with the How We Feel widget") (timeout: 10000ms)
+Element found and displayed: android=new UiSelector().text("Check in anytime with the How We Feel widget")
+Checking if element is displayed: android=new UiSelector().text("Quick check in") (timeout: 10000ms)
+Checking if element is displayed: android=new UiSelector().text("Check in anytime with the How We Feel Widget") (timeout: 10000ms)
+Element found and displayed: android=new UiSelector().text("Check in anytime with the How We Feel Widget")
+Element found and displayed: android=new UiSelector().text("Quick check in")
+Checking if element is displayed: android=new UiSelector().text("Finally, let's try a strategy") (timeout: 10000ms)
+Element found and displayed: android=new UiSelector().text("Finally, let's try a strategy")

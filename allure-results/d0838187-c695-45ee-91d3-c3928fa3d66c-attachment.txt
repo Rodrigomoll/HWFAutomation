@@ -1,0 +1,35 @@
+.........Console Logs.........
+
+[COMMAND] creating checkin with journal text: Feeling stressed about work 😰
+Checking if element is displayed: android=new UiSelector().text("High Energy
+Unpleasant") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("High Energy
+Unpleasant")
+Checking if element is displayed: android=new UiSelector().text("High Energy
+Pleasant") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("High Energy
+Pleasant")
+Checking if element is displayed: android=new UiSelector().text("Low Energy
+Unpleasant") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Low Energy
+Unpleasant")
+Checking if element is displayed: android=new UiSelector().text("Low Energy
+Pleasant") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Low Energy
+Pleasant")
+Checking if element is displayed: android=new UiSelector().text("Uneasy") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Uneasy")
+Checking if element is displayed: android=new UiSelector().textContains("What were you doing when you felt") (timeout: nullms)
+Checking if element is displayed: android=new UiSelector().text("Themes") (timeout: nullms)
+Element found and displayed: android=new UiSelector().textContains("What were you doing when you felt")
+Element found and displayed: android=new UiSelector().text("Themes")
+Checking if element is displayed: android=new UiSelector().text("People") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("People")
+Checking if element is displayed: android=new UiSelector().text("Places") (timeout: nullms)
+Element found and displayed: android=new UiSelector().text("Places")
+Checking if element is displayed: android=new UiSelector().textContains("Describe what might be causing you to feel") (timeout: nullms)
+Element found and displayed: android=new UiSelector().textContains("Describe what might be causing you to feel")
+Checking if element is displayed: android=new UiSelector().description("Open microphone") (timeout: nullms)
+Element found and displayed: android=new UiSelector().description("Open microphone")
+Checking if element is displayed: android=new UiSelector().description("Open camera") (timeout: nullms)
+Element found and displayed: android=new UiSelector().description("Open camera")

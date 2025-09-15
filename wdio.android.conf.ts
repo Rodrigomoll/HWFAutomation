@@ -10,18 +10,18 @@ console.log("Calculated timeout:", parseInt(process.env.COMMAND_TIMEOUT || '6000
 export const config: WebdriverIO.Config = {
     runner: 'local',
     specs: [
-        './src/tests/android/onboardingSkip.spec.ts',
-        './src/tests/android/onboardingComplete.spec.ts',
-        './src/tests/android/createCheckin.spec.ts',
-        './src/tests/android/createCheckinsQuadrants.spec.ts',
-        './src/tests/android/editCheckin.spec.ts',
-        './src/tests/android/deleteCheckin.spec.ts',
-        './src/tests/android/createCheckinPastdate.spec.ts',
-        './src/tests/android/createCheckinHealthData.spec.ts',
-        './src/tests/android/shareCheckin.spec.ts',
-        './src/tests/android/createCheckinMultipleFeelings.spec.ts',
-        './src/tests/android/createCheckinReflect.spec.ts',
-        './src/tests/android/createCheckinWithTakeaways.spec.ts'
+        './src/tests/onboardingSkip.spec.ts',
+        './src/tests/onboardingComplete.spec.ts',
+        './src/tests/createCheckin.spec.ts',
+        './src/tests/createCheckinsQuadrants.spec.ts',
+        './src/tests/editCheckin.spec.ts',
+        './src/tests/deleteCheckin.spec.ts',
+        './src/tests/createCheckinPastdate.spec.ts',
+        './src/tests/createCheckinHealthData.spec.ts',
+        './src/tests/shareCheckin.spec.ts',
+        './src/tests/createCheckinMultipleFeelings.spec.ts',
+        './src/tests/createCheckinReflect.spec.ts',
+        './src/tests/createCheckinWithTakeaways.spec.ts'
     ],
     maxInstances: 1,
     
@@ -46,7 +46,7 @@ export const config: WebdriverIO.Config = {
     reporters: [
         'spec',
         ['allure', {
-            outputDir: 'allure-results',
+            outputDir: 'allure-results-android',
             disableWebdriverStepsReporting: true,
             disableWebdriverScreenshotsReporting: false,
             addConsoleLogs: true
