@@ -1,9 +1,10 @@
+import { Capabilities } from '@wdio/types';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
 export const config: WebdriverIO.Config = {
     runner: 'local',
-    specs: ['./src/tests/**/*.spec.ts'],
+    specs: ['./src/tests/*.spec.ts'],
     maxInstances: 1,
     
     capabilities: [{
@@ -14,7 +15,9 @@ export const config: WebdriverIO.Config = {
         'appium:app': process.env.IOS_APP_PATH || './apps/ios/HowWeFeel.app',
         'appium:bundleId': process.env.IOS_BUNDLE_ID || 'org.howwefeel.HowWeFeel-Moodmeter',
         'appium:autoAcceptAlerts': true, 
-        'appium:autoDismissAlerts': false
+        'appium:autoDismissAlerts': false,
+        // 'appium:noReset': false,
+        // 'appium:fullReset': true
     }],
 
     hostname: 'localhost',
@@ -30,15 +33,7 @@ export const config: WebdriverIO.Config = {
             }
         }]
     ],
-    reporters: [
-        'spec',
-        ['allure', {
-            outputDir: 'allure-results-ios',
-            disableWebdriverStepsReporting: true,
-            disableWebdriverScreenshotsReporting: false,
-            addConsoleLogs: true
-        }]
-    ],
+    reporters: ['spec'],
     
     jasmineOpts: {
         defaultTimeoutInterval: parseInt(process.env.COMMAND_TIMEOUT || '60000')

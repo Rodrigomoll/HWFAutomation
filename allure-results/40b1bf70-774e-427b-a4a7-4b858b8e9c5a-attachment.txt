@@ -1,3 +1,0 @@
-.........Console Logs.........
-
-[COMMAND] creating checkin with journal text: Peaceful morning meditation 😌

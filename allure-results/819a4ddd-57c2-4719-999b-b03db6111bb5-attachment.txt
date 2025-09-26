@@ -1,8 +1,0 @@
-.........Console Logs.........
-
-Checking if element is displayed: android=new UiSelector().textContains("How are you feeling this") (timeout: nullms)
-Element found and displayed: android=new UiSelector().textContains("How are you feeling this")
-[SWIPE] Starting swipe vertical (up) ...
-[SWIPE] Swipe vertical (up) completed
-Checking if element is displayed: android=new UiSelector().text("I’m feeling") (timeout: nullms)
-Element not displayed: android=new UiSelector().text("I’m feeling") - Element "android=new UiSelector().text("I’m feeling")" not displayed after nullms

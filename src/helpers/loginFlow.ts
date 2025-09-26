@@ -1,25 +1,29 @@
-import { FriendsPage } from "../pages/flows/FriendsPage";
 import { verify } from "./testVerification";
 
-
-export async function doLoginFlow():Promise<void> {
-    const friendsPage = await new FriendsPage().init();
-
+export async function doLoginFlow(locator):Promise<void> {
     try{
-        await friendsPage.tapElementButton("friendsPrompt");
-        await verify(friendsPage.verifyIsElementDisplayed("sharePrompt"));
+        await locator.tapButton("friends");
+        await verify(locator.verifyIsElementDisplayed("sharePrompt"));
 
-        await friendsPage.tapElementButton("getStartedButton");
-        await verify(friendsPage.verifyIsElementDisplayed("signInPrompt"));
+        await locator.tapButton("getStarted");
+        await verify(locator.verifyIsElementDisplayed("signInPrompt"));
 
-        await friendsPage.tapElementButton("signInButton");
-        await verify(friendsPage.verifyIsElementDisplayed("signInModal"));
+        await locator.tapButton("signIn");
 
-        await friendsPage.tapElementButton("accountEmail");
-        await friendsPage.waitForAddFriendModal();
+        if(locator.isAndroidPlatform) await verify(locator.verifyIsElementDisplayed("signInModal"));
 
-        await friendsPage.tapElementButton("doneButton");
-        await friendsPage.tapElementButton("checkinPrompt");
+        await locator.tapButton("accountEmail");
+        
+        if(locator.isAndroidPlatform) {
+            await driver.pause(2000);
+            await locator.verifyIsElementDisplayed("addFriendPrompt", 6000);
+            await locator.tapButton("done");
+        }
+        else {
+            await locator.tapButton("continue");
+        }
+
+        await locator.tapButton("checkin");
     }
     catch (error) {
         console.error("Error during login flow:", error);

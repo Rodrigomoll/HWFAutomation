@@ -20,8 +20,6 @@ describe('Test emotions commands', () => {
     });
 
     it("Should create bored check-in (blue)", async () => {
-        /// not now button
-        
         await doCheckinWithEmotionsFlow('bored', "Nothing interesting happening 😴");
     });
 })

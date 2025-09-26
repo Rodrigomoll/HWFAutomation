@@ -1,23 +1,27 @@
-import { FriendsPage } from "../pages/flows/FriendsPage";
+export async function deactivateShare(locator):Promise<void>{
+    await locator.tapButton("settings");
 
-export async function deactivateShare():Promise<void>{
-    const friendsPage = await new FriendsPage().init();
-
-    try{
-        await friendsPage.tapElementButton("friendsPrompt");
-        await friendsPage.tapElementButton("feelingPrompt");
-
-        if(await friendsPage.verifyIsActive("alwaysAskToggle")){
-            await friendsPage.tapElementButton("alwaysAskToggle");
-        }
-
-        await friendsPage.tapElementButton("closeButton");
-        await driver.pause(1000);
-        await friendsPage.tapElementButton("checkinPrompt");
-        
+    if(locator.isAndroidPlatform) {
+        await locator.tapButton("account");
     }
-    catch (error){
-        console.error("Error during deactivating Share emotion flow:", error);
+
+    await locator.tapButton("sharing");
+    await locator.tapButton("notShare");
+
+    if(await locator.verifyIsActive("alwaysAskToggle")){
+        await locator.tapButton("alwaysAskToggle");
     }
+
+    await locator.tapButton("back");
+
+    if(locator.isAndroidPlatform) {
+        await locator.tapButton("back");
+        await locator.tapButton("closeButton");
+    }
+    else {
+        locator.tapButton("back");
+    }
+
+    await driver.pause(1000);
 }
 // This function enables AI settings in the app by navigating through the settings menu,

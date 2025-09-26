@@ -1,16 +1,17 @@
 import { CheckinPage } from "../pages/flows/CheckinPage";
-import { verify } from "./testVerification";
+import { whichPlatform } from "../helpers/whichPlatform";
 
 export async function doReflectFlow(takeaways: boolean, toolTip: boolean) {
-    const checkinPage = await new CheckinPage().init();
+    const locator = await whichPlatform();
+    const checkinPage = await new CheckinPage(locator);
 
     try{
         // Setup to skip all onboarding flow and start creating our check-ins
         await checkinPage.QuadrantsStep();
-        await checkinPage.tapUneasyEmotion();
+        await checkinPage.tapEmotion("redQuadrant", "uneasyEmotion");
         await driver.pause(1000);
 
-        await checkinPage.tagsAndJournalReflectStep("This is a test journal entry with reflection feature.");
+        await checkinPage.tagsAndJournalStep("This is a test journal entry with reflection feature.", false);
 
         let isLimitReached = await checkinPage.isUsageLimitReached();
 
@@ -24,26 +25,26 @@ export async function doReflectFlow(takeaways: boolean, toolTip: boolean) {
 
         for(let i = 0; i < reflectionText.length; i++){
             if(isLimitReached){
-                await checkinPage.completeReflectStep2(toolTip);
+                await checkinPage.completeReflectStep(false, toolTip);
                 await driver.pause(1000);
                 break;
             }
             else{
-                await verify(checkinPage.verifyIsElementDisplayed("writeText"));
-                await checkinPage.inputText("reflectInput", reflectionText[i]);
+                await driver.pause(2000); //textInput
+                await locator.enterTextJournal(locator.isAndroidPlatform ? "editText" : "prueba", reflectionText[i]);
 
                 if( i < reflectionText.length - 1){
-                    await checkinPage.tapElementButton("goDeeperButton");
+                    await locator.tapButton("goDeeper");
                     isLimitReached = await checkinPage.isUsageLimitReached();
                     await driver.pause(1000);
                 }
                 else{
-                    await checkinPage.tapElementButton("finishButton");
+                    await locator.tapButton(locator.isAndroidPlatform ? "finish" : "goFinish");
                     if(takeaways) {
-                        await verify(checkinPage.areTakeawaysDisplayed());
+                        await checkinPage.areTakeawaysDisplayed();
                         await checkinPage.tapAllButtons();
                     }
-                    await checkinPage.completeReflectStep(toolTip);
+                    await checkinPage.completeReflectStep(true, toolTip);
                     await driver.pause(1000);
                 }
             }

@@ -1,12 +1,15 @@
 import { CheckinPage } from "../pages/flows/CheckinPage";
 import { skipOnboardingFlow } from "../helpers/skipOnboardingFlow";
-import { verify } from "../helpers/testVerification";
+import { whichPlatform } from "../helpers/whichPlatform";
 
 describe("Create check-in with multiple feelings", () => {
     let checkinPage : CheckinPage;
+    let locator;
 
     beforeAll(async () => {
-        checkinPage = await new CheckinPage().init();
+        locator = await whichPlatform();
+        checkinPage = await new CheckinPage(locator);
+
         // Setup to skip all onboarding flow and start creating our check-ins
         await skipOnboardingFlow();
     })
@@ -14,16 +17,21 @@ describe("Create check-in with multiple feelings", () => {
     it("Should create a check-in with multiple feelings", async () => {
         await checkinPage.QuadrantsStep();
 
-        await checkinPage.tapUneasyEmotion();
+        await checkinPage.tapEmotion("redQuadrant", "uneasyEmotion");
 
         await checkinPage.tagsStep();
 
-        await checkinPage.tapElementButton("addFeelingButton");
-        await checkinPage.waitFor("searchInput");
+        if(locator.isAndroidPlatform){
+            await locator.tapButton("addFeeling");
+        }
+        else {
+            await locator.swipeVertical("down", 0.6);
+            await locator.tapButton("addEmotion");
+        }
 
-        //await verify(checkinPage.displayColorsCategory());
-        await checkinPage.tapElementButton("yellowEmotions");
-        await checkinPage.tapElementButton("absorbedEmotion");
+        await locator.tapButton("searchInput");
+        await locator.tapButton("yellowEmotions");
+        await locator.tapButton("absorbedEmotion");
 
         await checkinPage.journalStep("This is a test journal entry.");
 

@@ -1,85 +1,85 @@
-import { OnboardingCompletePage } from "../pages/flows/OnboardingCompletePage";
 import { setupInitialOnboardingFlow } from "../helpers/setupInitialOnboardingFlow";
 import { verify } from "../helpers/testVerification";
-import { BasePage } from "../pages/base/BasePage";
+import { whichPlatform } from "../helpers/whichPlatform";
 
 describe("Onboarding Complete Flow", () => {
-  let onboardingCompletePage: OnboardingCompletePage;
-  let isAndroidPlatform: boolean;
+  let locator;
 
   beforeAll(async () => {
-    onboardingCompletePage = await new OnboardingCompletePage().init();
-    isAndroidPlatform = await new BasePage().isAndroid();
+    locator = await whichPlatform();
      // Setup for first steps of onboarding and continue with the onboarding flow
-    await setupInitialOnboardingFlow(false);
+    await setupInitialOnboardingFlow(locator, false);
   });
 
   describe("Complete onboarding flow", () => {
     it("Should complete all onboarding flow", async () => {
-      await verify(onboardingCompletePage.verifyIsElementDisplayed("firstPrompt"));
+      await verify(locator.verifyIsElementDisplayed("explorePrompt"));
     
-      await onboardingCompletePage.tapButton("firstOption");
-      await onboardingCompletePage.tapButton("continue");
+      await locator.tapButton("positiveOption");
+      await locator.tapButton("continue");
 
-      await verify(onboardingCompletePage.verifyIsElementDisplayed("secondPrompt"));
-      await onboardingCompletePage.tapButton("continue");
+      await verify(locator.verifyIsElementDisplayed("helpPrompt"));
+      await locator.tapButton("continue");
 
-      await verify(onboardingCompletePage.verifyIsElementDisplayed("thirdPrompt"));
-      await onboardingCompletePage.tapButton("pleasantOption");
-      await onboardingCompletePage.tapButton("pleasedEmotion");
+      await driver.pause(1000);
 
-      if(isAndroidPlatform){
-        await verify(onboardingCompletePage.verifyIsElementDisplayed("fourthPrompt"));
-        await onboardingCompletePage.enterTextJournal("This is a test journal entry.");
-        await onboardingCompletePage.tapButton("next");
+      await verify(locator.verifyIsElementDisplayed("firstCheckinPrompt"));
+      await locator.tapButton("yellowQuadrant");
+      await locator.tapButton("pleasedEmotion");
+
+      if(locator.isAndroidPlatform){
+        await verify(locator.verifyIsElementDisplayed("describePrompt"));
+        await locator.enterTextJournal("textInput", "This is a test journal entry.");
+        await locator.tapButton("next");
       }
       else{
-        await onboardingCompletePage.tapButton("arrowRight");
-        await onboardingCompletePage.tapButton("journalEntry");
-        await verify(onboardingCompletePage.verifyIsElementDisplayed("fourthPrompt"));
-        await onboardingCompletePage.enterTextJournal("Exploring my pleased emotion with a test.");
-        await onboardingCompletePage.tapButton("finish");
-        await onboardingCompletePage.tapButton("complete");
+        await locator.tapButton("arrowRight");
+        await locator.tapButton("journalEntry");
+        await verify(locator.verifyIsElementDisplayed("explorePleasedPrompt"));
+        await locator.enterTextJournal("textInput", "Exploring my pleased emotion with a test.");
+        await locator.tapButton("finish");
+        await locator.tapButton("complete");
       }
 
-      await verify(onboardingCompletePage.verifyIsElementDisplayed("fifthPrompt"));
-      await onboardingCompletePage.tapButton("continue");
+      await verify(locator.verifyIsElementDisplayed("completePrompt"));
+      await locator.tapButton("continue");
 
-      await verify(onboardingCompletePage.verifyIsElementDisplayed("sixthPrompt"));
-      if(!isAndroidPlatform) await onboardingCompletePage.tapButton("twicePerDay");
-      await onboardingCompletePage.tapButton("continue");
+      await verify(locator.verifyIsElementDisplayed("frecuencyPrompt"));
+      if(!locator.isAndroidPlatform) await locator.tapButton("twicePerDay");
+      await locator.tapButton("continue");
 
-      await verify(onboardingCompletePage.verifyIsElementDisplayed("seventhPrompt"));
-      await onboardingCompletePage.tapButton("continue");
+      await verify(locator.verifyIsElementDisplayed("reminderPrompt"));
+      await locator.tapButton("continue");
 
-      if(isAndroidPlatform && await onboardingCompletePage.verifyIsElementDisplayed("accessModal")){
-        await verify(onboardingCompletePage.verifyIsElementDisplayed("alarmDescription"));
-        await onboardingCompletePage.tapButton("settings");
-        await onboardingCompletePage.tapButton("howWeFeel");
-        await onboardingCompletePage.tapButton("allowSettings");
-        await onboardingCompletePage.tapButton("navigateBack");
-        await onboardingCompletePage.tapButton("navigateBack");
-        await onboardingCompletePage.tapButton("continue");
+      if(locator.isAndroidPlatform && await locator.verifyIsElementDisplayed("accessModal")){
+        await verify(locator.verifyIsElementDisplayed("alarmAccessDescription"));
+        await locator.tapButton("settings");
+        await locator.tapButton("howWeFeel");
+        await locator.tapButton("allowSettings");
+        await locator.tapButton("navigateBack");
+        await locator.tapButton("navigateBack");
+        await locator.tapButton("continue");
       }
 
-      await verify(onboardingCompletePage.verifyIsElementDisplayed("eigthPrompt"));
+      if(locator.isAndroidPlatform) {
+        await verify(locator.verifyIsElementDisplayed("widgetPrompt"));
+        await locator.tapButton("continue");
 
-      if(isAndroidPlatform) {
-        await onboardingCompletePage.tapButton("continue");
+        await verify(locator.verifyIsElementDisplayed("quickCheckin"));
+        await locator.tapButton("addWidget");
+        await locator.tapButton("addToHome");
 
-        await verify(onboardingCompletePage.verifyIsElementDisplayed("widget"),onboardingCompletePage.verifyIsElementDisplayed("widgetDescription"));
-        await onboardingCompletePage.tapButton("addWidget");
-        await onboardingCompletePage.tapButton("addToHome");
+        await driver.pause(1000);
 
-        await verify(onboardingCompletePage.verifyIsElementDisplayed("ninethPrompt"));
-        await onboardingCompletePage.tapButton("notNow");
+        await verify(locator.verifyIsElementDisplayed("tryStrategyPrompt"));
+        await locator.tapButton("notRightNow");
       }
       else{
-        await onboardingCompletePage.tapButton("addWidget");
-        await onboardingCompletePage.tapButton("close");
+        await locator.tapButton("addWidget");
+        await locator.tapButton("close");
       }
 
-      await onboardingCompletePage.tapButton("checkin");
+      await locator.tapButton("emotionalToolsPrompt");
     });
   });
 });

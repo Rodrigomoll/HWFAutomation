@@ -46,7 +46,7 @@ export const config: WebdriverIO.Config = {
     reporters: [
         'spec',
         ['allure', {
-            outputDir: 'allure-results-android',
+            outputDir: 'allure-results',
             disableWebdriverStepsReporting: true,
             disableWebdriverScreenshotsReporting: false,
             addConsoleLogs: true

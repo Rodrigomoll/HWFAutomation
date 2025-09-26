@@ -1,26 +1,25 @@
-import { SettingsPage } from "../pages/flows/SettingsPage";
 import { verify } from "./testVerification";
 
-
-export async function enableAISettings():Promise<void>{
-    const settingsPage = await new SettingsPage().init();
-
+export async function enableAISettings(locator):Promise<void>{
     try{
-        await settingsPage.tapElementButton("settingsButton");
-        await verify(settingsPage.verifyIsElementDisplayed("settingsPrompt"));
+        await locator.tapButton("settings");
+        await verify(locator.verifyIsElementDisplayed("settingsPrompt"));
 
-        await settingsPage.tapElementButton("aiOption");
+        await locator.tapButton("aiOption");
         await driver.pause(1000);
-        await settingsPage.tapElementButton("aiToggle");
 
-        await verify(settingsPage.verifyIsElementDisplayed("reflectModal"));
-        await settingsPage.tapElementButton("getStartedButton");
+        if(locator.isAndroidPlatform) {
+            await locator.tapButton("aiToggle");
+            await verify(locator.verifyIsElementDisplayed("reflectModal"));
+            await locator.tapButton("getStarted");
+            await verify(locator.verifyIsElementDisplayed("aiEnablePrompt"));
+            await locator.tapButton("enableAI");
+        }
 
-        await verify(settingsPage.verifyIsElementDisplayed("aiEnablePrompt"));
-        await settingsPage.tapElementButton("enableAIButton");
+        await locator.tapButton("back");
 
-        await settingsPage.tapElementButton("backButton");
-        await settingsPage.tapElementButton("closeButton");
+        if(locator.isAndroidPlatform) await locator.tapButton("closeButton");
+        else locator.tapButton("back");
     }
     catch (error){
         console.error("Error during AI settings enable flow:", error);
