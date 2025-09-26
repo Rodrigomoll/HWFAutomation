@@ -1,36 +1,42 @@
 import { CheckinPage } from "../pages/flows/CheckinPage";
+import { whichPlatform } from "../helpers/whichPlatform";
 
 let isFirstTooltipHandled = false;
 let checkinCount = 0;
 
 export async function doCheckinWithEmotionsFlow(emotion: 'pleased' | 'uneasy' | 'calm' | 'bored', journalText: string) {
-    const checkinPage = await new CheckinPage().init();
+    const locator = await whichPlatform();
+    const checkinPage = await new CheckinPage(locator);
     checkinCount++;
 
     try{
-        await checkinPage.tapElementButton("newCheckin");
-        await checkinPage.areAllQuadrantsDisplayed();
+        await driver.pause(2000);
+        //await locator.tapButton("newCheckin");
+        await checkinPage.QuadrantsStep();
 
         switch(emotion) {
             case 'pleased':
                 // High Energy + Pleasant
-                await checkinPage.tapPleasedEmotion(true);
+                await checkinPage.tapEmotion("yellowQuadrant", "pleasedEmotion");
                 break;
             case 'uneasy':
                 // High Energy + Pleasant
-                await checkinPage.tapUneasyEmotion(); 
+                await checkinPage.tapEmotion("redQuadrant", "uneasyEmotion");
                 break;
             case 'calm':
                 // Low Energy + Pleasant
-                await checkinPage.tapCalmEmotion(); 
+                await checkinPage.tapEmotion("greenQuadrant", "calmEmotion");
                 break;
             case 'bored':
                 // Low Energy + Unpleasant
-                await checkinPage.tapBoredEmotion(); 
+                await checkinPage.tapEmotion("blueQuadrant", "boredEmotion");
                 break;
         }
-        await checkinPage.tagsAndJournalStep(journalText);
-        await checkinPage.tapElementButton("saveButton");
+
+        await driver.pause(1000);
+
+        await checkinPage.tagsAndJournalStep(journalText, true);
+        await checkinPage.dataAndSaveStep();
 
         if (!isFirstTooltipHandled) {
             const tooltipWasPresent = await checkinPage.handleChangeTooltip();
@@ -39,8 +45,12 @@ export async function doCheckinWithEmotionsFlow(emotion: 'pleased' | 'uneasy' | 
             } 
         }
 
-        if(await checkinPage.verifyIsElementDisplayed("reflectPrompt")){
+        if(locator.isAndroidPlatform && await locator.verifyIsElementDisplayed("reflectPrompt")){
             await checkinPage.dismissReflectModalIfPresent();
+        }
+
+        if(!locator.isAndroidPlatform && locator.verifyIsElementDisplayed("closeButton")){
+            await locator.tapButton("closeButton");
         }
 
         await checkinPage.isCheckinCompleted();

@@ -1,19 +1,21 @@
 import { setupInitialOnboardingFlow } from "./setupInitialOnboardingFlow";
-import { OnboardingSkipPage } from "../pages/flows/OnboardingSkipPage";
 import { verify } from "./testVerification";
+import { whichPlatform } from "./whichPlatform";
 
 export async function skipOnboardingFlow() {
     try{
-        const onboardingSkipPage = await new OnboardingSkipPage().init();
+        const locator = await whichPlatform();
         
-        await setupInitialOnboardingFlow(true);
+        await setupInitialOnboardingFlow(locator, true);
         
-        await verify(onboardingSkipPage.isScreenDisplayed("skipModal"));
-        await onboardingSkipPage.tapButton("skipModal");
+        await verify(locator.verifyIsElementDisplayed("skipModal"));
 
-        if (await onboardingSkipPage.isScreenDisplayed("privacyModal")) {
-            await verify(onboardingSkipPage.isScreenDisplayed("privacyModal"));
-            await onboardingSkipPage.tapButton("accept");
+        if (locator.isAndroidPlatform) {
+            await locator.tapButton("skip");
+
+            if(await locator.verifyIsElementDisplayed("privacyUpdateModal")){
+                await locator.tapButton("accept");
+            }
         }
     }
     catch (error) {

@@ -12,5 +12,5 @@ dist/
 apps/android/*.apk
 apps/ios/*.app
 
-allure-results-*/
-allure-report-*/
+allure-results/
+allure-report/

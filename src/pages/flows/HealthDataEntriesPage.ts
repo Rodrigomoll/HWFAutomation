@@ -1,79 +1,42 @@
-import { BasePage } from "../base/BasePage";
-import { AndroidLocators } from "../../locators/AndroidLocators";
-//import { iOSLocators } from "../../locators/iOSLocators";
 import { verify } from "../../helpers/testVerification";
 
-export class HealthDataEntriesPages extends BasePage {
-    private locators!: AndroidLocators; // | iOSLocators;
-    //private isAndroidPlatform!: boolean;
+export class HealthDataEntriesPages {
+    public entryTypes; 
 
-    private elements!: {
-        healthPrompt: string;
-        closeButton: string;
-    }
+    async healthDataEntriesFlowAndroid(locator) {
+        await locator.verifyIsElementDisplayed("healthPrompt");
 
-    private entryTypes = [
-                'Weather', 'Sleep', 'Steps', 'Exercise', 'Meditation', 'Water', 'Caffeine', 'Alcohol'
-            ];
-
-    async init() {
-        //this.isAndroidPlatform = await this.isAndroid();
-
-        this.locators = new AndroidLocators();
-
-        this.elements = {
-            healthPrompt: await this.locators.selectValue("text", "About Health & \nLocation Data"),
-            closeButton: await this.locators.selectValue("description", "Close"),
-        }
-
-        return this;
-    }
-
-    async verifyIsElementDisplayed(
-        element: keyof typeof this.elements
-    ): Promise<boolean> {
-        return await this.isElementDisplayed(await this.locators.buildSelector(this.elements[element]));
-    }
-
-    async tapElementButton(
-        button: keyof typeof this.elements,
-        timeout?: number
-    ): Promise<void> {
-        await this.tapElement(await this.locators.buildSelector(this.elements[button]), timeout ?? null);
-    }
-
-    async healthDataEntriesFlow() {
-        await this.verifyIsElementDisplayed("healthPrompt");
-
-        await this.swipeVertical("up", 0.5);
+        await locator.swipeVertical("up", 0.5);
         await driver.pause(500);
+
+        this.entryTypes = [
+            'Weather', 'Sleep', 'Steps', 'Exercise', 'Meditation', 'Water', 'Caffeine', 'Alcohol'
+        ];
 
         await Promise.all(
             this.entryTypes.map(async (type) => {
-                await this.isElementDisplayed(await this.locators.buildSelector(await this.locators.selectValue("text", type + " Tracking")));
+                await locator.isElementDisplayed({type: "text", value: type + " Tracking"});
             })
         );
 
-        const toggle = await this.locators.selectValue("className", "android.view.View");
-
         for(let i = 6; i < 19; i+=4) {
-            await this.tapElement(await this.locators.buildSelector(toggle + await this.locators.selectValue("instance", `${i}`)));
+            await locator.tapButton({type: "className", value: "android.view.View", instance: i});
         }
 
-        await this.swipeVertical("up", 1);
+        await locator.swipeVertical("up", 1);
         await driver.pause(1000);
-        await this.tapElement(await this.locators.buildSelector(toggle + await this.locators.selectValue("instance", "14")));
-        await this.tapElement(await this.locators.buildSelector(toggle + await this.locators.selectValue("instance", "16")));
+        await locator.tapButton({type: "className", value: "android.view.View", instance: 14});
+        await locator.tapButton({type: "className", value: "android.view.View", instance: 16});
 
-        await this.swipeVertical("up", 0.2);
+        await locator.swipeVertical("up", 0.2);
         await driver.pause(1000);
-        await this.tapElement(await this.locators.buildSelector(toggle + await this.locators.selectValue("instance", "19")));
+        await locator.tapButton({type: "className", value: "android.view.View", instance: 19});
         
-        await this.swipeVertical("up", 0.2);
+        await locator.swipeVertical("up", 0.2);
         await driver.pause(1000);
-        await this.tapElement(await this.locators.buildSelector(toggle + await this.locators.selectValue("instance", "20")));
+        await locator.tapButton({type: "className", value: "android.view.View", instance: 20});
         
-        await this.tapElementButton("closeButton");
+        await locator.tapButton("closeButton");
 
         const waterIndex = this.entryTypes.findIndex(type => type === "Water");
 
@@ -82,19 +45,43 @@ export class HealthDataEntriesPages extends BasePage {
 
         await Promise.all(
             firstGroup.map(async (type) => {
-                await this.isElementDisplayed(await this.locators.buildSelector(await this.locators.selectValue("text", type)));
+                await locator.verifyIsElementDisplayed({type: "text", value: type});
             })
         );
 
-        await this.swipeVertical("up", 0.2);
+        await locator.swipeVertical("up", 0.2);
 
         await Promise.all(
             secondGroup.map(async (type) => {
-                await this.isElementDisplayed(await this.locators.buildSelector(await this.locators.selectValue("text", type)));
+                await locator.verifyIsElementDisplayed({type: "text", value: type});
             })
         );
 
         await driver.pause(1000);
+    }
+
+    async healthDataEntriesFlowIOS(locator) {
+        this.entryTypes = [
+            'Weather', 'Sleep', 'Exercise', 'Meditation', 'Steps', 'Cycle', 'Alcohol', 'Water', 'Caffeine'
+        ];
+
+        for(let i = 1; i<10; i++) {
+            await locator.verifyIsElementDisplayed({type: "text", value: this.entryTypes[i-1]});
+            await locator.tapButton({type: "component", value: `(//XCUIElementTypeSwitch[@value="0"])[1]`});
+
+            await locator.swipeVertical("up", 0.2);
+            await driver.pause(500);
+        }
+
+        await locator.tapButton({type: "component", value: `(//XCUIElementTypeNavigationBar[@name="HowWeFeel_Moodmeter.CheckInOptionsView"])[3]/XCUIElementTypeButton`});
+        await driver.pause(500);
+        await locator.tapButton("attachment");
+
+        await Promise.all(
+            this.entryTypes.map(async (entry) => {
+                await locator.verifyIsElementDisplayed({type: "text", value: entry});
+            })
+        );
     }
 
 }

@@ -1,244 +1,104 @@
-import { BasePage } from "../base/BasePage";
-import { AndroidLocators } from "../../locators/AndroidLocators";
-//import { iOSLocators } from "../../locators/iOSLocators";
 import { verify } from "../../helpers/testVerification";
 
-export class CheckinPage extends BasePage {
-    private locators!: AndroidLocators; // | iOSLocators;
-    //private isAndroidPlatform!: boolean;
+export class CheckinPage {
+    public locator;
 
-    private elements!: {
-        checkinPrompt: string;
-        checkinText: string;
-        newCheckin: string;
-
-        quadrantPrompt: string;
-        redQuadrant: string;
-        yellowQuadrant: string;
-        blueQuadrant: string;
-        greenQuadrant: string;
-
-        pleasedEmotion: string;
-        pleasedDescription: string;
-        uneasyEmotion: string;
-        calmEmotion: string;
-        boredEmotion: string;
-
-        tagPrompt: string;
-        themesTag: string;
-        peopleTag: string;
-        placesTag: string;
-
-        drivingTag: string;
-        myselfTag: string;
-        commutingTag: string;
-
-        journalPrompt: string;
-        journalInput: string;
-
-        reflectPrompt: string;
-        writeText: string;
-        reflectInput: string;
-        suggestedActions: string;
-        affirmations: string;
-        insights: string;
-
-        searchInput: string;
-        yellowEmotions: string;
-        absorbedEmotion: string;
-        greenEmotions: string;
-        acceptedEmotion: string;
-        blueEmotions: string;
-        abandonedEmotion: string;
-        redEmotions: string;
-        afraidEmotion: string;
-
-        dataPrompt: string;
-        changeToolTip: string;
-
-        nextButton: string;
-        microphoneButton: string;
-        cameraButton: string;
-        reflectButton: string;
-        addFeelingButton: string;
-        goDeeperButton: string;
-        finishButton: string;
-        doneButton: string;
-        paperClipIcon: string;
-        saveButton: string;
-        toolsButton: string;
-        notNowButton: string;
-        notShareButton: string;
-
-        imFeelingText: string;
-        editText: string;
-        threeDotsButton: string;
-        deleteButton: string;
-        confirmButton: string;
-        uneasyEmotion2: string;
-        calmEmotion2: string;
-        uneasyText: string;
-        calmText: string;
-    };
-
-    async init() {
-        //this.isAndroidPlatform = await this.isAndroid();
-
-        this.locators = new AndroidLocators();
-
-        this.elements = {
-            // Checkin
-            checkinPrompt: await this.locators.selectValue("contains", "How are you feeling this"),
-            checkinText: await this.locators.selectValue("text", "Check in") + await this.locators.selectValue("instance", "0"),
-            newCheckin: await this.locators.selectValue("description", "New check In"),
-
-            // Quadrants
-            quadrantPrompt: await this.locators.selectValue("text", "Tap the color that best describes how you feel right now"),
-            redQuadrant: await this.locators.selectValue("text", "High Energy\nUnpleasant"),
-            yellowQuadrant: await this.locators.selectValue("text", "High Energy\nPleasant"),
-            blueQuadrant: await this.locators.selectValue("text", "Low Energy\nUnpleasant"),
-            greenQuadrant: await this.locators.selectValue("text", "Low Energy\nPleasant"),
-
-            // Emotions
-            pleasedEmotion: await this.locators.selectValue("text", "Pleased"),
-            pleasedDescription: await this.locators.selectValue("text", "feeling content and happy about a particular situation or person"),
-            uneasyEmotion: await this.locators.selectValue("text", "Uneasy"),
-            calmEmotion: await this.locators.selectValue("text", "Calm"),
-            boredEmotion: await this.locators.selectValue("text", "Bored"),
-
-            // Tags
-            tagPrompt: await this.locators.selectValue("contains", "What were you doing when you felt"),
-            themesTag: await this.locators.selectValue("text", "Themes"),
-            peopleTag: await this.locators.selectValue("text", "People"),
-            placesTag: await this.locators.selectValue("text", "Places"),
-
-            // Theme tags
-            drivingTag: await this.locators.selectValue("text", "Driving"),
-            myselfTag: await this.locators.selectValue("text", "By Myself"),
-            commutingTag: await this.locators.selectValue("text", "Commuting"),
-
-            // Journal entry
-            journalPrompt: await this.locators.selectValue("contains", "Describe what might be causing you to feel"),
-            journalInput: await this.locators.selectValue("className", "android.widget.ScrollView"),
-
-            // Reflect
-            reflectPrompt: await this.locators.selectValue("text", "Reflect"),
-            writeText: await this.locators.selectValue("text", "Write"),
-            reflectInput: await this.locators.selectValue("className", "android.widget.EditText"),
-            suggestedActions: await this.locators.selectValue("text", "[icon] Suggested actions"),
-            affirmations: await this.locators.selectValue("text", "[icon] Affirmations"),
-            insights: await this.locators.selectValue("text", "[icon] Insight"),
-
-            // Feelings
-            searchInput: await this.locators.selectValue("text", "Search feelings to add"),
-            yellowEmotions: await this.locators.selectValue("text", "Yellow"),
-            absorbedEmotion: await this.locators.selectValue("text", "Absorbed"),
-            greenEmotions: await this.locators.selectValue("text", "Green"),
-            acceptedEmotion: await this.locators.selectValue("text", "Accepted"),
-            blueEmotions: await this.locators.selectValue("text", "Blue"),
-            abandonedEmotion: await this.locators.selectValue("text", "Abandoned"),
-            redEmotions: await this.locators.selectValue("text", "Red"),
-            afraidEmotion: await this.locators.selectValue("text", "Afraid"),
-
-            // Data entries
-            dataPrompt: await this.locators.selectValue("text", "Time, weather, \nsleep & exercise"),
-
-            // Complete
-            changeToolTip: await this.locators.selectValue("contains", "Want to change how you feel"),
-
-            // Buttons
-            nextButton: await this.locators.selectValue("description", "Next"),
-            microphoneButton: await this.locators.selectValue("description", "Open microphone"),
-            cameraButton: await this.locators.selectValue("description", "Open camera"),
-            reflectButton: await this.locators.selectValue("description", "Reflect"),
-            addFeelingButton: await this.locators.selectValue("className", "android.view.View") + await this.locators.selectValue("instance", "4"),
-            goDeeperButton: await this.locators.selectValue("text", "Go Deeper"),
-            finishButton: await this.locators.selectValue("text", "Finish"),
-            doneButton: await this.locators.selectValue("text", "Done"),
-            paperClipIcon: await this.locators.selectValue("className", "android.widget.Button") + await this.locators.selectValue("instance", "0"),
-            saveButton: await this.locators.selectValue("text", "Save"),
-            toolsButton: await this.locators.selectValue("text", "Tools") + await this.locators.selectValue("instance", "0"),
-            notNowButton: await this.locators.selectValue("text", "Not now"),
-            notShareButton: await this.locators.selectValue("text", "Don't Share") + await this.locators.selectValue("instance", "1"),
-
-
-            // Card
-            imFeelingText: await this.locators.selectValue("text", "I’m feeling"),
-            editText: await this.locators.selectValue("className", "android.widget.EditText"),
-            threeDotsButton: await this.locators.selectValue("className", "android.widget.Button") + await this.locators.selectValue("instance", "4"),
-            deleteButton: await this.locators.selectValue("text", "Delete Check-In"),
-            confirmButton: await this.locators.selectValue("text", "Yes"),
-            uneasyEmotion2: await this.locators.selectValue("text", "uneasy"),
-            calmEmotion2: await this.locators.selectValue("text", "calm"),
-            uneasyText: await this.locators.selectValue("text", "Feeling stressed about work"),
-            calmText: await this.locators.selectValue("text", "Feeling peaceful and relaxed today."),
-        };
-
-        return this;
-    }
-
-    async verifyIsElementDisplayed(
-        element: keyof typeof this.elements,
-        timeout?: number
-    ): Promise<boolean> {
-        return await this.isElementDisplayed(await this.locators.buildSelector(this.elements[element]), timeout ?? null);
-    }
-
-    async tapElementButton(
-        button: keyof typeof this.elements,
-        timeout?: number
-    ): Promise<void> {
-        await this.tapElement(await this.locators.buildSelector(this.elements[button]), timeout ?? null);
-    }
-
-    async waitFor(
-        element: keyof typeof this.elements,
-        timeout?: number
-    ): Promise<void> {
-        await this.waitForElement(await this.locators.buildSelector(this.elements[element]), timeout ?? null);
-    }
-
-    async inputText(input: string, text: string) {
-        await this.enterText(await this.locators.buildSelector(this.elements[input]), text, true);
+    constructor(locator) {
+        this.locator = locator;
     }
 
     //////////////// Functions repetidas
-    async QuadrantsStep() {
-        await verify(this.verifyIsElementDisplayed("checkinPrompt")
-                    , this.verifyIsElementDisplayed("checkinText")
-                    , this.verifyIsElementDisplayed("newCheckin"));
-        
-        await this.tapElementButton("newCheckin");
 
-        await verify(this.verifyIsElementDisplayed("quadrantPrompt"), this.areAllQuadrantsDisplayed());
+    async areAllQuadrantsDisplayed(): Promise<boolean> {
+        return (await this.locator.verifyIsElementDisplayed("redQuadrant") 
+            && await this.locator.verifyIsElementDisplayed("yellowQuadrant")
+            && await this.locator.verifyIsElementDisplayed("blueQuadrant")
+            && await this.locator.verifyIsElementDisplayed("greenQuadrant"));
+    }
+
+    async QuadrantsStep() {
+        await driver.pause(2000);
+        await verify(this.locator.verifyIsElementDisplayed("newCheckin"));
+        await this.locator.tapButton("newCheckin");
+        await verify(this.locator.verifyIsElementDisplayed("quadrantPrompt"), this.areAllQuadrantsDisplayed());
+    }
+
+    async selectTags() {
+        await this.locator.tapButton("drivingTag");
+        await this.locator.tapButton("myselfTag");
+        await this.locator.tapButton("commutingTag");
+    }
+
+    async areThemesDisplayed(): Promise<boolean> {
+        return (await this.locator.verifyIsElementDisplayed("themesTag") 
+            && await this.locator.verifyIsElementDisplayed("peopleTag")
+            && await this.locator.verifyIsElementDisplayed("placesTag"));
     }
 
     async tagsStep() {
-        await verify(this.verifyIsElementDisplayed("tagPrompt"), this.areThemesDisplayed())
+        await verify(this.locator.verifyIsElementDisplayed("tagPrompt"));
+
+        if(!this.locator.isAndroidPlatform){
+            await this.locator.swipeVertical("up", 0.6);
+        } 
+        await verify(this.areThemesDisplayed());
         await this.selectTags();
-        await this.tapElementButton("nextButton");
+
+        if(this.locator.isAndroidPlatform) await this.locator.tapButton("next");
     }
 
-    async journalStep(input: string) {
-        await verify(this.isJournalScreenDisplayed());
-        await this.inputText("journalInput", input);
-        await this.tapElementButton("nextButton");
+    async isJournalScreenDisplayed(): Promise<boolean> {
+        if(this.locator.isAndroidPlatform){
+            return (await this.locator.verifyIsElementDisplayed("journalPrompt") 
+                && await this.locator.verifyIsElementDisplayed("microphone")
+                && await this.locator.verifyIsElementDisplayed("camera"));
+        }
+        else {
+            return await this.locator.verifyIsElementDisplayed("journalEntry");
+        }
     }
 
-    async journalReflectStep(input: string) {
-        await verify(this.isJournalScreenDisplayed());
-        await this.inputText("journalInput", input);
-        await this.tapElementButton("reflectButton");
+    async journalStep(input: string, next: boolean = true) {
+        if(!await this.isJournalScreenDisplayed()){
+            await this.locator.swipeVertical("down", 0.6);
+        }
+
+        if(!this.locator.isAndroidPlatform) await this.locator.tapButton("journalEntry");
+
+        await this.locator.enterTextJournal("textInput", input);
+
+        if(this.locator.isAndroidPlatform) await this.locator.tapButton(next ? "next" : "reflect");
+        else await this.locator.tapButton(next ? "finish" : "deeper");
+
+        if(!this.locator.isAndroidPlatform && await this.locator.verifyIsElementDisplayed("reflectModal")){
+            await this.locator.tapButton("continue");
+            await verify(this.locator.verifyIsElementDisplayed("aiEnablePrompt"));
+            await this.locator.tapButton("enableAI");
+        }
     }
 
-    async tagsAndJournalStep(input: string) {
+    async tagsAndJournalStep(input: string, next: boolean) {
         await this.tagsStep();
-        await this.journalStep(input);
+        await this.journalStep(input, next);
+    } 
+    
+    async handleChangeTooltip(): Promise<boolean> {
+        const tooltipPresent = await this.locator.verifyIsElementDisplayed("emotionalToolsPrompt");
+
+        if (tooltipPresent) {
+            await this.locator.tapScreenCenter();
+            return true;
+        }
+        return false;
     }
 
-    async tagsAndJournalReflectStep(input: string) {
-        await this.tagsStep();
-        await this.journalReflectStep(input);
+    async isCheckinCompleted(): Promise<boolean> {
+        try {
+            return (await this.locator.verifyIsElementDisplayed("newCheckin")
+                && await this.locator.verifyIsElementDisplayed("tools"));
+        } catch (error) {
+            return false;
+        }
     }
 
     async completeCheckin(again: boolean = true){
@@ -249,305 +109,247 @@ export class CheckinPage extends BasePage {
     }
 
     async dataAndSaveStep() {
-        await verify(this.verifyIsElementDisplayed("dataPrompt"));
-        await this.tapElementButton("saveButton");
+        if(this.locator.isAndroidPlatform){
+            await verify(this.locator.verifyIsElementDisplayed("dataPrompt"));
+            await this.locator.tapButton("save");
+        }
+        else {
+            await this.locator.tapButton("complete");
+        }
     }
 
-    async completeReflectStep(toolTip: boolean) {
-        await this.tapElementButton("doneButton");
-        await this.tapElementButton("nextButton");
-        await verify(this.verifyIsElementDisplayed("dataPrompt"));
-        await browser.pause(2000); // wait for the AI processing to complete
-        await this.tapElementButton("saveButton");
-        await browser.pause(2000); // wait for the save action to complete
+    async completeReflectStep(done: boolean = true, toolTip: boolean) {
+        if(this.locator.isAndroidPlatform) {
+            await this.locator.tapButton(done ? "done" : "finish");
+            await this.locator.tapButton("next");
+        }
+        else {
+            await this.locator.tapButton(done ? "done" : "goFinish");
+            await driver.pause(1000);
+
+            if(await this.locator.verifyIsElementDisplayed("done")) await this.locator.tapButton("done");
+            if(await this.locator.verifyIsElementDisplayed("finish")) await this.locator.tapButton("finish");
+        }
+
+        await this.dataAndSaveStep();
+
+        if(!this.locator.isAndroidPlatform && await this.locator.verifyIsElementDisplayed("closeButton")){
+            await this.locator.tapButton("closeButton");
+        }
+
+        if(this.locator.isAndroidPlatform && await this.locator.verifyIsElementDisplayed("save")){
+            await this.locator.tapButton("save");
+        }
+
+        await driver.pause(2000);
         
         if(toolTip) await this.completeCheckin(true);
     }
     
-    async completeReflectStep2(toolTip: boolean) {
-        await this.tapElementButton("finishButton");
-        await this.tapElementButton("nextButton");
-        await verify(this.verifyIsElementDisplayed("dataPrompt"));
-        await browser.pause(2000); // wait for the AI processing to complete
-        await this.tapElementButton("saveButton");
-        await browser.pause(2000); // wait for the save action to complete
+///// Emotions
 
-        if(toolTip) await this.completeCheckin(false);
-    }
-///// otras
-
-    async areAllQuadrantsDisplayed(): Promise<boolean> {
-        return (await this.verifyIsElementDisplayed("redQuadrant") 
-            && await this.verifyIsElementDisplayed("yellowQuadrant")
-            && await this.verifyIsElementDisplayed("blueQuadrant")
-            && await this.verifyIsElementDisplayed("greenQuadrant"));
-    }
-
-    async tapPleasedEmotion(quadrant: boolean): Promise<boolean> {
+    async tapEmotion(quadrant: string | null, emotion: string): Promise<boolean> {
         try{
-            if(quadrant) await this.tapElementButton("yellowQuadrant");
-            await verify(this.verifyIsElementDisplayed("pleasedEmotion"), this.verifyIsElementDisplayed("pleasedDescription"));
-            await this.tapElementButton("pleasedEmotion");
+            if(quadrant) await this.locator.tapButton(quadrant);
+            await verify(this.locator.verifyIsElementDisplayed(emotion));
+            await this.locator.tapButton(emotion);
+
+            if(!this.locator.isAndroidPlatform) await this.locator.tapButton(emotion);
+
             return true;
         } catch (error) {
             return false;
         }
     }
 
-    async tapUneasyEmotion(): Promise<boolean> {
-        try{
-            await this.tapElementButton("redQuadrant");
-            await verify(this.verifyIsElementDisplayed("uneasyEmotion"));
-            await this.tapElementButton("uneasyEmotion");
-            return true;
-        } catch (error) {
-            return false;
-        }
-    }
-
-    async tapBoredEmotion(): Promise<boolean> {
-        try{
-            await this.tapElementButton("blueQuadrant");
-            await verify(this.verifyIsElementDisplayed("boredEmotion"));
-            await this.tapElementButton("boredEmotion");
-            return true;
-        } catch (error) {
-            return false;
-        }
-    }
-
-    async tapCalmEmotion(): Promise<boolean> {
-        try{
-            await this.tapElementButton("greenQuadrant");
-            await verify(this.verifyIsElementDisplayed("calmEmotion"));
-            await this.tapElementButton("calmEmotion");
-            return true;
-        } catch (error) {
-            return false;
-        }
-    }
-
-    async areThemesDisplayed(): Promise<boolean> {
-        return (await this.verifyIsElementDisplayed("themesTag") 
-            && await this.verifyIsElementDisplayed("peopleTag")
-            && await this.verifyIsElementDisplayed("placesTag"));
-    }
-
-    async selectTags() {
-        await this.tapElementButton("drivingTag");
-        await this.tapElementButton("myselfTag");
-        await this.tapElementButton("commutingTag");
-    }
-
-    async isJournalScreenDisplayed(): Promise<boolean> {
-        return (await this.verifyIsElementDisplayed("journalPrompt") 
-            && await this.verifyIsElementDisplayed("microphoneButton")
-            && await this.verifyIsElementDisplayed("cameraButton"));
-    }
-
-    async handleChangeTooltip(): Promise<boolean> {
-        const tooltipPresent = await this.verifyIsElementDisplayed("changeToolTip");
-
-        if (tooltipPresent) {
-            await this.tapScreenCenter();
-            return true;
-        }
-        return false;
-    }
-
-    async isCheckinCompleted(): Promise<boolean> {
-        try {
-            return (await this.verifyIsElementDisplayed("checkinPrompt") 
-                && await this.verifyIsElementDisplayed("reflectPrompt")
-                && await this.verifyIsElementDisplayed("toolsButton"));
-        } catch (error) {
-            return false;
-        }
-    }
 
     ////////////////
     // card
 
-    async isCheckinDisplayed(emotion: "uneasyEmotion2" | "calmEmotion2"): Promise<boolean> {
-        const mainTitleDisplayed = await this.verifyIsElementDisplayed("checkinPrompt");
-        await this.swipeVertical("up", 0.7);
+    async isCheckinDisplayed(emotion: string): Promise<boolean> {
+        await this.locator.swipeVertical("up", 0.7);
         await browser.pause(1000);
-        return mainTitleDisplayed && await this.verifyIsElementDisplayed("imFeelingText") && await this.verifyIsElementDisplayed(emotion);
+
+        if(this.locator.isAndroidPlatform) {
+            return await this.locator.verifyIsElementDisplayed("imFeelingText") && await this.locator.verifyIsElementDisplayed(emotion);
+        }
+        else {
+            return await this.locator.verifyIsElementDisplayed(emotion);
+        }
     }
 
-    async isCheckinCardDisplayed(emotion: "uneasyEmotion2" | "calmEmotion2"): Promise<boolean> {
-        return (await this.verifyIsElementDisplayed(emotion)
-            && await this.verifyIsElementDisplayed("drivingTag")
-            && await this.verifyIsElementDisplayed("myselfTag")
-            && await this.verifyIsElementDisplayed("commutingTag")
-        );
+    async isCheckinCardDisplayed(emotion: string): Promise<boolean> {
+        return (await this.locator.verifyIsElementDisplayed(emotion));
     }
 
     async editJournalEntry(newText: string): Promise<void> {
-        const element = await this.waitForElement(await this.locators.buildSelector(this.elements.editText));
+        const element = await this.locator.waitFor(this.locator.isAndroidPlatform ? "editText" : "textInput");
         await element.setValue(newText);
         await driver.pause(1000);
     }
 
-    async deleteCheckinFlow(): Promise<void> {
-        await this.tapElementButton("threeDotsButton");
-        await driver.pause(2000);
-
-        await this.tapElementButton("deleteButton");
-        await driver.pause(2000);
-
-        await this.tapElementButton("confirmButton");
-        await driver.pause(2000);
-    }
-
-    async editJournalFlow(emotion: "uneasyEmotion2" | "calmEmotion2", newText: string): Promise<void> {
-        await this.tapElementButton(emotion);
+    async editJournalFlow(emotion: string, newText: string): Promise<void> {
+        await this.locator.tapButton(emotion);
         await driver.pause(2000);
 
         await this.editJournalEntry(newText);
 
-        await this.tapElementButton("saveButton");
+        await this.locator.tapButton("save");
         await driver.pause(2000);
     }
 
+    async deleteCheckinFlow(): Promise<void> {
+        await this.locator.tapButton("threeDots");
+        await driver.pause(2000);
+
+        await this.locator.tapButton("delete");
+        await driver.pause(2000);
+
+        await this.locator.tapButton("confirm");
+        await driver.pause(2000);
+    }
 
     async verifyIsNewElementDisplayed(
+        type: string,
         element: string,
         timeout?: number
     ): Promise<boolean> {
-        return await this.isElementDisplayed(await this.locators.buildSelector(await this.locators.selectValue("text", element)), timeout ?? null);
+        return await this.locator.verifyIsElementDisplayed({ type: type, value: element }, timeout ?? null);
     }
-
 
     // others
-    async generateCurrentDateTimeSelector(): Promise<string> {
-        const now = new Date();
-
-        const dayName = now.toLocaleString("default", { weekday: "long" });
-        const monthName = now.toLocaleString("default", { month: "long" });
-        const day = now.getDate();
-
-        const formatDate = `${dayName} ${monthName} ${day}`;
-        return `new UiSelector().textContains("${formatDate}")`;
-    }
-
-    generatePreviousDisplayDateSelector(): string {
-        const yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
-
-        const dayName = yesterday.toLocaleString("default", { weekday: "long" });
-        const monthName = yesterday.toLocaleString("default", { month: "long" });
-        const day = yesterday.getDate();
-
-        const dateOnly = `${dayName} ${monthName} ${day}`;
-
-        return `new UiSelector().textContains("${dateOnly}")`;
-    }
-
-    generateCarouselDateSelector(): string {
-        const now = new Date();
-
-        const dayName = now.toLocaleString("default", { weekday: "short" });
-        const monthName = now.toLocaleString("default", { month: "short" });
-        const day = now.getDate();
-
-        const dateText = `${dayName} ${monthName} ${day}`;
-        return `new UiSelector().text("${dateText}")`;
-    }
 
     async displayColorsCategory(): Promise<boolean> {
-        return (await this.verifyIsElementDisplayed("yellowEmotions")
-            && await this.verifyIsElementDisplayed("greenEmotions")
-            && await this.verifyIsElementDisplayed("blueEmotions")
-            && await this.verifyIsElementDisplayed("redEmotions"));
-    }
-
-    async isUsageLimitReached(): Promise<boolean> {
-        try{
-            const usageLimitSelector = `new UiSelector().text("Usage limit reached. Please try again tomorrow.")`;
-            const element = await $(`android=${usageLimitSelector}`);
-
-            return await element.isDisplayed();
-        }catch(error){
-            return false;
-        }
-    }
-
-    async areTakeawaysDisplayed(): Promise<boolean> {
-        try {
-            const timeout = 10000;
-            await this.waitFor("suggestedActions", timeout);
-            await this.swipeVertical("up", 0.5);
-            await this.waitFor("affirmations", timeout);
-            await this.waitFor("insights", timeout);
-            await browser.pause(1000);
-            return true;
-        } catch (error) {
-            return false;
-        }
-    }
-
-    async tapButtonByInstance(instance: number): Promise<void> {
-        await this.tapElement(`android=new UiSelector().className("android.widget.Button").instance(${instance})`);
-    }
-
-    // Tapping the buttons with instances 0, 1, and 2
-    async tapAllButtons(): Promise<void> {
-        for (let i = 0; i < 3; i++) {
-            await this.locators.selectValue("className", "android.view.Button") + await this.locators.selectValue("instance", `${i}`);
-        }
+        return (await this.locator.verifyIsElementDisplayed("yellowEmotions")
+            && await this.locator.verifyIsElementDisplayed("greenEmotions")
+            && await this.locator.verifyIsElementDisplayed("blueEmotions")
+            && await this.locator.verifyIsElementDisplayed("redEmotions"));
     }
 
     async dismissReflectModalIfPresent(): Promise<boolean> {
-        const modalPresent = await this.verifyIsElementDisplayed("notNowButton", 2000);
+        const modalPresent = await this.locator.verifyIsElementDisplayed("notNow", 2000);
         if (modalPresent) {
-            await this.tapElementButton("notNowButton");
+            await this.locator.tapButton("notNow");
             return true;
         } else {
             return false;
         }
     }
 
-    async tapDateTimeDisplay(date?: Date): Promise<void> {
-        const dateTimeSelector = await this.generateCurrentDateTimeSelector();
-        await this.tapElement(`android=${dateTimeSelector}`);
+    async isUsageLimitReached(): Promise<boolean> {
+        try{
+            if(this.locator.isAndroidPlatform) {
+                return await this.locator.verifyIsElementDisplayed({type: "text", value: "Usage limit reached. Please try again tomorrow."});
+            }
+            else {
+                return await this.locator.verifyIsElementDisplayed({type: "text", value: "We couldn't connect to our AI provider. Are you connected to the internet?"});
+            }
+        }catch(error){
+            return false;
+        }
+    }
+
+    async areTakeawaysDisplayed(): Promise<void> {
+
+        await this.locator.swipeVertical("up", 2.0);
+        await driver.pause(2000);
+        await this.locator.swipeVertical("up", 0.5);
+        await driver.pause(2000);
+        const timeout = 10000;
+
+        await verify(this.locator.verifyIsElementDisplayed("affirmations", timeout),
+            this.locator.verifyIsElementDisplayed("insights", timeout),
+            this.locator.verifyIsElementDisplayed("suggestedActions", timeout));
+    }
+
+    async tapAllButtons(): Promise<void> {
+        if(this.locator.isAndroidPlatform){
+            for (let i = 0; i < 3; i++) {
+                await this.locator.tapButton({type: "className", value: "android.widget.Button", instance: i });
+            }
+        }
+        else {
+            for (let i = 2; i < 5; i++) {
+                await this.locator.tapButton({type: "component", value: `//XCUIElementTypeApplication[@name="How We Feel"]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[4]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther[${i}]/XCUIElementTypeOther/XCUIElementTypeButton` });
+            }
+        }
+    }
+
+    async tapButtonByInstance(instance: number): Promise<void> {
+        await this.locator.tapElement(await this.locator.buildSelector({type: "className", value: "android.widget.", instance: instance}));
+    }
+
+    async generateDateTimeSelector(yesterday: boolean, type: "long" | "short"): Promise<string> {
+        const date = new Date();
+        if(yesterday) date.setDate(date.getDate() - 1);
+
+        const day = date.getDate();
+        const dayName = date.toLocaleString("default", { weekday: type });
+        const monthName = date.toLocaleString("default", { month: type });
+
+        if(this.locator.isAndroidPlatform){
+            return await this.locator.buildSelector({type: "contains", value: `${dayName} ${monthName} ${day}`});
+        }
+        else {
+            if(yesterday){
+                return await this.locator.buildSelector({type: "text", value: `${dayName} ${monthName} ${day}`});
+            }
+            else {
+                return await this.locator.buildSelector({type: type === "long" ? "contains" : "wheel", value: "Today"});
+            }
+        }
+    }
+
+    async tapDateTimeDisplay(): Promise<void> {
+        await this.locator.tapElement(await this.generateDateTimeSelector(false, "long"));
     }
 
     async isPreviousDateDisplayed(): Promise<boolean> {
-        const previousDateSelector = this.generatePreviousDisplayDateSelector();
-        return await this.isElementDisplayed(`android=${previousDateSelector}`);
+        return await this.locator.isElementDisplayed(await this.generateDateTimeSelector(true, "short"));
     }
 
     async selectPreviousDateInCarousel(): Promise<void> {
-        const dateSelector = this.generateCarouselDateSelector();
-        const dateElement = await this.waitForElement(`android=${dateSelector}`);
+        const dateElement = await this.locator.waitForElement(await this.generateDateTimeSelector(false, "short"));
 
-        const elementLocation = await dateElement.getLocation();
-        const elementSize = await dateElement.getSize();
+        if(this.locator.isAndroidPlatform){
 
-        // SWIPE DOWN to select previous date in date carousel
-        const centerX = elementLocation.x + elementSize.width / 2
-        const startY = elementLocation.y + elementSize.height * 0.1;
-        const endY = elementLocation.y + elementSize.height * 2;
+            const elementLocation = await dateElement.getLocation();
+            const elementSize = await dateElement.getSize();
 
-        await driver.performActions([
-            {
-                type: "pointer",
-                id: "finger",
-                parameters: { pointerType: "touch" },
-                actions: [
-                    { type: "pointerMove", duration: 0, x: centerX, y: startY },
-                    { type: "pointerDown", button: 0 },
-                    { type: "pointerMove", duration: 800, x: centerX, y: endY },
-                    { type: "pointerUp", button: 0 },
-                ],
-            },
-        ]);
+            // SWIPE DOWN to select previous date in date carousel
+            const centerX = elementLocation.x + elementSize.width / 2
+            const startY = elementLocation.y + elementSize.height * 0.1;
+            const endY = elementLocation.y + elementSize.height * 2;
 
-        await driver.releaseActions();
+            await driver.performActions([
+                {
+                    type: "pointer",
+                    id: "finger",
+                    parameters: { pointerType: "touch" },
+                    actions: [
+                        { type: "pointerMove", duration: 0, x: centerX, y: startY },
+                        { type: "pointerDown", button: 0 },
+                        { type: "pointerMove", duration: 800, x: centerX, y: endY },
+                        { type: "pointerUp", button: 0 },
+                    ],
+                },
+            ]);
+
+            await driver.releaseActions();
+        }
+        else {
+            await driver.execute('mobile: selectPickerWheelValue', {
+                element: dateElement.elementId,
+                order: 'previous',
+                offset: 0.15
+            });
+
+            await browser.pause(1000);
+
+            const newValue = await dateElement.getAttribute("value");
+            console.log("Valor actual:", newValue);
+        }
         await browser.pause(1000);
     }
-
-
 
 }

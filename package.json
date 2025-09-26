@@ -10,17 +10,25 @@
 
     "ios:skip": "wdio run wdio.ios.conf.ts --spec ./src/tests/onboardingSkip.spec.ts",
     "ios:complete": "wdio run wdio.ios.conf.ts --spec ./src/tests/onboardingComplete.spec.ts",
+    "ios:create": "wdio run wdio.ios.conf.ts --spec ./src/tests/createCheckin.spec.ts",
+    "ios:emotions": "wdio run wdio.ios.conf.ts --spec './src/tests/createCheckinsQuadrants.spec.ts'",
+    "ios:edit": "wdio run wdio.ios.conf.ts --spec './src/tests/editCheckin.spec.ts'",
+    "ios:delete": "wdio run wdio.ios.conf.ts --spec './src/tests/deleteCheckin.spec.ts'",
+    "ios:pastDate": "wdio run wdio.ios.conf.ts --spec './src/tests/createCheckinPastdate.spec.ts'",
+    "ios:healthData": "wdio run wdio.ios.conf.ts --spec './src/tests/createCheckinHealthData.spec.ts'",
+    "ios:share": "wdio run wdio.ios.conf.ts --spec './src/tests/shareCheckin.spec.ts'",
+    "ios:multiple": "wdio run wdio.ios.conf.ts --spec './src/tests/createCheckinMultipleFeelings.spec.ts'",
+    "ios:reflect": "wdio run wdio.ios.conf.ts --spec './src/tests/createCheckinReflect.spec.ts'",
+    "ios:takeaways": "wdio run wdio.ios.conf.ts --spec './src/tests/createCheckinWithTakeaways.spec.ts'",
 
     "android:skip": "wdio run wdio.android.conf.ts --spec ./src/tests/onboardingSkip.spec.ts",
     "android:complete": "wdio run wdio.android.conf.ts --spec ./src/tests/onboardingComplete.spec.ts",
     "android:create": "wdio run wdio.android.conf.ts --spec ./src/tests/createCheckin.spec.ts",
     "android:emotions": "npx wdio run wdio.android.conf.ts --spec './src/tests/createCheckinsQuadrants.spec.ts'",
     "android:edit": "npx wdio run wdio.android.conf.ts --spec './src/tests/editCheckin.spec.ts'",
-    "android:delete": "npx wdio run wdio.android.conf.ts --spec './src/tests/deleteCheckin.spec.ts'",    
+    "android:delete": "npx wdio run wdio.android.conf.ts --spec './src/tests/deleteCheckin.spec.ts'",
     "android:pastDate": "npx wdio run wdio.android.conf.ts --spec './src/tests/createCheckinPastdate.spec.ts'",
-    
     "android:healthData": "npx wdio run wdio.android.conf.ts --spec './src/tests/createCheckinHealthData.spec.ts'",
-
     "android:share": "npx wdio run wdio.android.conf.ts --spec './src/tests/shareCheckin.spec.ts'",
     "android:multiple": "npx wdio run wdio.android.conf.ts --spec './src/tests/createCheckinMultipleFeelings.spec.ts'",
     "android:reflect": "npx wdio run wdio.android.conf.ts --spec './src/tests/createCheckinReflect.spec.ts'",
@@ -37,12 +45,8 @@
     "allure:generate": "allure generate allure-results --clean",
     "allure:open": "allure open allure-report",
     "allure:serve": "allure serve allure-results",
-    "test:report": "npm run allure:serve",
-
-    "allure:serve:android": "allure serve allure-results-android",
-    "allure:serve:ios": "allure serve allure-results-ios",
-    "test:android:report": "npm run android && npm run allure:serve:android",
-    "test:ios:report": "npm run ios && npm run allure:serve:ios"
+    "test:android:report": "npm run android && npm run allure:serve",
+    "test:ios:report": "npm run ios && npm run allure:serve"
   },
   "keywords": [],
   "author": "",

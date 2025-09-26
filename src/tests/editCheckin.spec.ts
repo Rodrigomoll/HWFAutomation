@@ -2,15 +2,19 @@ import { CheckinPage } from "../pages/flows/CheckinPage";
 import { skipOnboardingFlow } from "../helpers/skipOnboardingFlow";
 import { verify } from "../helpers/testVerification";
 import { doCheckinWithEmotionsFlow } from "../helpers/checkinWithEmotionsFlow";
+import { whichPlatform } from "../helpers/whichPlatform";
 
 
 describe("Edit Checkin Page", () => {
     let checkinPage: CheckinPage;
+    let locator;
     
     const UPDATED_TEXT = "Updated journal entry for the check-in.";
 
     beforeAll(async () => {
-        checkinPage = await new CheckinPage().init();
+        locator = await whichPlatform();
+        checkinPage = await new CheckinPage(locator);
+
         //setup to skip all onboarding flow and start creating our check-ins
         await skipOnboardingFlow();
     });
@@ -20,18 +24,31 @@ describe("Edit Checkin Page", () => {
     });
 
     it("Should display the Checkin and edit the journal entry of the check-in", async () => {
-        await verify(checkinPage.isCheckinDisplayed("uneasyEmotion2"));
-        await checkinPage.tapElementButton("uneasyEmotion2");
-        await verify(checkinPage.isCheckinCardDisplayed("uneasyEmotion2"));
-        await checkinPage.tapElementButton("uneasyText");
+        if(locator.isAndroidPlatform){
+            await verify(checkinPage.isCheckinDisplayed("uneasyEmotionLabel"));
+            await locator.tapButton("uneasyEmotionLabel");
+        }
+        else {
+            await verify(checkinPage.isCheckinDisplayed("agoTiming"));
+            await locator.tapButton("agoTiming");
+        }
+
+        await verify(checkinPage.isCheckinCardDisplayed("uneasyEmotionLabel"));
+        await locator.tapButton("uneasyText");
         await driver.pause(2000);
 
         await checkinPage.editJournalEntry(UPDATED_TEXT);
-        await verify(checkinPage.verifyIsNewElementDisplayed(UPDATED_TEXT));
+        if(locator.isAndroidPlatform) await verify(checkinPage.verifyIsNewElementDisplayed("text", UPDATED_TEXT));
+        else await verify(checkinPage.verifyIsNewElementDisplayed("textView", UPDATED_TEXT));
 
-        await checkinPage.tapElementButton("saveButton", 200);
-        await checkinPage.tapElementButton("saveButton", 200);
+        if(locator.isAndroidPlatform){
+            await locator.tapButton("save", 200);
+            await locator.tapButton("save", 200);
+        }
+        else {
+            await locator.tapButton("finish", 200);
+        }
 
-        await verify(checkinPage.verifyIsNewElementDisplayed(UPDATED_TEXT));
+        await verify(checkinPage.verifyIsNewElementDisplayed("text", UPDATED_TEXT));
     })
 });

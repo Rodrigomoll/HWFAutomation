@@ -1,13 +1,17 @@
 import { CheckinPage } from "../pages/flows/CheckinPage";
 import { skipOnboardingFlow } from "../helpers/skipOnboardingFlow";
 import { verify } from "../helpers/testVerification";
+import { whichPlatform } from "../helpers/whichPlatform";
 import { doCheckinWithEmotionsFlow } from "../helpers/checkinWithEmotionsFlow";
 
 describe("Delete Checkin Page", () => {
     let checkinPage: CheckinPage;
+    let locator;
     
     beforeAll(async () => {
-        checkinPage = await new CheckinPage().init();
+        locator = await whichPlatform();
+        checkinPage = await new CheckinPage(locator);
+
         // Setup to skip all onboarding flow and start creating our check-ins
         await skipOnboardingFlow();
     })
@@ -17,14 +21,26 @@ describe("Delete Checkin Page", () => {
     });
 
     it("Should display the Checkin and delete the check-in", async () => {
-        await verify(checkinPage.isCheckinDisplayed("calmEmotion2"));
-        await checkinPage.tapElementButton("calmEmotion2");
-        await verify(checkinPage.isCheckinCardDisplayed("calmEmotion2"));
-        await checkinPage.tapElementButton("threeDotsButton");
-        await verify(checkinPage.verifyIsElementDisplayed("deleteButton"));
-        await checkinPage.tapElementButton("deleteButton");
+        if(locator.isAndroidPlatform) {
+            await verify(checkinPage.isCheckinDisplayed("calmEmotionLabel"));
+            await locator.tapButton("calmEmotionLabel");
+        }
+        else {
+            await verify(checkinPage.isCheckinDisplayed("agoTiming"));
+            await locator.tapButton("agoTiming");
+        }
+
+        await verify(checkinPage.isCheckinCardDisplayed("calmEmotionLabel"));
+        await locator.tapButton("threeDots");
+        await verify(locator.verifyIsElementDisplayed("delete"));
+        await locator.tapButton("delete");
         await driver.pause(2000);
-        await checkinPage.tapElementButton("confirmButton");
-        await verify(checkinPage.verifyIsElementDisplayed("checkinPrompt", 5000));
+        if(locator.isAndroidPlatform) {
+            await locator.tapButton("confirm");
+        }
+        else {
+            await locator.swipeVertical("down", 1);
+        }
+        await verify(locator.verifyIsElementDisplayed("checkinPrompt", 5000));
     });
 })

@@ -1,30 +1,33 @@
-import { OnboardingInitialPage } from "../pages/flows/OnboardingInitialPage";
 import { verify } from "./testVerification";
+import { AndroidLocators } from "../locators/AndroidLocators";
+import { iOSLocators } from "../locators/iOSLocators";
 
-export async function setupInitialOnboardingFlow(skip: boolean) {
-    const onboardingInitialPage = await new OnboardingInitialPage().init();
-
+export async function setupInitialOnboardingFlow(locator: AndroidLocators | iOSLocators, skip: boolean) {
     try{
-        await verify(onboardingInitialPage.isScreenDisplayed("firstPrompt"))
-        await onboardingInitialPage.tapButton("getStarted");
+        await verify(locator.verifyIsElementDisplayed("introPrompt"))
+        await locator.tapButton("getStarted");
 
-        await verify(onboardingInitialPage.isScreenDisplayed("secondPrompt"));
-        await onboardingInitialPage.tapButton("continue");
+        await verify(locator.verifyIsElementDisplayed("emotionWordsPrompt"));
+        await locator.tapButton("continue");
 
-        await verify(onboardingInitialPage.isScreenDisplayed("thirdPrompt"));
-        await onboardingInitialPage.tapButton("continue");
+        await verify(locator.verifyIsElementDisplayed("strategiesPrompt"));
+        await locator.tapButton("continue");
         
-        await verify(onboardingInitialPage.isScreenDisplayed("fourthPrompt"));
-        await onboardingInitialPage.tapButton("continue");
+        await verify(locator.verifyIsElementDisplayed("patternsPrompt"));
+        await locator.tapButton("continue");
 
-        await verify(onboardingInitialPage.isScreenDisplayed("fifthPrompt"));
-        await onboardingInitialPage.tapButton("continue");
+        await verify(locator.verifyIsElementDisplayed("freeInfoPrompt"));
+        await locator.tapButton("continue");
 
-        await verify(onboardingInitialPage.isScreenDisplayed("sixthPrompt"));
-        await onboardingInitialPage.tapButton("accept");
+        await verify(locator.verifyIsElementDisplayed("termsPrivacyPrompt"));
+        await locator.tapButton("accept");
 
-        await verify(onboardingInitialPage.isScreenDisplayed("seventhPrompt"));
-        await onboardingInitialPage.tapButton(skip ? "skipSetUp" : "continue");
+        if(locator.elements?.["welcomePrompt"]){
+            await verify(locator.verifyIsElementDisplayed("welcomePrompt"));
+        }
+
+        await driver.pause(1000);
+        await locator.tapButton(skip ? "skipSetUp" : "continue");
     }
     catch (error) {
         console.error("Error during initial onboarding setup:", error);

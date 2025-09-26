@@ -1,11 +1,14 @@
 import { CheckinPage } from "../pages/flows/CheckinPage";
 import { skipOnboardingFlow } from "../helpers/skipOnboardingFlow";
+import { whichPlatform } from "../helpers/whichPlatform";
 
 describe("Create Checkin Page", () => {
     let checkinPage: CheckinPage;
+    let locator;
 
     beforeAll(async () => {
-        checkinPage = await new CheckinPage().init();
+        locator = await whichPlatform();
+        checkinPage = await new CheckinPage(locator);
         
         //setup to skip all onboarding flow and start creating our check-ins
         await skipOnboardingFlow();
@@ -13,11 +16,10 @@ describe("Create Checkin Page", () => {
 
     it("Should display the Create Checkin page", async () => {
         await checkinPage.QuadrantsStep();
-        await checkinPage.tapElementButton("yellowQuadrant");
 
-        await checkinPage.tapPleasedEmotion(false);
+        await checkinPage.tapEmotion("yellowQuadrant", "pleasedEmotion");
 
-        await checkinPage.tagsAndJournalStep("This is a test journal entry.");
+        await checkinPage.tagsAndJournalStep("This is a test journal entry.", true);
 
         await checkinPage.dataAndSaveStep();
         
