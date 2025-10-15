@@ -1,6 +1,14 @@
-import { skipOnboardingFlow } from "../helpers/skipOnboardingFlow";
+import { createPageObjectInstance } from "../helpers/createPageObjectInstance";
+import { assertAllTrue } from "../helpers/assertAllTrue";
 
-it("Onboarding Skip Flow", async () => {
-    //setup to skip all onboarding flow and start creating our check-ins
-    await skipOnboardingFlow();
+describe("Onboarding skip flow", () => {
+  let onboardingPage;
+
+  beforeAll(async () => {
+    onboardingPage = createPageObjectInstance("onboarding");
+  });
+
+  it("Skip onboarding flow", async () => {
+    await assertAllTrue(onboardingPage.skipOnboardingFlow());
+  });
 });

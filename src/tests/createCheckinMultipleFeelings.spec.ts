@@ -1,42 +1,33 @@
-import { CheckinPage } from "../pages/flows/CheckinPage";
-import { skipOnboardingFlow } from "../helpers/skipOnboardingFlow";
-import { whichPlatform } from "../helpers/whichPlatform";
+import { createPageObjectInstance } from "../helpers/createPageObjectInstance";
+import { verifyCheckInHomeScreen } from "../helpers/verifyCheckInHomeScreen";
+import { assertAllTrue } from "../helpers/assertAllTrue";
 
 describe("Create check-in with multiple feelings", () => {
-    let checkinPage : CheckinPage;
-    let locator;
+    let checkinPage, onboardingPage;
 
     beforeAll(async () => {
-        locator = await whichPlatform();
-        checkinPage = await new CheckinPage(locator);
+        checkinPage = createPageObjectInstance("checkin");
+        onboardingPage = createPageObjectInstance("onboarding");
 
         // Setup to skip all onboarding flow and start creating our check-ins
-        await skipOnboardingFlow();
+        await onboardingPage.skipOnboardingFlow();
     })
 
     it("Should create a check-in with multiple feelings", async () => {
-        await checkinPage.QuadrantsStep();
+        await checkinPage.selectEmotionFromQuadrant("uneasy");
 
-        await checkinPage.tapEmotion("redQuadrant", "uneasyEmotion");
+        await checkinPage.verifyAndSelectTags();
 
-        await checkinPage.tagsStep();
+        await checkinPage.addEmotion();
 
-        if(locator.isAndroidPlatform){
-            await locator.tapButton("addFeeling");
-        }
-        else {
-            await locator.swipeVertical("down", 0.6);
-            await locator.tapButton("addEmotion");
-        }
+        await checkinPage.tapButton("searchInput");
+        await checkinPage.tapButton("yellowEmotions");
+        await checkinPage.tapButton("absorbedEmotion");
 
-        await locator.tapButton("searchInput");
-        await locator.tapButton("yellowEmotions");
-        await locator.tapButton("absorbedEmotion");
+        await checkinPage.addJournalEntry("This is a test journal entry.");
 
-        await checkinPage.journalStep("This is a test journal entry.");
-
-        await checkinPage.dataAndSaveStep();
+        await checkinPage.completeCheckIn();
         
-        await checkinPage.completeCheckin(true);
+        await assertAllTrue(verifyCheckInHomeScreen());
     })
 })

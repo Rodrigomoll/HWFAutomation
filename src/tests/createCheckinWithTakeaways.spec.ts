@@ -1,30 +1,25 @@
-import { enableAISettings } from "../helpers/enableAISettings";
-import { doLoginFlow } from "../helpers/loginFlow";
-import { skipOnboardingFlow } from "../helpers/skipOnboardingFlow";
-import { doReflectFlow } from "../helpers/reflectFlow";
-import { whichPlatform } from "../helpers/whichPlatform";
-import { deactivateShare } from "../helpers/deactivateShare";
+import { createPageObjectInstance } from "../helpers/createPageObjectInstance";
+import { assertAllTrue } from "../helpers/assertAllTrue";
 
-it("Should create a check-in with reflection and takeaways feature", async () => {
-    let locator = await whichPlatform();
-    await skipOnboardingFlow();
-    await doLoginFlow(locator);
-    await enableAISettings(locator);
+describe("Create check-in with reflection and takeaways feature", () => {
+    let loginPage, reflectPage, settingsPage, onboardingPage;
 
-    await doReflectFlow(true, true); // First check-in
-    await deactivateShare(locator);
+    beforeAll(async () => {
+        loginPage = createPageObjectInstance("login");
+        reflectPage = createPageObjectInstance("reflect");
+        settingsPage = createPageObjectInstance("settings");
+        onboardingPage = createPageObjectInstance("onboarding");
+        
+        // Setup to skip all onboarding flow and start creating our check-ins
+        await onboardingPage.skipOnboardingFlow();
+        // Sign in to access AI features in the app.
+        await loginPage.signIn();
+    },90000);
 
-    for(let i=0; i<5; i++){
-        await doReflectFlow(true, false);
-    }
+    it("Should create a check-in with reflection and takeaways feature", async () => {
+        await settingsPage.enableAISettings();
+        //await settingsPage.deactivateShare();
 
-    if(locator.isAndroidPlatform){
-        // The last one with the modal of sharing
-        if(await locator.verifyIsElementDisplayed("shareEmotionsModal")){
-            await locator.tapButton("close")
-        }
-        await driver.pause(1000);
-    }
-    
-    await doReflectFlow(true, false);
-});
+        await assertAllTrue(reflectPage.completeReflectFlow(true));
+    });
+})

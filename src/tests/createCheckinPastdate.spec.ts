@@ -1,46 +1,25 @@
-import { CheckinPage } from "../pages/flows/CheckinPage";
-import { skipOnboardingFlow } from "../helpers/skipOnboardingFlow";
-import { verify } from "../helpers/testVerification";
-import { whichPlatform } from "../helpers/whichPlatform";
-import { doCheckinWithEmotionsFlow } from "../helpers/checkinWithEmotionsFlow";
+import { assertAllTrue } from "../helpers/assertAllTrue";
+import { createPageObjectInstance } from "../helpers/createPageObjectInstance";
+import { verifyCheckInHomeScreen } from "../helpers/verifyCheckInHomeScreen";
 
-describe("Create Checkin Past Date Page", () => {
-    let checkinPage: CheckinPage;
-    let locator;
+describe("Create check-in with a past date", () => {
+    let checkinPage, onboardingPage;
 
     beforeAll(async () => {
-        locator = await whichPlatform();
-        checkinPage = await new CheckinPage(locator);
+        checkinPage = createPageObjectInstance("checkin");
+        onboardingPage = createPageObjectInstance("onboarding");
 
         //setup to skip all onboarding flow and start creating our check-ins
-        await skipOnboardingFlow();
+        await onboardingPage.skipOnboardingFlow();
     });
 
-    it("Should display the Create Checkin page", async () => {
-        await checkinPage.QuadrantsStep();
-        await checkinPage.tapEmotion("blueQuadrant", "boredEmotion");
+    it("Should create a check-in with a past date", async () => {
+        await checkinPage.selectEmotionFromQuadrant("bored");
 
-        await checkinPage.tagsAndJournalStep("This is a test journal entry.", true);
+        await checkinPage.completeTagsAndJournalEntry("This is a test journal entry.", true);
 
-        if(locator.isAndroidPlatform){
-            await verify(locator.verifyIsElementDisplayed("dataPrompt"));
-        }
+        await checkinPage.selectPreviousCheckinDate();
 
-        await checkinPage.tapDateTimeDisplay();
-        await checkinPage.selectPreviousDateInCarousel();
-
-        if(locator.isAndroidPlatform){
-            await locator.tapButton("save");
-            await locator.tapButton("save");
-        }
-        else {
-            await locator.tapButton("updateTime");
-            await locator.tapButton("complete");
-            await driver.pause(2000);
-        }
-
-        await verify(checkinPage.isPreviousDateDisplayed());
-
-        await checkinPage.completeCheckin();
+        await assertAllTrue(verifyCheckInHomeScreen());
     });
 })

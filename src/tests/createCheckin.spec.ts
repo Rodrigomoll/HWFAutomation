@@ -1,28 +1,18 @@
-import { CheckinPage } from "../pages/flows/CheckinPage";
-import { skipOnboardingFlow } from "../helpers/skipOnboardingFlow";
-import { whichPlatform } from "../helpers/whichPlatform";
+import { createPageObjectInstance } from "../helpers/createPageObjectInstance";
+import { completeBasicCheckin } from "../helpers/completeBasicCheckin";
+import { assertAllTrue } from "../helpers/assertAllTrue";
 
-describe("Create Checkin Page", () => {
-    let checkinPage: CheckinPage;
-    let locator;
+describe("Create check-in", () => {
+    let onboardingPage;
 
     beforeAll(async () => {
-        locator = await whichPlatform();
-        checkinPage = await new CheckinPage(locator);
+        onboardingPage = createPageObjectInstance("onboarding");
         
-        //setup to skip all onboarding flow and start creating our check-ins
-        await skipOnboardingFlow();
+        // Setup to skip all onboarding flow and start creating our check-ins
+        await onboardingPage.skipOnboardingFlow();
     });
 
-    it("Should display the Create Checkin page", async () => {
-        await checkinPage.QuadrantsStep();
-
-        await checkinPage.tapEmotion("yellowQuadrant", "pleasedEmotion");
-
-        await checkinPage.tagsAndJournalStep("This is a test journal entry.", true);
-
-        await checkinPage.dataAndSaveStep();
-        
-        await checkinPage.completeCheckin();
+    it("Should create a basic check-in", async () => {
+        await assertAllTrue(completeBasicCheckin("pleased", "This is a test journal entry."));
     });
 });

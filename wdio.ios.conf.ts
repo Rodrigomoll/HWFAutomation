@@ -6,6 +6,9 @@ export const config: WebdriverIO.Config = {
     runner: 'local',
     specs: ['./src/tests/*.spec.ts'],
     maxInstances: 1,
+    specFileRetries: 1,
+    specFileRetriesDelay: 1000,
+    specFileRetriesDeferred: false,
     
     capabilities: [{
         platformName: 'iOS',

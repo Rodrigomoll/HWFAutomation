@@ -1,101 +1,54 @@
-import { BasePage } from "../pages/base/BasePage";
-
-export abstract class BaseLocators extends BasePage {
-
-    public isAndroidPlatform: boolean = false;
-
-    constructor() {
-        super();
-        this.initPlatform();
-    }
-
-    private async initPlatform() {
-        this.isAndroidPlatform = await this.isAndroid();
-    }
-    
+/**
+ * Abstract base class for defining UI element locators and platform-specific logic.
+ *
+ * This class holds a default set of shared elements and defines abstract methods
+ * that must be implemented by platform-specific subclasses (e.g., AndroidLocators, iOSLocators).
+ */
+export abstract class BaseLocators {
+    /**
+     * Common UI elements used across navigation flows and test flows.
+     * Subclasses can extend or override this object with platform-specific locators.
+     * Each element includes its type, value, and optional instance.
+     */
     public elements: Record<string, { type: string; value: string; instance?: number }> = {
-        // Texts / Prompt
-        emotionWordsPrompt: { type: "text", value: "Find words to identify your emotions" },
-        strategiesPrompt: { type: "text", value: "Try strategies to help you in the moment" },
-        termsPrivacyPrompt: { type: "text", value: "Terms & Privacy" },
-        reminderPrompt: { type: "text", value: "What time do you want to be reminded?" },
-        checkinPrompt: { type: "contains", value: "How are you feeling this" },
-
-        // Modals
-        skipModal: { type: "text", value: "Are you sure you want to skip the setup?" },
-        privacyUpdateModal: { type: "text", value: "We\'ve updated our Privacy Policy" },
-
-        // Inputs
-
-        // Buttons
         continue: { type: "text", value: "Continue"},
-        accept: { type: "text", value: "I Accept"},
-        skipSetUp: { type: "text", value: "Skip setup"},
-        skip: { type: "text", value: "Skip"},
-        complete: { type: "text", value: "Complete check-in" },
-        positiveOption: { type: "text", value: "I want to feel more positive around others" },
         yellowQuadrant: { type: "text", value: "High Energy\nPleasant" },
         pleasedEmotion: { type: "text", value: "Pleased" },
-        greenQuadrant: { type: "text", value: "Low Energy\nPleasant" },
-
-        // Emotions
-        uneasyEmotion: { type: "text", value: "Uneasy" },
-        calmEmotion: { type: "text", value: "Calm" },
-        boredEmotion: { type: "text", value: "Bored" },
-
-        uneasyEmotionLabel: { type: "text", value: "uneasy" },
-        calmEmotionLabel: { type: "text", value: "calm" },
-
-        uneasyText: { type: "text", value: "Feeling stressed about work" },
-        calmText: { type: "text", value: "Feeling peaceful and relaxed today." },
-
-        // Feelings
-        yellowEmotions: { type: "text", value: "Yellow" },
-        absorbedEmotion: { type: "text", value: "Absorbed" },
-        greenEmotions: { type: "text", value: "Green" },
-        acceptedEmotion: { type: "text", value: "Accepted" },
-        blueEmotions: { type: "text", value: "Blue" },
-        abandonedEmotion: { type: "text", value: "Abandoned" },
-        redEmotions: { type: "text", value: "Red" },
-        afraidEmotion: { type: "text", value: "Afraid" },
-
-        // Friends
-        friends: { type: "text", value: "Friends" },
-        sharePrompt: { type: "text", value: "Share your emotions with friends" },
-        checkin: { type: "text", value: "Check in" },
-        selectAllButton: { type: "text", value: "Select all" },
-        shareModalPrompt: { type: "text", value: "Share your check-in?" },
-        share: { type: "contains", value: "Share with" },
-
-        // Settings
-        aiOption: { type: "text", value: "AI settings" },
+        complete: { type: "text", value: "Complete check-in" },
         reflectModal: { type: "text", value: "Introducing" },
+        friends: { type: "text", value: "Friends" },
+        shareModalPrompt: { type: "text", value: "Share your check-in?" },
     }
 
-    abstract buildSelector(selector: string): Promise<string>;
+    /**
+     * Builds a selector string from the provided element config.
+     * Must be implemented by the subclass depending on platform (e.g., iOS or Android).
+     *
+     * @param selector - A string key or full element object from `this.elements`.
+     * @returns {Promise<string>} A resolved selector string usable in tests.
+     */
+    abstract buildSelector(selector): Promise<string>;
 
-    async verifyIsElementDisplayed(element, timeout?: number): Promise<boolean> {
-        //: keyof typeof this.elements
-        return await this.isElementDisplayed(await this.buildSelector(element), timeout ?? null);
-    }
+    /**
+     * Verifies the "active" state of a given UI element (e.g., checked, value).
+     * Must be implemented by the subclass with platform-specific logic.
+     *
+     * @param element - The UI element to check.
+     * @returns {Promise<boolean>} True if the element is in the expected active state.
+     */
+    abstract verifyStatusElement(element): Promise<boolean>;
 
-    async tapButton(element, timeout?: number): Promise<void> {
-        await this.tapElement(await this.buildSelector(element), timeout ?? null);
-    }
-
-    async enterTextJournal(element: string, text: string): Promise<void> {
-        await this.enterText(await this.buildSelector(element), text, true);
-    }
-
-    async waitFor(element, timeout?: number) {
-        return await this.waitForElement(await this.buildSelector(element), timeout ?? null);
-    }
-
+    /**
+     * Checks if a given element is active by evaluating its status.
+     *
+     * @param element - Element key.
+     * @returns {Promise<boolean>} True if the element is active.
+     */
     async verifyIsActive(element): Promise<boolean> {
         const checkedAttr = await $(await this.buildSelector(element));
         await driver.pause(1000);
-        const val = await checkedAttr.getAttribute(this.isAndroidPlatform ? "checked" : "value");
-        return this.isAndroidPlatform ? val === "true" : val === "1";
+
+        return await this.verifyStatusElement(checkedAttr);
     }
     
 }
