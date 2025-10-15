@@ -2,7 +2,30 @@
  * BasePage - Base class with common methods for mobile automation
  * Works for both Android and iOS
  */
+import { AndroidLocators } from "../locators/AndroidLocators";
+import { iOSLocators } from "../locators/iOSLocators";
+
 export class BasePage {
+  protected locator: AndroidLocators | iOSLocators;
+
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    const platform = driver.capabilities.platformName;
+    console.log(`[BasePage] Running on platform: ${platform}`);
+
+    // Create locator based on platform
+    if (platform === "Android") {
+      this.locator = new AndroidLocators();
+    } else if (platform === "iOS") {
+      this.locator = new iOSLocators();
+    } else {
+      throw new Error(`Unsupported platform: ${platform}`);
+    }
+  }
+
   // ==========================================
   // ELEMENTS - Selector methods
   // ==========================================
@@ -338,5 +361,53 @@ export class BasePage {
   async isIOS(): Promise<boolean> {
     const capabilities = driver.capabilities;
     return capabilities.platformName === "iOS";
+  }
+
+  // ==========================================
+  // LOCATORS - Locator-based utility methods
+  // ==========================================
+
+  /**
+   * Verifies if a UI element is visible on screen using its locator.
+   *
+   * @param element - The key or locator object to resolve the element.
+   * @param timeout - Optional timeout to wait for the element.
+   * @returns {Promise<boolean>} True if the element is visible.
+   */
+  async verifyIsElementDisplayed(element, timeout?: number): Promise<boolean> {
+      return await this.isElementDisplayed(await this.locator.buildSelector(element), timeout ?? null);
+  }
+
+  /**
+   * Taps on a UI element using its locator.
+   *
+   * @param element - The key or locator object to resolve the element.
+   * @param timeout - Optional timeout to wait before tapping.
+   * @returns {Promise<void>}
+   */
+  async tapButton(element, timeout?: number): Promise<void> {
+      await this.tapElement(await this.locator.buildSelector(element), timeout ?? null);
+  }
+
+  /**
+   * Enters text into a journal input field using its locator.
+   *
+   * @param element - The key or locator for the input field.
+   * @param text - The text to be entered.
+   * @returns {Promise<void>}
+   */
+  async enterTextJournal(element: string, text: string): Promise<void> {
+      await this.enterText(await this.locator.buildSelector(element), text, true);
+  }
+
+  /**
+   * Waits for an element to be present and ready on the screen using its locator.
+   *
+   * @param element - The key or locator object to resolve the element.
+   * @param timeout - Optional timeout duration in milliseconds.
+   * @returns {Promise<any>} The resolved element after it appears.
+   */
+  async waitFor(element, timeout?: number) {
+      return await this.waitForElement(await this.locator.buildSelector(element), timeout ?? null);
   }
 }

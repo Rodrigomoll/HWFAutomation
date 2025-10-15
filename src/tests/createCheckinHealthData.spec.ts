@@ -1,44 +1,26 @@
-import { CheckinPage } from "../pages/flows/CheckinPage";
-import { skipOnboardingFlow } from "../helpers/skipOnboardingFlow";
-import { HealthDataEntriesPages } from "../pages/flows/HealthDataEntriesPage";
-import { verify } from "../helpers/testVerification";
-import { whichPlatform } from "../helpers/whichPlatform";
+import { assertAllTrue } from "../helpers/assertAllTrue";
+import { verifyCheckInHomeScreen } from "../helpers/verifyCheckInHomeScreen";
+import { createPageObjectInstance } from "../helpers/createPageObjectInstance";
 
-describe("Create Checkin Health Data Page", () => {
-    let checkinPage : CheckinPage;
-    let healthDataPage : HealthDataEntriesPages;
-    let locator;
+describe("Create check-in with health data", () => {
+    let checkinPage, healthDataPage, onboardingPage;
 
     beforeAll(async () => {
-        locator = await whichPlatform();
-        checkinPage = await new CheckinPage(locator);
-        healthDataPage = await new HealthDataEntriesPages();
+        checkinPage = createPageObjectInstance("checkin");
+        healthDataPage = createPageObjectInstance("health");
+        onboardingPage = createPageObjectInstance("onboarding");
 
-        await skipOnboardingFlow();
+        // Setup to skip all onboarding flow and start creating our check-ins
+        await onboardingPage.skipOnboardingFlow();
     });
 
     it("Should create a check-in with health data", async () => {
-        await checkinPage.QuadrantsStep();
+        await checkinPage.selectEmotionFromQuadrant("uneasy");
 
-        await checkinPage.tapEmotion("redQuadrant", "uneasyEmotion");
+        await checkinPage.completeTagsAndJournalEntry("This is a test journal entry with health data entries.", true);
 
-        await checkinPage.tagsAndJournalStep("This is a test journal entry with health data entries.", true);
+        await healthDataPage.completeHealthData();
 
-        if(locator.isAndroidPlatform) {
-            await verify(locator.verifyIsElementDisplayed("dataPrompt"));
-            await locator.tapButton("paperClipIcon");
-
-            await healthDataPage.healthDataEntriesFlowAndroid(locator);
-            await locator.tapButton("save");
-        }
-        else {
-            await locator.tapButton("filter");
-            await locator.tapButton("healthData");
-
-            await healthDataPage.healthDataEntriesFlowIOS(locator);
-            await locator.tapButton("complete");
-        }
-
-        await checkinPage.completeCheckin();
+        await assertAllTrue(verifyCheckInHomeScreen());
     })
 })

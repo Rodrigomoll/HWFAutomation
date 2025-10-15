@@ -1,54 +1,31 @@
-import { CheckinPage } from "../pages/flows/CheckinPage";
-import { skipOnboardingFlow } from "../helpers/skipOnboardingFlow";
-import { verify } from "../helpers/testVerification";
-import { doCheckinWithEmotionsFlow } from "../helpers/checkinWithEmotionsFlow";
-import { whichPlatform } from "../helpers/whichPlatform";
-
+import { createPageObjectInstance } from "../helpers/createPageObjectInstance";
+import { assertAllTrue } from "../helpers/assertAllTrue";
+import { completeBasicCheckin } from "../helpers/completeBasicCheckin";
 
 describe("Edit Checkin Page", () => {
-    let checkinPage: CheckinPage;
-    let locator;
+    let checkinPage, onboardingPage;
     
     const UPDATED_TEXT = "Updated journal entry for the check-in.";
 
     beforeAll(async () => {
-        locator = await whichPlatform();
-        checkinPage = await new CheckinPage(locator);
+        checkinPage = createPageObjectInstance("checkin");
+        onboardingPage = createPageObjectInstance("onboarding");
 
         //setup to skip all onboarding flow and start creating our check-ins
-        await skipOnboardingFlow();
+        await onboardingPage.skipOnboardingFlow();
     });
 
     it("Should create uneasy check-in (red)", async () => {
-        await doCheckinWithEmotionsFlow('uneasy', "Feeling stressed about work");
+        await assertAllTrue(completeBasicCheckin('uneasy', "Feeling stressed about work"));
     });
 
     it("Should display the Checkin and edit the journal entry of the check-in", async () => {
-        if(locator.isAndroidPlatform){
-            await verify(checkinPage.isCheckinDisplayed("uneasyEmotionLabel"));
-            await locator.tapButton("uneasyEmotionLabel");
-        }
-        else {
-            await verify(checkinPage.isCheckinDisplayed("agoTiming"));
-            await locator.tapButton("agoTiming");
-        }
-
-        await verify(checkinPage.isCheckinCardDisplayed("uneasyEmotionLabel"));
-        await locator.tapButton("uneasyText");
+        await assertAllTrue(checkinPage.isCheckinDisplayed("uneasyEmotionLabel"));
+        await checkinPage.tapButton("uneasyText");
         await driver.pause(2000);
 
-        await checkinPage.editJournalEntry(UPDATED_TEXT);
-        if(locator.isAndroidPlatform) await verify(checkinPage.verifyIsNewElementDisplayed("text", UPDATED_TEXT));
-        else await verify(checkinPage.verifyIsNewElementDisplayed("textView", UPDATED_TEXT));
+        await checkinPage.updateJournalEntryText(UPDATED_TEXT);
 
-        if(locator.isAndroidPlatform){
-            await locator.tapButton("save", 200);
-            await locator.tapButton("save", 200);
-        }
-        else {
-            await locator.tapButton("finish", 200);
-        }
-
-        await verify(checkinPage.verifyIsNewElementDisplayed("text", UPDATED_TEXT));
+        await assertAllTrue(checkinPage.verifyIsElementDisplayed({type: "text", value: UPDATED_TEXT}));
     })
 });

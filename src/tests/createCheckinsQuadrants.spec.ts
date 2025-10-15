@@ -1,25 +1,30 @@
-import { skipOnboardingFlow } from "../helpers/skipOnboardingFlow";
-import { doCheckinWithEmotionsFlow } from "../helpers/checkinWithEmotionsFlow";
+import { completeBasicCheckin } from "../helpers/completeBasicCheckin";
+import { createPageObjectInstance } from "../helpers/createPageObjectInstance";
+import { assertAllTrue } from "../helpers/assertAllTrue";
 
 describe('Test emotions commands', () => {
+    let onboardingPage;
 
     beforeAll(async () => {
-        await skipOnboardingFlow();
+        onboardingPage = createPageObjectInstance("onboarding");
+        
+        // Setup to skip all onboarding flow and start creating our check-ins
+        await onboardingPage.skipOnboardingFlow();
     });
 
     it("Should create pleased check-in (yellow)", async () => {
-        await doCheckinWithEmotionsFlow('pleased', "Feeling great today! 😊");
+        await assertAllTrue(completeBasicCheckin('pleased', "Feeling great today! 😊"));
     });
 
     it("Should create uneasy check-in (red)", async () => {
-        await doCheckinWithEmotionsFlow('uneasy', "Feeling stressed about work 😰");
+        await assertAllTrue(completeBasicCheckin('uneasy', "Feeling stressed about work 😰"));
     });
 
     it("Should create calm check-in (green)", async () => {
-        await doCheckinWithEmotionsFlow('calm', "Peaceful morning meditation 😌");
+        await assertAllTrue(completeBasicCheckin('calm', "Peaceful morning meditation 😌"));
     });
 
     it("Should create bored check-in (blue)", async () => {
-        await doCheckinWithEmotionsFlow('bored', "Nothing interesting happening 😴");
+        await assertAllTrue(completeBasicCheckin('bored', "Nothing interesting happening 😴"));
     });
 })

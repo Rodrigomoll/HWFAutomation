@@ -24,6 +24,9 @@ export const config: WebdriverIO.Config = {
         './src/tests/createCheckinWithTakeaways.spec.ts'
     ],
     maxInstances: 1,
+    specFileRetries: 1,
+    specFileRetriesDelay: 1000,
+    specFileRetriesDeferred: false,
     
     capabilities: [{
         platformName: 'Android',
