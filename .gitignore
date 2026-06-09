@@ -9,8 +9,9 @@ dist/
 *.log
 .vscode/
 .idea/
-apps/android/*.apk
-apps/ios/*.app
+apps/
 
 allure-results/
 allure-report/
+tests_img/
+tmp/

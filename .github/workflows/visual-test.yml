@@ -1,0 +1,52 @@
+name: iOS Visual Tests (Argos)
+
+on:
+  push:
+    branches: [visual_test]
+  pull_request:
+
+jobs:
+  ios-visual-tests:
+    runs-on: macos-latest
+
+    env:
+      IOS_APP_PATH: ./app/HowWeFeelMoodmeter.app
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # 📦 Download iOS app from GitHub Release
+      - name: Download iOS App
+        run: |
+          curl -L -o app.zip https://github.com/Rodrigomoll/HWFAutomation/releases/download/ios-app/HowWeFeelMoodmeter.app.zip
+          unzip app.zip -d app
+          ls -R app
+
+      # 🔥 Install Appium (CI only)
+      - name: Install Appium
+        run: npm install -g appium
+
+      # 🔥 Start Appium server
+      - name: Start Appium server
+        run: |
+          appium --port 4724 --base-path / &
+          sleep 10
+
+      # 🧪 Run your test command
+      - name: Run iOS Visual Test
+        run: npm run ios:skip
+
+      # 📸 Upload screenshots to Argos
+      - name: Upload screenshots to Argos
+        run: |
+          npm exec -- argos upload --token ${{ secrets.ARGOS_TOKEN }} screenshots
