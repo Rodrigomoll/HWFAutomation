@@ -2,7 +2,7 @@ name: iOS Visual Tests (Argos)
 
 on:
   push:
-    branches: [visual_test]
+    branches: [visual_test_clean_final]
   pull_request:
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       # 📦 Download iOS app from GitHub Release
       - name: Download iOS App
