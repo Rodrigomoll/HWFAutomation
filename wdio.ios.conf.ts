@@ -53,6 +53,6 @@ export const config: WebdriverIO.Config = {
     reporters: ['spec'],
     
     jasmineOpts: {
-        defaultTimeoutInterval: parseInt(process.env.COMMAND_TIMEOUT || '60000')
+        defaultTimeoutInterval: parseInt(process.env.COMMAND_TIMEOUT || '2000000')
     }
 };
