@@ -36,6 +36,15 @@ jobs:
       - name: Install Appium
         run: npm install -g appium
 
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: List runtimes
+        run: xcrun simctl list runtimes
+
+      - name: List devices
+        run: xcrun simctl list devices
+
       # 🧪 Run your test command
       - name: Run iOS Visual Test
         run: npm run ios:skip
