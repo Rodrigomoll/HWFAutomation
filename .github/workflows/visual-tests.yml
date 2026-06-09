@@ -30,12 +30,6 @@ jobs:
           unzip app.zip -d app
           ls -R app
 
-      - name: Install Appium
-        run: npm install -g appium
-
-      - name: Install XCUITest driver
-        run: appium driver install xcuitest
-
       - name: Show Xcode version
         run: xcodebuild -version
 
