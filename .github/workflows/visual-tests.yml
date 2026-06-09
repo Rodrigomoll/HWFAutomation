@@ -30,11 +30,13 @@ jobs:
           unzip app.zip -d app
           ls -R app
 
-      - name: Show Xcode version
-        run: xcodebuild -version
-
-      - name: List devices
-        run: xcrun simctl list devices
+      - name: Boot stable simulator
+        run: |
+          xcrun simctl shutdown all || true
+          xcrun simctl erase all || true
+          xcrun simctl boot "iPhone 16"
+          xcrun simctl bootstatus "iPhone 16" -b
+          sleep 20
 
       - name: Run iOS Visual Test
         run: npm run ios:skip

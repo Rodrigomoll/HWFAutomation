@@ -10,6 +10,9 @@ export const config: WebdriverIO.Config = {
     specFileRetries: 1,
     specFileRetriesDelay: 1000,
     specFileRetriesDeferred: false,
+
+    connectionRetryTimeout: 300000,
+    connectionRetryCount: 2,  
     
     capabilities: [{
         platformName: 'iOS',
@@ -18,7 +21,7 @@ export const config: WebdriverIO.Config = {
         'appium:platformVersion': process.env.IOS_PLATFORM_VERSION || '18.6',
         'appium:app': process.env.IOS_APP_PATH || './apps/ios/HowWeFeelMoodmeter.app',
         'appium:bundleId': process.env.IOS_BUNDLE_ID || 'org.howwefeel.HowWeFeel-Moodmeter',
-        'appium:autoAcceptAlerts': true, 
+        'appium:autoAcceptAlerts': true,
         'appium:autoDismissAlerts': false,
 
         'appium:wdaStartupRetries': 3,
@@ -27,10 +30,12 @@ export const config: WebdriverIO.Config = {
         'appium:noReset': true,
         'appium:fullReset': false,
 
-        // 'appium:noReset': false,
-        // 'appium:fullReset': true,
-        'appium:language': 'en', //es //en
-        'appium:locale': 'EN' //ES //EN
+        'appium:wdaLaunchTimeout': 180000,
+        'appium:wdaConnectionTimeout': 180000,
+        'appium:waitForQuiescence': false,
+
+        'appium:language': 'en',
+        'appium:locale': 'EN'
     }],
 
     hostname: 'localhost',
