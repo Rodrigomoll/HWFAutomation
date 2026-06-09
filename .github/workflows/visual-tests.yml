@@ -36,12 +36,6 @@ jobs:
       - name: Install Appium
         run: npm install -g appium
 
-      # 🔥 Start Appium server
-      - name: Start Appium server
-        run: |
-          appium --port 4724 --base-path / &
-          sleep 10
-
       # 🧪 Run your test command
       - name: Run iOS Visual Test
         run: npm run ios:skip
