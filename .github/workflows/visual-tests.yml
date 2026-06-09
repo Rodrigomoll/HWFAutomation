@@ -13,8 +13,7 @@ jobs:
       IOS_APP_PATH: ./app/HowWeFeelMoodmeter.app
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -25,30 +24,26 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # 📦 Download iOS app from GitHub Release
       - name: Download iOS App
         run: |
           curl -L -o app.zip https://github.com/Rodrigomoll/HWFAutomation/releases/download/ios-app/HowWeFeelMoodmeter.app.zip
           unzip app.zip -d app
+          ls -R app
 
-      # 🔥 Install Appium (CI only)
       - name: Install Appium
         run: npm install -g appium
+
+      - name: Install XCUITest driver
+        run: appium driver install xcuitest
 
       - name: Show Xcode version
         run: xcodebuild -version
 
-      - name: List runtimes
-        run: xcrun simctl list runtimes
-
       - name: List devices
         run: xcrun simctl list devices
 
-      # 🧪 Run your test command
       - name: Run iOS Visual Test
         run: npm run ios:skip
 
-      # 📸 Upload screenshots to Argos
       - name: Upload screenshots to Argos
-        run: |
-          npm exec -- argos upload --token ${{ secrets.ARGOS_TOKEN }} screenshots
+        run: npm exec -- argos upload --token ${{ secrets.ARGOS_TOKEN }} screenshots

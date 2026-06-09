@@ -20,6 +20,13 @@ export const config: WebdriverIO.Config = {
         'appium:bundleId': process.env.IOS_BUNDLE_ID || 'org.howwefeel.HowWeFeel-Moodmeter',
         'appium:autoAcceptAlerts': true, 
         'appium:autoDismissAlerts': false,
+
+        'appium:wdaStartupRetries': 3,
+        'appium:wdaStartupRetryInterval': 15000,
+        'appium:newCommandTimeout': 300,
+        'appium:noReset': true,
+        'appium:fullReset': false,
+
         // 'appium:noReset': false,
         // 'appium:fullReset': true,
         'appium:language': 'en', //es //en
