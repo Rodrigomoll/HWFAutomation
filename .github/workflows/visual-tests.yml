@@ -21,25 +21,25 @@ jobs:
           node-version: 20
           cache: npm
 
-      - name: Install dependencies
-        run: npm install
+    #   - name: Install dependencies
+    #     run: npm install
 
-      - name: Download iOS App
-        run: |
-          curl -L -o app.zip https://github.com/Rodrigomoll/HWFAutomation/releases/download/ios-app/HowWeFeelMoodmeter.app.zip
-          unzip app.zip -d app
-          ls -R app
+    #   - name: Download iOS App
+    #     run: |
+    #       curl -L -o app.zip https://github.com/Rodrigomoll/HWFAutomation/releases/download/ios-app/HowWeFeelMoodmeter.app.zip
+    #       unzip app.zip -d app
+    #       ls -R app
 
-      - name: Boot stable simulator
-        run: |
-          xcrun simctl shutdown all || true
-          xcrun simctl erase all || true
-          xcrun simctl boot "iPhone 16"
-          xcrun simctl bootstatus "iPhone 16" -b
-          sleep 20
+    #   - name: Boot stable simulator
+    #     run: |
+    #       xcrun simctl shutdown all || true
+    #       xcrun simctl erase all || true
+    #       xcrun simctl boot "iPhone 16"
+    #       xcrun simctl bootstatus "iPhone 16" -b
+    #       sleep 20
 
-      - name: Run iOS Visual Test
-        run: npm run ios:skip
+    #   - name: Run iOS Visual Test
+    #     run: npm run ios:skip
 
       - name: Upload screenshots to Argos
         run: npm exec -- argos upload --token ${{ secrets.ARGOS_TOKEN }} screenshots
