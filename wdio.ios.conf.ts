@@ -29,7 +29,7 @@ export const config: WebdriverIO.Config = {
     hostname: 'localhost',
     port: 4724,
     
-    logLevel: 'info',
+    logLevel: 'debug',
     framework: 'jasmine',
     services: [
         ['appium', {

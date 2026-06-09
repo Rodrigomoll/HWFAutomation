@@ -30,7 +30,6 @@ jobs:
         run: |
           curl -L -o app.zip https://github.com/Rodrigomoll/HWFAutomation/releases/download/ios-app/HowWeFeelMoodmeter.app.zip
           unzip app.zip -d app
-          ls -R app
 
       # 🔥 Install Appium (CI only)
       - name: Install Appium
